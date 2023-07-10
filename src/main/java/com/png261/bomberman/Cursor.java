@@ -1,20 +1,18 @@
-package com.png261.bomberman.graphic;
+package com.png261.bomberman;
 
-import com.png261.bomberman.graphic.*;
-import com.png261.bomberman.input.*;
-import com.png261.bomberman.manager.TextureManager;
+import com.png261.bomberman.*;
 
 public final class Cursor
 {
-    private int size;
+    private final int size;
     private boolean isHover;
 
     public Cursor()
     {
         size = 32;
         isHover = false;
-        TextureManager.getInstance().load("cursor_normal", "images/cursor/normal.png");
-        TextureManager.getInstance().load("cursor_hover", "images/cursor/hover.png");
+        TextureManager.getInstance().load("cursor_normal", "/images/cursor/normal.png");
+        TextureManager.getInstance().load("cursor_hover", "/images/cursor/hover.png");
     }
 
     public void draw()

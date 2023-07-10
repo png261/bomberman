@@ -1,4 +1,4 @@
-package com.png261.bomberman.util;
+package com.png261.bomberman;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

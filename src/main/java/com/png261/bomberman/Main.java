@@ -1,15 +1,25 @@
 package com.png261.bomberman;
 
-import com.png261.bomberman.game.Game;
-import javax.swing.*;
+import com.png261.bomberman.Game;
+import javafx.animation.AnimationTimer;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-public class Main
+public final class Main extends Application
 {
-    public static void main(String[] args)
+    public static void main(String[] args) { launch(args); }
+    @Override public void start(Stage stage)
     {
-        SwingUtilities.invokeLater(() -> {
-            Game.getInstance().init(600, 600, "bomberman");
-            Game.getInstance().start();
-        });
+        Game game = Game.getInstance();
+        game.init(stage, 400, 400, "Bomerman");
+
+        new AnimationTimer() {
+            @Override public void handle(long now)
+            {
+                game.update();
+                game.handleEvents();
+                game.render();
+            }
+        }.start();
     }
 }
