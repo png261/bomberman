@@ -1,4 +1,5 @@
-package com.png261.bomberman;
+package com.png261.bomberman.manager;
+
 import com.png261.bomberman.*;
 import java.io.IOException;
 import java.util.Map;

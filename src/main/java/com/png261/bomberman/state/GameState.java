@@ -1,4 +1,4 @@
-package com.png261.bomberman;
+package com.png261.bomberman.state;
 
 public abstract class GameState
 {

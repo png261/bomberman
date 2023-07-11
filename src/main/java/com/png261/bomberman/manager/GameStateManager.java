@@ -1,6 +1,7 @@
-package com.png261.bomberman;
+package com.png261.bomberman.manager;
 
 import com.png261.bomberman.*;
+import com.png261.bomberman.state.*;
 import java.util.Stack;
 
 public class GameStateManager

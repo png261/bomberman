@@ -1,6 +1,8 @@
 package com.png261.bomberman;
 
 import com.png261.bomberman.*;
+import com.png261.bomberman.manager.*;
+import com.png261.bomberman.state.*;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -43,7 +45,7 @@ public final class Game
         SceneManager.getInstance().load("play_state", "/scenes/play.fxml");
         SceneManager.getInstance().load("help_state", "/scenes/help.fxml");
 
-        GameStateManager.getInstance().pushState(new MainMenuState());
+        GameStateManager.getInstance().pushState(new PlayState());
     }
 
     public void update() { GameStateManager.getInstance().update(); }

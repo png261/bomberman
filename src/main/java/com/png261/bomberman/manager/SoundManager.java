@@ -1,4 +1,4 @@
-package com.png261.bomberman;
+package com.png261.bomberman.manager;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
