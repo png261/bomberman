@@ -11,13 +11,11 @@ public final class Main extends Application
     @Override public void start(Stage stage)
     {
         Game game = Game.getInstance();
-        game.init(stage, 400, 400, "Bomerman");
-
+        game.init(stage, "Bomerman");
         new AnimationTimer() {
             @Override public void handle(long now)
             {
                 game.update();
-                game.handleEvents();
                 game.render();
             }
         }.start();

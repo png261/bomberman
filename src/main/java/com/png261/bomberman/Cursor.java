@@ -11,13 +11,13 @@ public final class Cursor
     {
         size = 32;
         isHover = false;
-        TextureManager.getInstance().load("cursor_normal", "/images/cursor/normal.png");
-        TextureManager.getInstance().load("cursor_hover", "/images/cursor/hover.png");
+        Painter.getInstance().loadImage("cursor_normal", "/images/cursor/normal.png");
+        Painter.getInstance().loadImage("cursor_hover", "/images/cursor/hover.png");
     }
 
     public void draw()
     {
-        TextureManager.getInstance().draw(
+        Painter.getInstance().drawImage(
             isHover ? "cursor_hover" : "cursor_normal",
             InputManager.getInstance().getMouseX(),
             InputManager.getInstance().getMouseY(),

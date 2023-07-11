@@ -15,7 +15,11 @@ public final class InputManager
     private double mouseX;
     private double mouseY;
 
-    private InputManager() {}
+    private InputManager()
+    {
+        keys = new boolean[256];
+        mouseButtons = new boolean[5];
+    }
 
     public static InputManager getInstance()
     {
@@ -23,16 +27,6 @@ public final class InputManager
             instance = new InputManager();
         }
         return instance;
-    }
-
-    public void init(Scene scene)
-    {
-        this.scene = scene;
-        keys = new boolean[256];
-
-        mouseButtons = new boolean[5];
-
-        this.bindingListener();
     }
 
     public boolean isKeyDown(KeyCode key) { return keys[key.ordinal()]; }
@@ -71,12 +65,12 @@ public final class InputManager
             keys[e.getCode().ordinal()] = true;
         }
     }
-    public void bindingListener()
+    public void bindingListener(Scene scene)
     {
-        this.scene.addEventFilter(KeyEvent.KEY_PRESSED, this::onKeyPressed);
-        this.scene.addEventFilter(KeyEvent.KEY_RELEASED, this::onKeyReleased);
-        this.scene.addEventFilter(MouseEvent.MOUSE_PRESSED, this::onMousePressed);
-        this.scene.addEventFilter(MouseEvent.MOUSE_RELEASED, this::onMouseReleased);
-        this.scene.addEventFilter(MouseEvent.MOUSE_MOVED, this::onMouseMoved);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, this::onKeyPressed);
+        scene.addEventFilter(KeyEvent.KEY_RELEASED, this::onKeyReleased);
+        scene.addEventFilter(MouseEvent.MOUSE_PRESSED, this::onMousePressed);
+        scene.addEventFilter(MouseEvent.MOUSE_RELEASED, this::onMouseReleased);
+        scene.addEventFilter(MouseEvent.MOUSE_MOVED, this::onMouseMoved);
     }
 }
