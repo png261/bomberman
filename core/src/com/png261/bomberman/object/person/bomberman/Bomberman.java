@@ -17,8 +17,8 @@ import com.png261.bomberman.utils.Unit;
 
 public class Bomberman extends Person
 {
-    private int flameLength;
-    private int maxBomb;
+    private int flameLength = 1;
+    private int maxBomb = 1;
     private State direction = State.IDLE_DOWN;
     private TextureAtlas textureAtlas;
     private boolean canPlaceBomb = true;
@@ -64,7 +64,7 @@ public class Bomberman extends Person
     public void handleEvents()
     {
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            placeBomb();
+            // placeBomb();
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             moveUp();
             animationHandle.setCurrentAnimation(State.WALK_UP.getValue());

@@ -18,9 +18,11 @@ import com.png261.bomberman.utils.Unit;
 
 public abstract class Tile extends Object
 {
+    private Rectangle bounds;
     public Tile(Rectangle bounds)
     {
         super();
+        this.bounds = bounds;
         createRectangleBody(bounds, true);
     }
 
@@ -28,6 +30,8 @@ public abstract class Tile extends Object
 
     @Override public void update(float delta) {}
     @Override public void render() {}
+
+    public Rectangle getBounds() { return bounds; }
 
     public TiledMapTileLayer.Cell getCell()
     {

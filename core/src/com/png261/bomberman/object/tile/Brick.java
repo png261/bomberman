@@ -29,6 +29,6 @@ public class Brick extends Tile
         //         item.load(position);
         //         Game.getInstance().getLevel().spawnObject(item);
 
-        isExist = false;
+        disappear();
     }
 }

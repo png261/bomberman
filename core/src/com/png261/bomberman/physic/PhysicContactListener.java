@@ -13,8 +13,9 @@ public class PhysicContactListener implements ContactListener
 {
     @Override public void beginContact(Contact contact)
     {
-        // ItemBeginContact(contact);
-        BrickBeginContact(contact);
+        ItemBeginContact(contact);
+        FlameAndBrickBeginContact(contact);
+        FlameAndBombermanBeginContact(contact);
     }
     @Override public void endContact(Contact contact) {}
     @Override public void preSolve(Contact contact, Manifold oldManifold) {}
@@ -43,7 +44,7 @@ public class PhysicContactListener implements ContactListener
         item.bonus(bomberman);
     }
 
-    public void BrickBeginContact(Contact contact)
+    public void FlameAndBrickBeginContact(Contact contact)
     {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
@@ -51,15 +52,31 @@ public class PhysicContactListener implements ContactListener
         short categoryA = fixtureA.getFilterData().categoryBits;
         short categoryB = fixtureB.getFilterData().categoryBits;
 
-        if ((categoryA | categoryB) != (BitCollision.BRICK | BitCollision.BOMBERMAN)) {
+        if ((categoryA | categoryB) != (BitCollision.FLAME | BitCollision.BRICK)) {
             return;
         }
 
         Fixture brickFixture =
             fixtureA.getFilterData().categoryBits == BitCollision.BRICK ? fixtureA : fixtureB;
-
         Brick brick = (Brick)brickFixture.getUserData();
-
         brick.bonus();
+    }
+
+    public void FlameAndBombermanBeginContact(Contact contact)
+    {
+        Fixture fixtureA = contact.getFixtureA();
+        Fixture fixtureB = contact.getFixtureB();
+
+        short categoryA = fixtureA.getFilterData().categoryBits;
+        short categoryB = fixtureB.getFilterData().categoryBits;
+
+        if ((categoryA | categoryB) != (BitCollision.FLAME | BitCollision.BOMBERMAN)) {
+            return;
+        }
+
+        Fixture bombermanFixture =
+            fixtureA.getFilterData().categoryBits == BitCollision.BOMBERMAN ? fixtureA : fixtureB;
+        Bomberman bomberman = (Bomberman)bombermanFixture.getUserData();
+        // bomberman.speedUp(2);
     }
 }

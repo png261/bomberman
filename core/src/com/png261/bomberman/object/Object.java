@@ -79,6 +79,9 @@ public abstract class Object implements Disposable
         fixture.setFilterData(filter);
     }
 
+    public void setSensor(boolean isSensor) { fixture.setSensor(isSensor); }
+
     public boolean isExist() { return isExist; }
+    public void disappear() { isExist = false; }
     @Override public void dispose() { PhysicManager.getInstance().getWorld().destroyBody(body); }
 }

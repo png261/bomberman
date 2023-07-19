@@ -59,14 +59,14 @@ public class Bulb extends Enemy
     public void updateSprite()
     {
         sprite.setBounds(
-            Unit.box2DToScreen(body.getPosition().x, bodyDiameter),
-            Unit.box2DToScreen(body.getPosition().y, bodyDiameter),
+            Unit.box2DToScreen(body.getPosition().x, BODY_DIAMETER),
+            Unit.box2DToScreen(body.getPosition().y, BODY_DIAMETER),
             Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
             Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
 
         sprite.setPosition(
-            Unit.box2DToScreen(body.getPosition().x, bodyDiameter),
-            Unit.box2DToScreen(body.getPosition().y, bodyDiameter));
+            Unit.box2DToScreen(body.getPosition().x, BODY_DIAMETER),
+            Unit.box2DToScreen(body.getPosition().y, BODY_DIAMETER));
 
         sprite.setRegion(animationHandle.getCurrentFrame());
     }

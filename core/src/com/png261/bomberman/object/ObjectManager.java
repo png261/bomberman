@@ -62,7 +62,9 @@ public class ObjectManager implements Disposable
     public void createBrick()
     {
         for (RectangleMapObject object : getRectangleMapObjectsFromLayer(tiledBrickLayer)) {
-            objects.add(new Brick(object.getRectangle()));
+            Brick brick = new Brick(object.getRectangle());
+            objects.add(brick);
+            bricks.add(brick);
         }
     }
 
@@ -110,6 +112,27 @@ public class ObjectManager implements Disposable
                 object.render();
             }
         }
+    }
+
+    public boolean isWall(Vector2 position)
+    {
+        for (Wall wall : walls) {
+            if (wall.getBounds().contains(position.x, position.y)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isBrick(Vector2 position)
+    {
+        for (Brick brick : bricks) {
+            if (brick.getBounds().contains(position.x, position.y)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override public void dispose() {}

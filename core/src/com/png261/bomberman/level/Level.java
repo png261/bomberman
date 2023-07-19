@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.manager.MapManager;
 import com.png261.bomberman.object.Object;
 import com.png261.bomberman.physic.PhysicManager;
@@ -35,10 +36,22 @@ public final class Level
     public void update(float delta)
     {
         PhysicManager.getInstance().update();
-        objectManager.update(delta);
+
+        ArrayList<Object> trashObjects = new ArrayList<Object>();
         for (Object object : spawnObjects) {
-            object.update(delta);
+            if (object.isExist()) {
+                object.update(delta);
+            } else {
+                trashObjects.add(object);
+            }
         }
+
+        for (Object object : trashObjects) {
+            spawnObjects.remove(object);
+            object.dispose();
+        }
+
+        objectManager.update(delta);
     }
 
     public void renderMap(final OrthographicCamera camera)
@@ -49,12 +62,15 @@ public final class Level
 
     public void renderObject()
     {
-        objectManager.render();
-
         for (Object object : spawnObjects) {
             object.render();
         }
+        objectManager.render();
     }
+
+    public boolean isWall(Vector2 position) { return objectManager.isWall(position); }
+
+    public boolean isBrick(Vector2 position) { return objectManager.isBrick(position); }
 
     public void spawnObject(Object object) { spawnObjects.add(object); }
 }

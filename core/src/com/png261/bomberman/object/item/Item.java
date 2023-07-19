@@ -28,11 +28,17 @@ public abstract class Item extends Object
     @Override public void load(Vector2 position)
     {
         createRectangleBody(new Rectangle(position.x * 16, position.y * 16, 16, 16), true);
-        fixture.setSensor(true);
+        setSensor(true);
         setCollisionFilter(BitCollision.ITEM, BitCollision.orOperation(BitCollision.BOMBERMAN));
     }
 
-    public void bonus(Bomberman bomberman) { isExist = false; };
+    public void bonus(Bomberman bomberman) { disappear(); };
     public void update(float delta) {}
     public void render() { sprite.draw(Game.getInstance().getBatch()); }
+
+    @Override public void dispose()
+    {
+        super.dispose();
+        sprite.getTexture().dispose();
+    }
 }

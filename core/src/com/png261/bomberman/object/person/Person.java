@@ -16,11 +16,12 @@ import com.png261.bomberman.utils.Unit;
 
 public abstract class Person extends Object
 {
+    protected final float BODY_DIAMETER = 0.875f;
+    protected final float FRAME_TIME = 0.6f;
+
     protected boolean isDead;
     protected float speed = 2.5f;
     protected AnimationHandle animationHandle;
-    protected float bodyDiameter = 0.875f;
-    protected float FRAME_TIME = 0.6f;
     protected Sprite sprite;
 
     public Person() { super(); }
@@ -28,7 +29,7 @@ public abstract class Person extends Object
     @Override public void load(Vector2 position)
     {
         animationHandle = new AnimationHandle();
-        createCircleBody(new Circle(position, bodyDiameter / 2), false);
+        createCircleBody(new Circle(position, BODY_DIAMETER / 2), false);
     }
 
     public boolean isDead() { return isDead; }
@@ -44,8 +45,8 @@ public abstract class Person extends Object
     public void updateSprite()
     {
         sprite.setBounds(
-            Unit.box2DToScreen(body.getPosition().x, bodyDiameter),
-            Unit.box2DToScreen(body.getPosition().y, bodyDiameter),
+            Unit.box2DToScreen(body.getPosition().x, BODY_DIAMETER),
+            Unit.box2DToScreen(body.getPosition().y, BODY_DIAMETER),
             Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
             Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
 
