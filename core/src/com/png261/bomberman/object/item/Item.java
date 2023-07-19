@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.png261.bomberman.object.person.Bomberman;
+import com.png261.bomberman.object.person.bomberman.Bomberman;
 import com.png261.bomberman.physic.BitCollision;
 import com.png261.bomberman.physic.PhysicManager;
 import com.png261.bomberman.utils.Unit;

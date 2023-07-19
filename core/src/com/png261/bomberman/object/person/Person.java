@@ -14,13 +14,14 @@ import com.png261.bomberman.utils.Unit;
 public abstract class Person
 {
     protected boolean isDead;
-    protected float speed;
+    protected float speed = 2.5f;
     protected final AnimationHandle animationHandle;
     protected final float bodyDiameter = 0.875f;
     protected Body body;
     protected Fixture fixture;
     protected BodyDef bodyDef;
     protected FixtureDef fixtureDef;
+    protected float FRAME_TIME = 0.6f;
 
     public Person(Vector2 position)
     {
@@ -58,7 +59,14 @@ public abstract class Person
 
     public boolean isDead() { return isDead; }
 
-    public abstract void handleEvents();
-    public abstract void update();
+    public void moveUp() { this.body.setLinearVelocity(new Vector2(0, speed)); }
+
+    public void moveDown() { this.body.setLinearVelocity(new Vector2(0, -speed)); }
+
+    public void moveRight() { this.body.setLinearVelocity(new Vector2(speed, 0)); }
+
+    public void moveLeft() { this.body.setLinearVelocity(new Vector2(-speed, 0)); }
+
+    public abstract void update(float delta);
     public abstract void render();
 }

@@ -1,4 +1,4 @@
-package com.png261.bomberman.object.person;
+package com.png261.bomberman.object.person.bomberman;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.animation.AnimationHandle;
+import com.png261.bomberman.object.person.Person;
 import com.png261.bomberman.physic.BitCollision;
 import com.png261.bomberman.utils.Unit;
 
@@ -17,7 +18,6 @@ public class Bomberman extends Person
 {
     private int flameLength;
     private int maxBomb;
-    private final float FRAME_TIME = 0.6f;
     private State direction = State.IDLE_DOWN;
     private TextureAtlas textureAtlas;
     private Sprite sprite;
@@ -55,28 +55,38 @@ public class Bomberman extends Person
                 BitCollision.ENEMY,
                 BitCollision.ITEM));
 
-        speed = 2.5f;
-
         setupAnimation();
     }
 
-    @Override public void handleEvents()
+    public void handleEvents()
     {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             moveUp();
+            animationHandle.setCurrentAnimation(State.WALK_UP.getValue());
+            direction = State.IDLE_UP;
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             moveDown();
+            animationHandle.setCurrentAnimation(State.WALK_DOWN.getValue());
+            direction = State.IDLE_DOWN;
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             moveLeft();
+            animationHandle.setCurrentAnimation(State.WALK_LEFT.getValue());
+            direction = State.IDLE_LEFT;
         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             moveRight();
+            animationHandle.setCurrentAnimation(State.WALK_RIGHT.getValue());
+            direction = State.IDLE_RIGHT;
         } else {
             animationHandle.setCurrentAnimation(direction.getValue());
             this.body.setLinearVelocity(0, 0);
         }
     }
 
-    @Override public void update() { updateSprite(); }
+    @Override public void update(float delta)
+    {
+        handleEvents();
+        updateSprite();
+    }
 
     @Override public void render() { sprite.draw(Game.getInstance().getBatch()); }
 
@@ -141,35 +151,6 @@ public class Bomberman extends Person
         animationHandle.setCurrentAnimation(State.IDLE_DOWN.getValue());
 
         sprite = new Sprite(animationHandle.getCurrentFrame());
-    }
-
-
-    public void moveUp()
-    {
-        this.body.setLinearVelocity(new Vector2(0, speed));
-        animationHandle.setCurrentAnimation(State.WALK_UP.getValue());
-        direction = State.IDLE_UP;
-    }
-
-    public void moveDown()
-    {
-        this.body.setLinearVelocity(new Vector2(0, -speed));
-        animationHandle.setCurrentAnimation(State.WALK_DOWN.getValue());
-        direction = State.IDLE_DOWN;
-    }
-
-    public void moveRight()
-    {
-        this.body.setLinearVelocity(new Vector2(speed, 0));
-        animationHandle.setCurrentAnimation(State.WALK_RIGHT.getValue());
-        direction = State.IDLE_RIGHT;
-    }
-
-    public void moveLeft()
-    {
-        this.body.setLinearVelocity(new Vector2(-speed, 0));
-        animationHandle.setCurrentAnimation(State.WALK_LEFT.getValue());
-        direction = State.IDLE_LEFT;
     }
 
     public void updateSprite()

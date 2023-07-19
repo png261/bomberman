@@ -37,25 +37,21 @@ public class PlayScreen implements Screen
         objectManager.load(mapManager.getMap());
     }
 
-    public void handleEvents() { objectManager.handleEvents(); }
-
     public void update(final float delta)
     {
         camera.update();
         PhysicManager.getInstance().update();
-        objectManager.update();
+        objectManager.update(delta);
     }
 
     @Override public void render(final float delta)
     {
-        handleEvents();
         update(delta);
 
         ScreenUtils.clear(Color.BLACK);
         mapManager.render(camera);
         PhysicManager.getInstance().debugDraw(camera);
 
-        // render what camera is seeing
         Game.getInstance().getBatch().setProjectionMatrix(camera.combined);
         Game.getInstance().getBatch().begin();
         objectManager.render();
