@@ -1,6 +1,7 @@
 package com.png261.bomerberman.object;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.png261.bomberman.object.Object;
 import com.png261.bomberman.object.item.*;
 import com.png261.bomberman.object.person.*;
 import com.png261.bomberman.object.person.bomberman.*;
@@ -24,21 +26,16 @@ public class ObjectManager implements Disposable
 
     private ArrayList<Wall> walls;
     private ArrayList<Brick> bricks;
-    private ArrayList<Person> personList;
+    private ArrayList<Object> objects;
 
     private static final String tiledWallsLayer = "wall";
     private static final String tiledBrickLayer = "brick";
-    private static final String tiledBombermanLayer = "bomberman";
-    private static final String tiledEnemyLayer = "enemy";
-    private static final String tiledKeysLayer = "keys";
-    private static final String tiledKey = "key";
-    private static final String tiledPortal = "portal";
 
     public ObjectManager()
     {
         walls = new ArrayList<>();
         bricks = new ArrayList<>();
-        personList = new ArrayList<>();
+        objects = new ArrayList<>();
     }
 
     public void load(TiledMap map)
@@ -47,8 +44,7 @@ public class ObjectManager implements Disposable
 
         createWall();
         createBrick();
-        createEnemy();
-        createBomberman();
+        createObject();
     }
 
     public Array<RectangleMapObject> getRectangleMapObjectsFromLayer(String layer)
@@ -66,49 +62,53 @@ public class ObjectManager implements Disposable
     public void createBrick()
     {
         for (RectangleMapObject object : getRectangleMapObjectsFromLayer(tiledBrickLayer)) {
-            bricks.add(new Brick(object.getRectangle()));
+            objects.add(new Brick(object.getRectangle()));
         }
     }
 
-    public void createBomberman()
+    public void createObject()
     {
-        for (MapObject object : map.getLayers().get(tiledBombermanLayer).getObjects()) {
-            float x = object.getProperties().get("x", float.class);
-            float y = object.getProperties().get("y", float.class);
-            Vector2 position = Unit.coordPixelsToMeters(x, y);
-            String type = object.getProperties().get("type", String.class);
-
-            personList.add(new Bomberman(position));
-        }
-    }
-
-    public void createEnemy()
-    {
-        for (MapObject object : map.getLayers().get(tiledEnemyLayer).getObjects()) {
-            float x = object.getProperties().get("x", float.class);
-            float y = object.getProperties().get("y", float.class);
-            Vector2 position = Unit.coordPixelsToMeters(x, y);
-            String type = object.getProperties().get("type", String.class);
-
-            if (type.equals("Balloom")) {
-                personList.add(new Balloom(position));
-            } else if (type.equals("Bulb")) {
-                personList.add(new Bulb(position));
+        for (MapLayer layer : map.getLayers()) {
+            for (MapObject object : layer.getObjects()) {
+                float x = object.getProperties().get("x", float.class);
+                float y = object.getProperties().get("y", float.class);
+                Vector2 position = Unit.coordPixelsToMeters(x, y);
+                String type = object.getProperties().get("type", String.class);
+                if (type != null) {
+                    Object newObject = ObjectFactory.getInstance().create(type);
+                    if (newObject != null) {
+                        newObject.load(position);
+                        objects.add(newObject);
+                    }
+                }
             }
         }
     }
 
     public void update(float delta)
     {
-        for (Person person : personList) {
-            person.update(delta);
+        ArrayList<Object> trashObjects = new ArrayList<Object>();
+
+        for (Object object : objects) {
+            if (object.isExist()) {
+                object.update(delta);
+            } else {
+                trashObjects.add(object);
+            }
+        }
+
+        for (Object object : trashObjects) {
+            objects.remove(object);
+            object.dispose();
         }
     }
 
     public void render()
     {
-        for (Person person : personList) {
-            person.render();
+        for (Object object : objects) {
+            if (object.isExist()) {
+                object.render();
+            }
         }
     }
 

@@ -33,9 +33,11 @@ public class Balloom extends Enemy
         public String getValue() { return value; }
     }
 
-    public Balloom(Vector2 position)
+    public Balloom() { super(); }
+
+    @Override public void load(Vector2 position)
     {
-        super(position);
+        super.load(position);
         setupAnimation();
     }
 

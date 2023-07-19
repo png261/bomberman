@@ -1,6 +1,7 @@
 package com.png261.bomberman;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.png261.bomberman.level.Level;
 import com.png261.bomberman.screen.*;
 
 public class Game extends com.badlogic.gdx.Game
@@ -10,6 +11,7 @@ public class Game extends com.badlogic.gdx.Game
     private final int width = 1280;
     private final int height = 768;
     private SpriteBatch batch;
+    private Level level;
 
     public static Game getInstance()
     {
@@ -30,4 +32,7 @@ public class Game extends com.badlogic.gdx.Game
     public SpriteBatch getBatch() { return batch; }
     public int getWidth() { return width; }
     public int getHeight() { return height; }
+
+    public void setLevel(Level level) { this.level = level; }
+    public Level getLevel() { return level; }
 }

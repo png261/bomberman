@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.animation.AnimationHandle;
+import com.png261.bomberman.object.Bomb;
 import com.png261.bomberman.object.person.Person;
 import com.png261.bomberman.physic.BitCollision;
 import com.png261.bomberman.utils.Unit;
@@ -20,7 +21,7 @@ public class Bomberman extends Person
     private int maxBomb;
     private State direction = State.IDLE_DOWN;
     private TextureAtlas textureAtlas;
-    private Sprite sprite;
+    private boolean canPlaceBomb = true;
 
     private enum State {
         IDLE_UP("idle_up"),
@@ -41,9 +42,11 @@ public class Bomberman extends Person
     }
 
 
-    public Bomberman(Vector2 position)
+    public Bomberman() { super(); }
+
+    public void load(Vector2 position)
     {
-        super(position);
+        super.load(position);
 
         setCollisionFilter(
             BitCollision.BOMBERMAN,
@@ -60,7 +63,9 @@ public class Bomberman extends Person
 
     public void handleEvents()
     {
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            placeBomb();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             moveUp();
             animationHandle.setCurrentAnimation(State.WALK_UP.getValue());
             direction = State.IDLE_UP;
@@ -78,17 +83,27 @@ public class Bomberman extends Person
             direction = State.IDLE_RIGHT;
         } else {
             animationHandle.setCurrentAnimation(direction.getValue());
-            this.body.setLinearVelocity(0, 0);
+            body.setLinearVelocity(0, 0);
         }
+    }
+
+    public void placeBomb()
+    {
+        if (!canPlaceBomb) {
+            return;
+        }
+
+        canPlaceBomb = false;
+        Bomb bomb = new Bomb();
+        bomb.load(body.getPosition());
+        Game.getInstance().getLevel().spawnObject(bomb);
     }
 
     @Override public void update(float delta)
     {
+        super.update(delta);
         handleEvents();
-        updateSprite();
     }
-
-    @Override public void render() { sprite.draw(Game.getInstance().getBatch()); }
 
     public void setupAnimation()
     {
@@ -151,21 +166,6 @@ public class Bomberman extends Person
         animationHandle.setCurrentAnimation(State.IDLE_DOWN.getValue());
 
         sprite = new Sprite(animationHandle.getCurrentFrame());
-    }
-
-    public void updateSprite()
-    {
-        sprite.setBounds(
-            Unit.box2DToScreen(body.getPosition().x, bodyDiameter),
-            Unit.box2DToScreen(body.getPosition().y, bodyDiameter),
-            Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
-            Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
-
-        sprite.setPosition(
-            Unit.box2DToScreen(body.getPosition().x, bodyDiameter),
-            Unit.box2DToScreen(body.getPosition().y, bodyDiameter));
-
-        sprite.setRegion(animationHandle.getCurrentFrame());
     }
 
     public void speedUp(float n) { speed += n; }

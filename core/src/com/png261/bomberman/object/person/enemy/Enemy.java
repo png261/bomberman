@@ -6,9 +6,11 @@ import com.png261.bomberman.physic.BitCollision;
 
 public abstract class Enemy extends Person
 {
-    public Enemy(Vector2 position)
+    public Enemy() { super(); }
+
+    public void load(Vector2 position)
     {
-        super(position);
+        super.load(position);
 
         setCollisionFilter(
             BitCollision.ENEMY,

@@ -5,9 +5,9 @@ import com.png261.bomberman.physic.BitCollision;
 
 public class Wall extends Tile
 {
-    public Wall(Rectangle rect)
+    public Wall(Rectangle bounds)
     {
-        super(rect);
+        super(bounds);
         setCollisionFilter(
             BitCollision.WALL,
             BitCollision.orOperation(

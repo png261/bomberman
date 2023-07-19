@@ -30,9 +30,11 @@ public class Bulb extends Enemy
         public String getValue() { return value; }
     }
 
-    public Bulb(Vector2 position)
+    public Bulb() { super(); }
+
+    @Override public void load(Vector2 position)
     {
-        super(position);
+        super.load(position);
         setupAnimation();
     }
 
