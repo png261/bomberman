@@ -11,66 +11,68 @@ import com.png261.bomberman.physic.PhysicManager;
 import com.png261.bomerberman.object.ObjectManager;
 import java.util.ArrayList;
 
-public final class Level
-{
-    private final MapManager mapManager;
-    private final ObjectManager objectManager;
-    private final ArrayList<Object> spawnObjects;
+public final class Level {
+	private final MapManager mapManager;
+	private final ObjectManager objectManager;
+	private final ArrayList<Object> spawnObjects;
 
-    public Level()
-    {
-        PhysicManager.getInstance().setDebug(true);
-        mapManager = new MapManager();
-        objectManager = new ObjectManager();
-        spawnObjects = new ArrayList<>();
-    }
+	public Level() {
+		PhysicManager.getInstance().setDebug(true);
+		mapManager = new MapManager();
+		objectManager = new ObjectManager();
+		spawnObjects = new ArrayList<>();
+	}
 
-    public void load(String mapFile)
-    {
-        mapManager.load(mapFile);
-        objectManager.load(mapManager.getMap());
-    }
+	public void load(String mapFile) {
+		mapManager.load(mapFile);
+		objectManager.load(mapManager.getMap());
+	}
 
-    public TiledMap getMap() { return mapManager.getMap(); }
+	public TiledMap getMap() {
+		return mapManager.getMap();
+	}
 
-    public void update(float delta)
-    {
-        PhysicManager.getInstance().update();
+	public void update(float delta) {
+		PhysicManager.getInstance().update();
 
-        ArrayList<Object> trashObjects = new ArrayList<Object>();
-        for (Object object : spawnObjects) {
-            if (object.isExist()) {
-                object.update(delta);
-            } else {
-                trashObjects.add(object);
-            }
-        }
+		ArrayList<Object> trashObjects = new ArrayList<Object>();
+		for (Object object : spawnObjects) {
+			if (object.isExist()) {
+				object.update(delta);
+			} else {
+				trashObjects.add(object);
+			}
+		}
 
-        for (Object object : trashObjects) {
-            spawnObjects.remove(object);
-            object.dispose();
-        }
+		for (Object object : trashObjects) {
+			spawnObjects.remove(object);
+			object.dispose();
+		}
 
-        objectManager.update(delta);
-    }
+		objectManager.update(delta);
+	}
 
-    public void renderMap(final OrthographicCamera camera)
-    {
-        mapManager.render(camera);
-        PhysicManager.getInstance().debugDraw(camera);
-    }
+	public void renderMap(final OrthographicCamera camera) {
+		mapManager.render(camera);
+		PhysicManager.getInstance().debugDraw(camera);
+	}
 
-    public void renderObject()
-    {
-        for (Object object : spawnObjects) {
-            object.render();
-        }
-        objectManager.render();
-    }
+	public void renderObject() {
+		for (Object object : spawnObjects) {
+			object.render();
+		}
+		objectManager.render();
+	}
 
-    public boolean isWall(Vector2 position) { return objectManager.isWall(position); }
+	public boolean isWall(Vector2 position) {
+		return objectManager.isWall(position);
+	}
 
-    public boolean isBrick(Vector2 position) { return objectManager.isBrick(position); }
+	public boolean isBrick(Vector2 position) {
+		return objectManager.isBrick(position);
+	}
 
-    public void spawnObject(Object object) { spawnObjects.add(object); }
+	public void spawnObject(Object object) {
+		spawnObjects.add(object);
+	}
 }

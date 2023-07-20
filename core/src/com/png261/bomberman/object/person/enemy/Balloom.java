@@ -15,92 +15,79 @@ import com.png261.bomberman.physic.BitCollision;
 import com.png261.bomberman.utils.Unit;
 import com.png261.bomberman.utils.Util;
 
-public class Balloom extends Enemy
-{
-    private static final TextureAtlas textureAtlas = new TextureAtlas("balloom.atlas");
-    private Sprite sprite;
-    private float timeMove;
+public class Balloom extends Enemy {
+	private static final TextureAtlas textureAtlas = new TextureAtlas("balloom.atlas");
+	private Sprite sprite;
+	private float timeMove;
 
-    private enum State {
-        BALLOOM_DOWN("balloom_down"),
-        BALLOOM_UP("balloom_up"),
-        BALLOOM_LEFT("balloom_left"),
-        BALLOOM_RIGHT("balloom_right"),
-        BALLOOM_DEAD("balloom_dead");
+	private enum State {
+		BALLOOM_DOWN("balloom_down"), BALLOOM_UP("balloom_up"), BALLOOM_LEFT("balloom_left"),
+		BALLOOM_RIGHT("balloom_right"), BALLOOM_DEAD("balloom_dead");
 
-        private String value;
-        private State(String value) { this.value = value; }
-        public String getValue() { return value; }
-    }
+		private String value;
 
-    public Balloom() { super(); }
+		private State(String value) {
+			this.value = value;
+		}
 
-    @Override public void load(Vector2 position)
-    {
-        super.load(position);
-        setupAnimation();
-    }
+		public String getValue() {
+			return value;
+		}
+	}
 
-    public void setupAnimation()
-    {
-        animationHandle.addAnimation(
-            State.BALLOOM_UP.getValue(),
-            new Animation<TextureRegion>(
-                FRAME_TIME,
-                textureAtlas.findRegions(State.BALLOOM_UP.getValue())));
-        animationHandle.addAnimation(
-            State.BALLOOM_DEAD.getValue(),
-            new Animation<TextureRegion>(
-                FRAME_TIME,
-                textureAtlas.findRegions(State.BALLOOM_DEAD.getValue())));
-        animationHandle.addAnimation(
-            State.BALLOOM_DOWN.getValue(),
-            new Animation<TextureRegion>(
-                FRAME_TIME,
-                textureAtlas.findRegions(State.BALLOOM_DOWN.getValue())));
-        animationHandle.addAnimation(
-            State.BALLOOM_RIGHT.getValue(),
-            new Animation<TextureRegion>(
-                FRAME_TIME,
-                textureAtlas.findRegions(State.BALLOOM_RIGHT.getValue())));
-        animationHandle.addAnimation(
-            State.BALLOOM_LEFT.getValue(),
-            new Animation<TextureRegion>(
-                FRAME_TIME,
-                textureAtlas.findRegions(State.BALLOOM_LEFT.getValue())));
-        animationHandle.setCurrentAnimation(State.BALLOOM_DOWN.getValue());
-    }
+	public Balloom() {
+		super();
+	}
 
-    private void randomMove(float delta)
-    {
-        timeMove -= delta;
-        if (timeMove <= 0) {
-            int random = Util.getRandomInRange(1, 5);
-            switch (random) {
-            case 1:
-                animationHandle.setCurrentAnimation(State.BALLOOM_RIGHT.getValue());
-                moveRight();
-                break;
-            case 2:
-                animationHandle.setCurrentAnimation(State.BALLOOM_LEFT.getValue());
-                moveLeft();
-                break;
-            case 3:
-                animationHandle.setCurrentAnimation(State.BALLOOM_UP.getValue());
-                moveUp();
-                break;
-            case 4:
-                animationHandle.setCurrentAnimation(State.BALLOOM_DOWN.getValue());
-                moveDown();
-                break;
-            }
-            timeMove = 3f;
-        }
-    }
+	@Override
+	public void load(Vector2 position) {
+		super.load(position);
+		setupAnimation();
+	}
 
-    @Override public void update(float delta)
-    {
-        super.update(delta);
-        randomMove(delta);
-    }
+	public void setupAnimation() {
+		animationHandle.addAnimation(State.BALLOOM_UP.getValue(),
+				new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.BALLOOM_UP.getValue())));
+		animationHandle.addAnimation(State.BALLOOM_DEAD.getValue(),
+				new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.BALLOOM_DEAD.getValue())));
+		animationHandle.addAnimation(State.BALLOOM_DOWN.getValue(),
+				new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.BALLOOM_DOWN.getValue())));
+		animationHandle.addAnimation(State.BALLOOM_RIGHT.getValue(),
+				new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.BALLOOM_RIGHT.getValue())));
+		animationHandle.addAnimation(State.BALLOOM_LEFT.getValue(),
+				new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.BALLOOM_LEFT.getValue())));
+		animationHandle.setCurrentAnimation(State.BALLOOM_DOWN.getValue());
+	}
+
+	private void randomMove(float delta) {
+		timeMove -= delta;
+		if (timeMove <= 0) {
+			int random = Util.getRandomInRange(1, 5);
+			switch (random) {
+			case 1:
+				animationHandle.setCurrentAnimation(State.BALLOOM_RIGHT.getValue());
+				moveRight();
+				break;
+			case 2:
+				animationHandle.setCurrentAnimation(State.BALLOOM_LEFT.getValue());
+				moveLeft();
+				break;
+			case 3:
+				animationHandle.setCurrentAnimation(State.BALLOOM_UP.getValue());
+				moveUp();
+				break;
+			case 4:
+				animationHandle.setCurrentAnimation(State.BALLOOM_DOWN.getValue());
+				moveDown();
+				break;
+			}
+			timeMove = 3f;
+		}
+	}
+
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		randomMove(delta);
+	}
 }

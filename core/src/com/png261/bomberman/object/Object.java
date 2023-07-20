@@ -15,80 +15,83 @@ import com.png261.bomberman.animation.AnimationHandle;
 import com.png261.bomberman.physic.PhysicManager;
 import com.png261.bomberman.utils.Unit;
 
-public abstract class Object implements Disposable
-{
-    protected Body body;
-    protected BodyDef bodyDef;
-    protected Fixture fixture;
-    protected FixtureDef fixtureDef;
+public abstract class Object implements Disposable {
+	protected Body body;
+	protected BodyDef bodyDef;
+	protected Fixture fixture;
+	protected FixtureDef fixtureDef;
 
-    protected Boolean isExist = true;
+	protected Boolean isExist = true;
 
-    public Object()
-    {
-        bodyDef = new BodyDef();
-        fixtureDef = new FixtureDef();
-    }
+	public Object() {
+		bodyDef = new BodyDef();
+		fixtureDef = new FixtureDef();
+	}
 
-    public abstract void load(Vector2 position);
+	public abstract void load(Vector2 position);
 
-    public abstract void update(float delta);
+	public abstract void update(float delta);
 
-    public abstract void render();
+	public abstract void render();
 
-    public boolean isExist() { return isExist; }
+	public boolean isExist() {
+		return isExist;
+	}
 
-    public void disappear() { isExist = false; }
+	public void disappear() {
+		isExist = false;
+	}
 
-    @Override public void dispose() { PhysicManager.getInstance().getWorld().destroyBody(body); }
+	@Override
+	public void dispose() {
+		PhysicManager.getInstance().getWorld().destroyBody(body);
+	}
 
-    protected void createCircleBody(Vector2 position, float radius)
-    {
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(Unit.coordScreenToBox2D(position.x, position.y, radius));
-        body = PhysicManager.getInstance().getWorld().createBody(bodyDef);
+	protected void createCircleBody(Vector2 position, float radius) {
+		bodyDef.type = BodyDef.BodyType.DynamicBody;
+		bodyDef.position.set(Unit.coordScreenToBox2D(position.x, position.y, radius));
+		body = PhysicManager.getInstance().getWorld().createBody(bodyDef);
 
-        CircleShape shape = new CircleShape();
-        shape.setRadius(radius);
+		CircleShape shape = new CircleShape();
+		shape.setRadius(radius);
 
-        fixtureDef.shape = shape;
-        fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
+		fixtureDef.shape = shape;
+		fixture = body.createFixture(fixtureDef);
+		fixture.setUserData(this);
 
-        shape.dispose();
-    }
+		shape.dispose();
+	}
 
-    protected void createRectangleBody(Rectangle bounds)
-    {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(Unit.coordPixelsToMeters(
-            Unit.screenToBox2D(bounds.getX(), bounds.getWidth()),
-            Unit.screenToBox2D(bounds.getY(), bounds.getHeight())));
-        body = PhysicManager.getInstance().getWorld().createBody(bodyDef);
+	protected void createRectangleBody(Rectangle bounds) {
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyDef.BodyType.DynamicBody;
+		bodyDef.position.set(Unit.coordPixelsToMeters(Unit.screenToBox2D(bounds.getX(), bounds.getWidth()),
+				Unit.screenToBox2D(bounds.getY(), bounds.getHeight())));
+		body = PhysicManager.getInstance().getWorld().createBody(bodyDef);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(
-            Unit.pixelsToMeters(bounds.getWidth() / 2),
-            Unit.pixelsToMeters(bounds.getHeight() / 2));
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(Unit.pixelsToMeters(bounds.getWidth() / 2), Unit.pixelsToMeters(bounds.getHeight() / 2));
 
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		fixture = body.createFixture(fixtureDef);
+		fixture.setUserData(this);
 
-        shape.dispose();
-    }
+		shape.dispose();
+	}
 
-    protected void setCollisionFilter(short categoryBit, short maskBits)
-    {
-        Filter filter = new Filter();
-        filter.categoryBits = categoryBit;
-        filter.maskBits = maskBits;
-        fixture.setFilterData(filter);
-    }
+	protected void setCollisionFilter(short categoryBit, short maskBits) {
+		Filter filter = new Filter();
+		filter.categoryBits = categoryBit;
+		filter.maskBits = maskBits;
+		fixture.setFilterData(filter);
+	}
 
-    protected void setSensor(boolean isSensor) { fixture.setSensor(isSensor); }
+	protected void setSensor(boolean isSensor) {
+		fixture.setSensor(isSensor);
+	}
 
-    protected void setBodyToStatic() { body.setType(BodyDef.BodyType.StaticBody); }
+	protected void setBodyToStatic() {
+		body.setType(BodyDef.BodyType.StaticBody);
+	}
 }

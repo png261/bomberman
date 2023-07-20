@@ -11,38 +11,36 @@ import com.png261.bomberman.object.person.enemy.Bulb;
 import com.png261.bomberman.object.tile.Brick;
 import com.png261.bomberman.object.tile.Wall;
 
-public final class ObjectFactory
-{
-    public static volatile ObjectFactory instance;
+public final class ObjectFactory {
+	public static volatile ObjectFactory instance;
 
-    private ObjectFactory() {}
+	private ObjectFactory() {
+	}
 
-    public static ObjectFactory getInstance()
-    {
-        if (instance == null) {
-            instance = new ObjectFactory();
-        }
-        return instance;
-    }
+	public static ObjectFactory getInstance() {
+		if (instance == null) {
+			instance = new ObjectFactory();
+		}
+		return instance;
+	}
 
-    public Object create(String id)
-    {
-        if (id.equals("Bomb")) {
-            return new Bomb();
-        } else if (id.equals("Bomberman")) {
-            return new Bomberman();
-        } else if (id.equals("Balloom")) {
-            return new Balloom();
-        } else if (id.equals("Bulb")) {
-            return new Bulb();
-        } else if (id.equals("ItemSpeedUp")) {
-            return new ItemSpeedUp();
-        } else if (id.equals("ItemFlameUp")) {
-            return new ItemFlameUp();
-        } else if (id.equals("ItemBombUp")) {
-            return new ItemBombUp();
-        }
+	public Object create(String id) {
+		if (id.equals("Bomb")) {
+			return new Bomb();
+		} else if (id.equals("Bomberman")) {
+			return new Bomberman();
+		} else if (id.equals("Balloom")) {
+			return new Balloom();
+		} else if (id.equals("Bulb")) {
+			return new Bulb();
+		} else if (id.equals("ItemSpeedUp")) {
+			return new ItemSpeedUp();
+		} else if (id.equals("ItemFlameUp")) {
+			return new ItemFlameUp();
+		} else if (id.equals("ItemBombUp")) {
+			return new ItemBombUp();
+		}
 
-        return null;
-    }
+		return null;
+	}
 }

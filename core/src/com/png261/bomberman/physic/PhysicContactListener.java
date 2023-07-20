@@ -9,74 +9,77 @@ import com.png261.bomberman.object.item.Item;
 import com.png261.bomberman.object.person.bomberman.Bomberman;
 import com.png261.bomberman.object.tile.Brick;
 
-public class PhysicContactListener implements ContactListener
-{
-    @Override public void beginContact(Contact contact)
-    {
-        ItemBeginContact(contact);
-        FlameAndBrickBeginContact(contact);
-        FlameAndBombermanBeginContact(contact);
-    }
-    @Override public void endContact(Contact contact) {}
-    @Override public void preSolve(Contact contact, Manifold oldManifold) {}
-    @Override public void postSolve(Contact contact, ContactImpulse impulse) {}
+public class PhysicContactListener implements ContactListener {
+	@Override
+	public void beginContact(Contact contact) {
+		ItemBeginContact(contact);
+		FlameAndBrickBeginContact(contact);
+		FlameAndBombermanBeginContact(contact);
+	}
 
-    public void ItemBeginContact(Contact contact)
-    {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
+	@Override
+	public void endContact(Contact contact) {
+	}
 
-        short categoryA = fixtureA.getFilterData().categoryBits;
-        short categoryB = fixtureB.getFilterData().categoryBits;
+	@Override
+	public void preSolve(Contact contact, Manifold oldManifold) {
+	}
 
-        if ((categoryA | categoryB) != (BitCollision.ITEM | BitCollision.BOMBERMAN)) {
-            return;
-        }
+	@Override
+	public void postSolve(Contact contact, ContactImpulse impulse) {
+	}
 
-        Fixture itemFixture =
-            fixtureA.getFilterData().categoryBits == BitCollision.ITEM ? fixtureA : fixtureB;
-        Fixture bombermanFixture =
-            fixtureA.getFilterData().categoryBits == BitCollision.BOMBERMAN ? fixtureA : fixtureB;
+	public void ItemBeginContact(Contact contact) {
+		Fixture fixtureA = contact.getFixtureA();
+		Fixture fixtureB = contact.getFixtureB();
 
-        Item item = (Item)itemFixture.getUserData();
-        Bomberman bomberman = (Bomberman)bombermanFixture.getUserData();
+		short categoryA = fixtureA.getFilterData().categoryBits;
+		short categoryB = fixtureB.getFilterData().categoryBits;
 
-        item.bonus(bomberman);
-    }
+		if ((categoryA | categoryB) != (BitCollision.ITEM | BitCollision.BOMBERMAN)) {
+			return;
+		}
 
-    public void FlameAndBrickBeginContact(Contact contact)
-    {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
+		Fixture itemFixture = fixtureA.getFilterData().categoryBits == BitCollision.ITEM ? fixtureA : fixtureB;
+		Fixture bombermanFixture = fixtureA.getFilterData().categoryBits == BitCollision.BOMBERMAN ? fixtureA
+				: fixtureB;
 
-        short categoryA = fixtureA.getFilterData().categoryBits;
-        short categoryB = fixtureB.getFilterData().categoryBits;
+		Item item = (Item) itemFixture.getUserData();
+		Bomberman bomberman = (Bomberman) bombermanFixture.getUserData();
 
-        if ((categoryA | categoryB) != (BitCollision.FLAME | BitCollision.BRICK)) {
-            return;
-        }
+		item.bonus(bomberman);
+	}
 
-        Fixture brickFixture =
-            fixtureA.getFilterData().categoryBits == BitCollision.BRICK ? fixtureA : fixtureB;
-        Brick brick = (Brick)brickFixture.getUserData();
-        brick.bonus();
-    }
+	public void FlameAndBrickBeginContact(Contact contact) {
+		Fixture fixtureA = contact.getFixtureA();
+		Fixture fixtureB = contact.getFixtureB();
 
-    public void FlameAndBombermanBeginContact(Contact contact)
-    {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
+		short categoryA = fixtureA.getFilterData().categoryBits;
+		short categoryB = fixtureB.getFilterData().categoryBits;
 
-        short categoryA = fixtureA.getFilterData().categoryBits;
-        short categoryB = fixtureB.getFilterData().categoryBits;
+		if ((categoryA | categoryB) != (BitCollision.FLAME | BitCollision.BRICK)) {
+			return;
+		}
 
-        if ((categoryA | categoryB) != (BitCollision.FLAME | BitCollision.BOMBERMAN)) {
-            return;
-        }
+		Fixture brickFixture = fixtureA.getFilterData().categoryBits == BitCollision.BRICK ? fixtureA : fixtureB;
+		Brick brick = (Brick) brickFixture.getUserData();
+		brick.bonus();
+	}
 
-        Fixture bombermanFixture =
-            fixtureA.getFilterData().categoryBits == BitCollision.BOMBERMAN ? fixtureA : fixtureB;
-        Bomberman bomberman = (Bomberman)bombermanFixture.getUserData();
-        bomberman.damage();
-    }
+	public void FlameAndBombermanBeginContact(Contact contact) {
+		Fixture fixtureA = contact.getFixtureA();
+		Fixture fixtureB = contact.getFixtureB();
+
+		short categoryA = fixtureA.getFilterData().categoryBits;
+		short categoryB = fixtureB.getFilterData().categoryBits;
+
+		if ((categoryA | categoryB) != (BitCollision.FLAME | BitCollision.BOMBERMAN)) {
+			return;
+		}
+
+		Fixture bombermanFixture = fixtureA.getFilterData().categoryBits == BitCollision.BOMBERMAN ? fixtureA
+				: fixtureB;
+		Bomberman bomberman = (Bomberman) bombermanFixture.getUserData();
+		bomberman.damage();
+	}
 }

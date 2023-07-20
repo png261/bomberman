@@ -18,120 +18,111 @@ import com.png261.bomberman.object.tile.Wall;
 import com.png261.bomberman.utils.Unit;
 import java.util.ArrayList;
 
-public final class ObjectManager implements Disposable
-{
-    private TiledMap map;
+public final class ObjectManager implements Disposable {
+	private TiledMap map;
 
-    private ArrayList<Wall> walls;
-    private ArrayList<Brick> bricks;
-    private ArrayList<Object> objects;
+	private ArrayList<Wall> walls;
+	private ArrayList<Brick> bricks;
+	private ArrayList<Object> objects;
 
-    private static final String tiledBrickLayer = "brick";
-    private static final String tiledWallsLayer = "wall";
+	private static final String tiledBrickLayer = "brick";
+	private static final String tiledWallsLayer = "wall";
 
-    public ObjectManager()
-    {
-        walls = new ArrayList<>();
-        bricks = new ArrayList<>();
-        objects = new ArrayList<>();
-    }
+	public ObjectManager() {
+		walls = new ArrayList<>();
+		bricks = new ArrayList<>();
+		objects = new ArrayList<>();
+	}
 
-    public void load(TiledMap map)
-    {
-        this.map = map;
+	public void load(TiledMap map) {
+		this.map = map;
 
-        createWall();
-        createBrick();
-        createObject();
-    }
+		createWall();
+		createBrick();
+		createObject();
+	}
 
-    public Array<RectangleMapObject> getRectangleMapObjectsFromLayer(String layer)
-    {
-        return map.getLayers().get(layer).getObjects().getByType(RectangleMapObject.class);
-    }
+	public Array<RectangleMapObject> getRectangleMapObjectsFromLayer(String layer) {
+		return map.getLayers().get(layer).getObjects().getByType(RectangleMapObject.class);
+	}
 
-    public void createWall()
-    {
-        for (RectangleMapObject object : getRectangleMapObjectsFromLayer(tiledWallsLayer)) {
-            walls.add(new Wall(object.getRectangle()));
-        }
-    }
+	public void createWall() {
+		for (RectangleMapObject object : getRectangleMapObjectsFromLayer(tiledWallsLayer)) {
+			walls.add(new Wall(object.getRectangle()));
+		}
+	}
 
-    public void createBrick()
-    {
-        for (RectangleMapObject object : getRectangleMapObjectsFromLayer(tiledBrickLayer)) {
-            Brick brick = new Brick(object.getRectangle());
-            objects.add(brick);
-            bricks.add(brick);
-        }
-    }
+	public void createBrick() {
+		for (RectangleMapObject object : getRectangleMapObjectsFromLayer(tiledBrickLayer)) {
+			Brick brick = new Brick(object.getRectangle());
+			objects.add(brick);
+			bricks.add(brick);
+		}
+	}
 
-    public void createObject()
-    {
-        for (MapLayer layer : map.getLayers()) {
-            for (MapObject object : layer.getObjects()) {
-                float x = object.getProperties().get("x", float.class);
-                float y = object.getProperties().get("y", float.class);
-                Vector2 position = Unit.coordPixelsToMeters(x, y);
-                String type = object.getProperties().get("type", String.class);
-                if (type != null) {
-                    Object newObject = ObjectFactory.getInstance().create(type);
-                    if (newObject != null) {
-                        newObject.load(position);
-                        objects.add(newObject);
-                    }
-                }
-            }
-        }
-    }
+	public void createObject() {
+		for (MapLayer layer : map.getLayers()) {
+			for (MapObject object : layer.getObjects()) {
+				float x = object.getProperties().get("x", float.class);
+				float y = object.getProperties().get("y", float.class);
+				Vector2 position = Unit.coordPixelsToMeters(x, y);
+				String type = object.getProperties().get("type", String.class);
+				if (type != null) {
+					Object newObject = ObjectFactory.getInstance().create(type);
+					if (newObject != null) {
+						newObject.load(position);
+						objects.add(newObject);
+					}
+				}
+			}
+		}
+	}
 
-    public void update(float delta)
-    {
-        ArrayList<Object> trashObjects = new ArrayList<Object>();
+	public void update(float delta) {
+		ArrayList<Object> trashObjects = new ArrayList<Object>();
 
-        for (Object object : objects) {
-            if (object.isExist()) {
-                object.update(delta);
-            } else {
-                trashObjects.add(object);
-            }
-        }
+		for (Object object : objects) {
+			if (object.isExist()) {
+				object.update(delta);
+			} else {
+				trashObjects.add(object);
+			}
+		}
 
-        for (Object object : trashObjects) {
-            objects.remove(object);
-            object.dispose();
-        }
-    }
+		for (Object object : trashObjects) {
+			objects.remove(object);
+			object.dispose();
+		}
+	}
 
-    public void render()
-    {
-        for (Object object : objects) {
-            if (object.isExist()) {
-                object.render();
-            }
-        }
-    }
+	public void render() {
+		for (Object object : objects) {
+			if (object.isExist()) {
+				object.render();
+			}
+		}
+	}
 
-    public boolean isWall(Vector2 position)
-    {
-        for (Wall wall : walls) {
-            if (wall.getBounds().contains(position.x, position.y)) {
-                return true;
-            }
-        }
+	public boolean isWall(Vector2 position) {
+		for (Wall wall : walls) {
+			if (wall.getBounds().contains(position.x, position.y)) {
+				return true;
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    public boolean isBrick(Vector2 position)
-    {
-        for (Brick brick : bricks) {
-            if (brick.getBounds().contains(position.x, position.y)) {
-                return true;
-            }
-        }
-        return false;
-    }
+	public boolean isBrick(Vector2 position) {
+		for (Brick brick : bricks) {
+			if (brick.getBounds().contains(position.x, position.y)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    @Override public void dispose() {}
+	@Override
+	public void dispose() {
+	}
 }

@@ -16,36 +16,40 @@ import com.png261.bomberman.object.Object;
 import com.png261.bomberman.physic.PhysicManager;
 import com.png261.bomberman.utils.Unit;
 
-public abstract class Tile extends Object
-{
-    private Rectangle bounds;
-    public Tile(Rectangle bounds)
-    {
-        super();
-        this.bounds = bounds;
-        createRectangleBody(bounds);
-        setBodyToStatic();
-    }
+public abstract class Tile extends Object {
+	private Rectangle bounds;
 
-    public void load(Vector2 position) {}
+	public Tile(Rectangle bounds) {
+		super();
+		this.bounds = bounds;
+		createRectangleBody(bounds);
+		setBodyToStatic();
+	}
 
-    @Override public void update(float delta) {}
-    @Override public void render() {}
+	public void load(Vector2 position) {
+	}
 
-    public Rectangle getBounds() { return bounds; }
+	@Override
+	public void update(float delta) {
+	}
 
-    public TiledMapTileLayer.Cell getCell()
-    {
-        TiledMapTileLayer layer =
-            (TiledMapTileLayer)Game.getInstance().getLevel().getMap().getLayers().get("tile");
-        return layer.getCell((int)body.getPosition().x, (int)body.getPosition().y);
-    }
+	@Override
+	public void render() {
+	}
 
-    public void emptyCell()
-    {
-        TiledMapTileLayer.Cell cell = getCell();
-        if (cell != null) {
-            getCell().setTile(null);
-        }
-    }
+	public Rectangle getBounds() {
+		return bounds;
+	}
+
+	public TiledMapTileLayer.Cell getCell() {
+		TiledMapTileLayer layer = (TiledMapTileLayer) Game.getInstance().getLevel().getMap().getLayers().get("tile");
+		return layer.getCell((int) body.getPosition().x, (int) body.getPosition().y);
+	}
+
+	public void emptyCell() {
+		TiledMapTileLayer.Cell cell = getCell();
+		if (cell != null) {
+			getCell().setTile(null);
+		}
+	}
 }

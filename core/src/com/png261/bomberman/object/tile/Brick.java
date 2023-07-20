@@ -8,29 +8,21 @@ import com.png261.bomberman.object.item.ItemFlameUp;
 import com.png261.bomberman.object.item.ItemSpeedUp;
 import com.png261.bomberman.physic.BitCollision;
 
-public class Brick extends Tile
-{
-    public Brick(Rectangle rect)
-    {
-        super(rect);
-        setCollisionFilter(
-            BitCollision.BRICK,
-            BitCollision.orOperation(
-                BitCollision.BOMBERMAN,
-                BitCollision.BOMB,
-                BitCollision.FLAME,
-                BitCollision.ENEMY));
-    }
+public class Brick extends Tile {
+	public Brick(Rectangle rect) {
+		super(rect);
+		setCollisionFilter(BitCollision.BRICK, BitCollision.orOperation(BitCollision.BOMBERMAN, BitCollision.BOMB,
+				BitCollision.FLAME, BitCollision.ENEMY));
+	}
 
-    public void bonus()
-    {
-        emptyCell();
+	public void bonus() {
+		emptyCell();
 
-        //         ItemSpeedUp item = new ItemSpeedUp();
-        //         Vector2 position = body.getPosition();
-        //         item.load(position);
-        //         Game.getInstance().getLevel().spawnObject(item);
+		// ItemSpeedUp item = new ItemSpeedUp();
+		// Vector2 position = body.getPosition();
+		// item.load(position);
+		// Game.getInstance().getLevel().spawnObject(item);
 
-        disappear();
-    }
+		disappear();
+	}
 }
