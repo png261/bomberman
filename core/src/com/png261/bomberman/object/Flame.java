@@ -21,15 +21,15 @@ import com.png261.bomberman.utils.Unit;
 
 public class Flame extends Object
 {
-    private final float FRAME_TIME = 0.3f;
-    private final float BODY_DIAMETER = 0.875f;
+    private static final float FRAME_TIME = 0.3f;
+    private static final float BODY_DIAMETER = 0.875f;
+    private static final TextureAtlas atlas = new TextureAtlas("flame.atlas");
 
     private Sprite sprite;
     private AnimationHandle animationHandle;
 
     public Flame(Vector2 position, State direction)
     {
-        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("flame.atlas"));
         animationHandle = new AnimationHandle();
         animationHandle.addAnimation(
             State.FLAME_DOWN.getValue(),
@@ -52,7 +52,7 @@ public class Flame extends Object
 
         animationHandle.setCurrentAnimation(direction.getValue(), false);
         sprite = new Sprite(animationHandle.getCurrentFrame());
-        createCircleBody(new Circle(position, BODY_DIAMETER / 2), false);
+        createCircleBody(position, BODY_DIAMETER / 2);
 
         setCollisionFilter(
             BitCollision.FLAME,

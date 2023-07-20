@@ -23,7 +23,8 @@ public abstract class Tile extends Object
     {
         super();
         this.bounds = bounds;
-        createRectangleBody(bounds, true);
+        createRectangleBody(bounds);
+        setBodyToStatic();
     }
 
     public void load(Vector2 position) {}

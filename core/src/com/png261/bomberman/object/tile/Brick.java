@@ -3,7 +3,9 @@ package com.png261.bomberman.object.tile;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.Game;
-import com.png261.bomberman.object.item.*;
+import com.png261.bomberman.object.item.ItemBombUp;
+import com.png261.bomberman.object.item.ItemFlameUp;
+import com.png261.bomberman.object.item.ItemSpeedUp;
 import com.png261.bomberman.physic.BitCollision;
 
 public class Brick extends Tile

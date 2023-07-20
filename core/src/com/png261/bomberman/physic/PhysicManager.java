@@ -10,11 +10,11 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 
-public class PhysicManager implements Disposable
+public final class PhysicManager implements Disposable
 {
     public static volatile PhysicManager instance;
+    private final static Vector2 gravity = new Vector2(0, 0);
 
-    private Vector2 gravity = new Vector2(0, 0);
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private boolean isDebug = false;
@@ -45,8 +45,12 @@ public class PhysicManager implements Disposable
             debugRenderer.render(world, camera.combined);
         }
     }
+
     public void setDebug(final boolean isDebug) { this.isDebug = isDebug; }
+
     public boolean isDebug() { return isDebug; }
+
     public World getWorld() { return world; }
+
     @Override public void dispose() {}
 }

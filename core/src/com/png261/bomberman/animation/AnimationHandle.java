@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import java.util.HashMap;
 
-public class AnimationHandle
+public final class AnimationHandle
 {
     private float timer = 0;
     private String currentAnimation = "";

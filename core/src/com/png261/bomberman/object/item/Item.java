@@ -27,7 +27,7 @@ public abstract class Item extends Object
 
     @Override public void load(Vector2 position)
     {
-        createRectangleBody(new Rectangle(position.x * 16, position.y * 16, 16, 16), true);
+        createRectangleBody(new Rectangle(position.x * 16, position.y * 16, 16, 16));
         setSensor(true);
         setCollisionFilter(BitCollision.ITEM, BitCollision.orOperation(BitCollision.BOMBERMAN));
     }

@@ -20,7 +20,8 @@ public class Bomberman extends Person
     private int flameLength = 1;
     private int maxBomb = 1;
     private State direction = State.IDLE_DOWN;
-    private TextureAtlas textureAtlas;
+    private static final TextureAtlas textureAtlas =
+        new TextureAtlas("bomberman.atlas");
     private boolean canPlaceBomb = true;
 
     private enum State {
@@ -63,6 +64,10 @@ public class Bomberman extends Person
 
     public void handleEvents()
     {
+        if (isDead()) {
+            return;
+        }
+
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             // placeBomb();
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
@@ -107,8 +112,6 @@ public class Bomberman extends Person
 
     public void setupAnimation()
     {
-        textureAtlas = new TextureAtlas(Gdx.files.internal("bomberman.atlas"));
-
         animationHandle.addAnimation(
             State.WALK_DOWN.getValue(),
             new Animation<TextureRegion>(
@@ -164,8 +167,12 @@ public class Bomberman extends Person
                 textureAtlas.findRegions(State.DEAD.getValue())));
 
         animationHandle.setCurrentAnimation(State.IDLE_DOWN.getValue());
+    }
 
-        sprite = new Sprite(animationHandle.getCurrentFrame());
+    @Override public void dead()
+    {
+        super.dead();
+        animationHandle.setCurrentAnimation(State.DEAD.getValue());
     }
 
     public void speedUp(float n) { speed += n; }

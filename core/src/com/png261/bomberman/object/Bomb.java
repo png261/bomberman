@@ -15,9 +15,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.animation.AnimationHandle;
+import com.png261.bomberman.level.Level;
 import com.png261.bomberman.object.Object;
 import com.png261.bomberman.object.person.bomberman.Bomberman;
-import com.png261.bomberman.physic.*;
+import com.png261.bomberman.physic.BitCollision;
 import com.png261.bomberman.utils.Unit;
 import java.util.ArrayList;
 
@@ -25,15 +26,16 @@ public class Bomb extends Object
 {
     private final float BODY_DIAMETER = 0.95f;
     private final float FRAME_TIME = 0.6f;
+    private final static TextureAtlas atlas = new TextureAtlas("bomb.atlas");
 
     private int flameLength = 3;
     private AnimationHandle animationHandle;
     private Sprite sprite;
-    public float countDown = 1.5f;
+    private float countDown = 1.5f;
     private Bomberman bombOwner;
-    public float timeRemove;
-    public boolean canMove = true;
-    public boolean canKick = false;
+    private float timeRemove;
+    private boolean canMove = true;
+    private boolean canKick = false;
 
     private enum State {
         BOMB_IDLE("bomb_idle"),
@@ -48,7 +50,7 @@ public class Bomb extends Object
 
     public Bomb()
     {
-        TextureAtlas atlas = new TextureAtlas("bomb.atlas");
+        sprite = new Sprite();
         animationHandle = new AnimationHandle();
         animationHandle.addAnimation(
             State.BOMB_IDLE.getValue(),
@@ -61,12 +63,11 @@ public class Bomb extends Object
                 FRAME_TIME,
                 atlas.findRegions(State.BOMB_EXPLODE.getValue())));
         animationHandle.setCurrentAnimation(State.BOMB_IDLE.getValue());
-        sprite = new Sprite(animationHandle.getCurrentFrame());
     }
 
     public void load(Vector2 position)
     {
-        createCircleBody(new Circle(position, BODY_DIAMETER / 2), true);
+        createCircleBody(position, BODY_DIAMETER / 2);
         setCollisionFilter(
             BitCollision.BOMB,
             BitCollision.orOperation(
@@ -78,7 +79,21 @@ public class Bomb extends Object
                 BitCollision.BOMB));
     }
 
-    public void updateSprite()
+    @Override public void update(float delta)
+    {
+        updateSprite();
+        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+            explode();
+        }
+        if (animationHandle.isCurrentAnimation(State.BOMB_EXPLODE.getValue())
+            && animationHandle.isFinished()) {
+            disappear();
+        }
+    }
+
+    @Override public void render() { sprite.draw(Game.getInstance().getBatch()); }
+
+    private void updateSprite()
     {
         sprite.setBounds(
             Unit.box2DToScreen(body.getPosition().x, BODY_DIAMETER),
@@ -92,47 +107,28 @@ public class Bomb extends Object
     private void explode()
     {
         animationHandle.setCurrentAnimation(State.BOMB_EXPLODE.getValue());
+        final Level level = Game.getInstance().getLevel();
 
         for (Flame.State direction : Flame.State.values()) {
-            for (int i = 0; i <= flameLength; ++i) {
-                Vector2 position = Unit.coordBox2DSnapToGrid(
-                    body.getPosition().add(Flame.State.getOffSet(direction).scl(i)));
+            for (int i = 1; i <= flameLength; ++i) {
+                Vector2 position = body.getPosition().add(Flame.State.getOffSet(direction).scl(i));
+                Vector2 positionPixel = Unit.coordMetersToPixels(position.x, position.y);
 
-                Vector2 nextPosition =
-                    body.getPosition().add(Flame.State.getOffSet(direction).scl(i + 1));
-
-                Vector2 nextPositionPixel =
-                    Unit.coordMetersToPixels(nextPosition.x, nextPosition.y);
-
-
-                if (i != 0) {
-                    Game.getInstance().getLevel().spawnObject(new Flame(position, direction));
-                }
-
-                if (Game.getInstance().getLevel().isBrick(nextPositionPixel)) {
-                    Game.getInstance().getLevel().spawnObject(
-                        new Flame(Unit.coordBox2DSnapToGrid(nextPosition), direction));
+                if (level.isWall(positionPixel)) {
                     break;
                 }
 
-                if (Game.getInstance().getLevel().isWall(nextPositionPixel)) {
+                level.spawnObject(new Flame(Unit.coordBox2DSnapToGrid(position), direction));
+
+                if (level.isBrick(positionPixel)) {
                     break;
                 }
             }
         }
+
         Game.getInstance().getLevel().spawnObject(
             new Flame(Unit.coordBox2DSnapToGrid(body.getPosition()), Flame.State.FLAME_UP));
+
+        setSensor(true);
     }
-    @Override public void update(float delta)
-    {
-        updateSprite();
-        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
-            explode();
-        }
-        if (animationHandle.isCurrentAnimation(State.BOMB_EXPLODE.getValue())
-            && animationHandle.isFinished()) {
-            disappear();
-        }
-    }
-    @Override public void render() { sprite.draw(Game.getInstance().getBatch()); }
 }

@@ -18,9 +18,10 @@ import com.png261.bomberman.utils.Unit;
 public abstract class Object implements Disposable
 {
     protected Body body;
-    protected Fixture fixture;
     protected BodyDef bodyDef;
+    protected Fixture fixture;
     protected FixtureDef fixtureDef;
+
     protected Boolean isExist = true;
 
     public Object()
@@ -30,17 +31,25 @@ public abstract class Object implements Disposable
     }
 
     public abstract void load(Vector2 position);
+
     public abstract void update(float delta);
+
     public abstract void render();
 
-    public void createCircleBody(Circle circle, boolean isStatic)
+    public boolean isExist() { return isExist; }
+
+    public void disappear() { isExist = false; }
+
+    @Override public void dispose() { PhysicManager.getInstance().getWorld().destroyBody(body); }
+
+    protected void createCircleBody(Vector2 position, float radius)
     {
-        bodyDef.type = isStatic ? BodyDef.BodyType.StaticBody : BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(Unit.coordScreenToBox2D(circle.x, circle.y, circle.radius));
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(Unit.coordScreenToBox2D(position.x, position.y, radius));
         body = PhysicManager.getInstance().getWorld().createBody(bodyDef);
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(circle.radius);
+        shape.setRadius(radius);
 
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
@@ -49,10 +58,10 @@ public abstract class Object implements Disposable
         shape.dispose();
     }
 
-    public void createRectangleBody(Rectangle bounds, boolean isStatic)
+    protected void createRectangleBody(Rectangle bounds)
     {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = isStatic ? BodyDef.BodyType.StaticBody : BodyDef.BodyType.DynamicBody;
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(Unit.coordPixelsToMeters(
             Unit.screenToBox2D(bounds.getX(), bounds.getWidth()),
             Unit.screenToBox2D(bounds.getY(), bounds.getHeight())));
@@ -71,7 +80,7 @@ public abstract class Object implements Disposable
         shape.dispose();
     }
 
-    public void setCollisionFilter(short categoryBit, short maskBits)
+    protected void setCollisionFilter(short categoryBit, short maskBits)
     {
         Filter filter = new Filter();
         filter.categoryBits = categoryBit;
@@ -79,9 +88,7 @@ public abstract class Object implements Disposable
         fixture.setFilterData(filter);
     }
 
-    public void setSensor(boolean isSensor) { fixture.setSensor(isSensor); }
+    protected void setSensor(boolean isSensor) { fixture.setSensor(isSensor); }
 
-    public boolean isExist() { return isExist; }
-    public void disappear() { isExist = false; }
-    @Override public void dispose() { PhysicManager.getInstance().getWorld().destroyBody(body); }
+    protected void setBodyToStatic() { body.setType(BodyDef.BodyType.StaticBody); }
 }

@@ -13,8 +13,11 @@ import com.png261.bomberman.Game;
 import com.png261.bomberman.level.Level;
 import com.png261.bomberman.manager.MapManager;
 
-public class PlayScreen implements Screen
+public final class PlayScreen implements Screen
 {
+    private final int MAP_WIDTH = 17;
+    private final int MAP_HEIGHT = 13;
+
     private OrthographicCamera camera;
     private Viewport viewport;
     private Level level;
@@ -22,7 +25,7 @@ public class PlayScreen implements Screen
     @Override public void show()
     {
         camera = new OrthographicCamera();
-        viewport = new FitViewport(17, 13, camera);
+        viewport = new FitViewport(MAP_WIDTH, MAP_HEIGHT, camera);
         camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
         level = new Level();
@@ -38,21 +41,26 @@ public class PlayScreen implements Screen
 
     @Override public void render(final float delta)
     {
-        update(delta);
-
         ScreenUtils.clear(Color.BLACK);
 
+        update(delta);
         level.renderMap(camera);
+
         Game.getInstance().getBatch().setProjectionMatrix(camera.combined);
         Game.getInstance().getBatch().begin();
+
         level.renderObject();
+
         Game.getInstance().getBatch().end();
     }
 
     @Override public void resize(int width, int height) { viewport.update(width, height); }
 
     @Override public void dispose() {}
+
     @Override public void hide() {}
+
     @Override public void pause() {}
+
     @Override public void resume() {}
 }

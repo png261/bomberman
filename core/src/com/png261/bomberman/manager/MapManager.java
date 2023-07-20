@@ -8,9 +8,10 @@ import com.png261.bomberman.Game;
 
 public final class MapManager
 {
+    private final static float unitScale = 1 / 16f;
+
     private TmxMapLoader loader;
     private TiledMap map;
-    private final float unitScale = 1 / 16f;
     private OrthogonalTiledMapRenderer renderer;
 
     public MapManager() { loader = new TmxMapLoader(); }
@@ -26,5 +27,6 @@ public final class MapManager
         renderer.setView(camera);
         renderer.render();
     }
+
     public TiledMap getMap() { return map; }
 }

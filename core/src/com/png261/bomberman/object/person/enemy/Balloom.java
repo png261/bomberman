@@ -17,7 +17,7 @@ import com.png261.bomberman.utils.Util;
 
 public class Balloom extends Enemy
 {
-    private TextureAtlas textureAtlas;
+    private static final TextureAtlas textureAtlas = new TextureAtlas("balloom.atlas");
     private Sprite sprite;
     private float timeMove;
 
@@ -43,8 +43,6 @@ public class Balloom extends Enemy
 
     public void setupAnimation()
     {
-        textureAtlas = new TextureAtlas(Gdx.files.internal("balloom.atlas"));
-
         animationHandle.addAnimation(
             State.BALLOOM_UP.getValue(),
             new Animation<TextureRegion>(
@@ -71,22 +69,6 @@ public class Balloom extends Enemy
                 FRAME_TIME,
                 textureAtlas.findRegions(State.BALLOOM_LEFT.getValue())));
         animationHandle.setCurrentAnimation(State.BALLOOM_DOWN.getValue());
-        sprite = new Sprite(animationHandle.getCurrentFrame());
-    }
-
-    public void updateSprite()
-    {
-        sprite.setBounds(
-            Unit.box2DToScreen(body.getPosition().x, BODY_DIAMETER),
-            Unit.box2DToScreen(body.getPosition().y, BODY_DIAMETER),
-            Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
-            Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
-
-        sprite.setPosition(
-            Unit.box2DToScreen(body.getPosition().x, BODY_DIAMETER),
-            Unit.box2DToScreen(body.getPosition().y, BODY_DIAMETER));
-
-        sprite.setRegion(animationHandle.getCurrentFrame());
     }
 
     private void randomMove(float delta)
@@ -118,9 +100,7 @@ public class Balloom extends Enemy
 
     @Override public void update(float delta)
     {
+        super.update(delta);
         randomMove(delta);
-        updateSprite();
     }
-
-    @Override public void render() { sprite.draw(Game.getInstance().getBatch()); }
 }

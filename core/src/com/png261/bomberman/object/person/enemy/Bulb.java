@@ -16,7 +16,8 @@ import com.png261.bomberman.utils.Unit;
 
 public class Bulb extends Enemy
 {
-    private TextureAtlas textureAtlas;
+    private static final TextureAtlas textureAtlas = new TextureAtlas("bulb.atlas");
+
     private Sprite sprite;
 
     private enum State {
@@ -38,10 +39,8 @@ public class Bulb extends Enemy
         setupAnimation();
     }
 
-    public void setupAnimation()
+    private void setupAnimation()
     {
-        textureAtlas = new TextureAtlas(Gdx.files.internal("bulb.atlas"));
-
         animationHandle.addAnimation(
             State.BULB_DEAD.getValue(),
             new Animation<TextureRegion>(
@@ -53,25 +52,5 @@ public class Bulb extends Enemy
                 FRAME_TIME,
                 textureAtlas.findRegions(State.BULB_IDLE.getValue())));
         animationHandle.setCurrentAnimation(State.BULB_IDLE.getValue(), false);
-        sprite = new Sprite(animationHandle.getCurrentFrame());
     }
-
-    public void updateSprite()
-    {
-        sprite.setBounds(
-            Unit.box2DToScreen(body.getPosition().x, BODY_DIAMETER),
-            Unit.box2DToScreen(body.getPosition().y, BODY_DIAMETER),
-            Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
-            Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
-
-        sprite.setPosition(
-            Unit.box2DToScreen(body.getPosition().x, BODY_DIAMETER),
-            Unit.box2DToScreen(body.getPosition().y, BODY_DIAMETER));
-
-        sprite.setRegion(animationHandle.getCurrentFrame());
-    }
-
-    @Override public void update(float delta) { updateSprite(); }
-
-    @Override public void render() { sprite.draw(Game.getInstance().getBatch()); }
 }

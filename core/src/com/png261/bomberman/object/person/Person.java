@@ -16,10 +16,12 @@ import com.png261.bomberman.utils.Unit;
 
 public abstract class Person extends Object
 {
-    protected final float BODY_DIAMETER = 0.875f;
-    protected final float FRAME_TIME = 0.6f;
+    protected static final float BODY_DIAMETER = 0.875f;
+    protected static final float FRAME_TIME = 0.6f;
 
-    protected boolean isDead;
+    protected int health = 1;
+    protected boolean isDead = false;
+
     protected float speed = 2.5f;
     protected AnimationHandle animationHandle;
     protected Sprite sprite;
@@ -29,28 +31,8 @@ public abstract class Person extends Object
     @Override public void load(Vector2 position)
     {
         animationHandle = new AnimationHandle();
-        createCircleBody(new Circle(position, BODY_DIAMETER / 2), false);
-    }
-
-    public boolean isDead() { return isDead; }
-
-    public void moveUp() { this.body.setLinearVelocity(new Vector2(0, speed)); }
-
-    public void moveDown() { this.body.setLinearVelocity(new Vector2(0, -speed)); }
-
-    public void moveRight() { this.body.setLinearVelocity(new Vector2(speed, 0)); }
-
-    public void moveLeft() { this.body.setLinearVelocity(new Vector2(-speed, 0)); }
-
-    public void updateSprite()
-    {
-        sprite.setBounds(
-            Unit.box2DToScreen(body.getPosition().x, BODY_DIAMETER),
-            Unit.box2DToScreen(body.getPosition().y, BODY_DIAMETER),
-            Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
-            Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
-
-        sprite.setRegion(animationHandle.getCurrentFrame());
+        sprite = new Sprite();
+        createCircleBody(position, BODY_DIAMETER / 2);
     }
 
     @Override public void update(float delta) { updateSprite(); };
@@ -61,5 +43,36 @@ public abstract class Person extends Object
     {
         super.dispose();
         PhysicManager.getInstance().getWorld().destroyBody(body);
+    }
+
+    public void dead() { isDead = true; }
+
+    public boolean isDead() { return isDead; }
+
+    public void damage()
+    {
+        health = health - 1;
+        if (health <= 0) {
+            dead();
+        }
+    }
+
+    public void moveUp() { this.body.setLinearVelocity(new Vector2(0, speed)); }
+
+    public void moveDown() { this.body.setLinearVelocity(new Vector2(0, -speed)); }
+
+    public void moveRight() { this.body.setLinearVelocity(new Vector2(speed, 0)); }
+
+    public void moveLeft() { this.body.setLinearVelocity(new Vector2(-speed, 0)); }
+
+    protected void updateSprite()
+    {
+        sprite.setBounds(
+            Unit.box2DToScreen(body.getPosition().x, BODY_DIAMETER),
+            Unit.box2DToScreen(body.getPosition().y, BODY_DIAMETER),
+            Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
+            Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
+
+        sprite.setRegion(animationHandle.getCurrentFrame());
     }
 }

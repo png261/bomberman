@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.manager.*;
 
-public class MainMenuScreen implements Screen
+public final class MainMenuScreen implements Screen
 {
     private Viewport viewport;
     private Stage stage;
@@ -28,7 +28,7 @@ public class MainMenuScreen implements Screen
         viewport = new FitViewport(Game.getInstance().getWidth(), Game.getInstance().getHeight());
         stage = new Stage(viewport, batch);
 
-        Texture texture = new Texture(Gdx.files.internal("badlogic.jpg"));
+        Texture texture = new Texture("badlogic.jpg");
         Image image1 = new Image(texture);
         image1.setPosition(
             Gdx.graphics.getWidth() / 3 - image1.getWidth() / 2,

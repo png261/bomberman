@@ -1,6 +1,6 @@
 package com.png261.bomberman.physic;
 
-public class BitCollision
+public final class BitCollision
 {
     public static final short NULL = 0;
     public static final short BOMBERMAN = 1;

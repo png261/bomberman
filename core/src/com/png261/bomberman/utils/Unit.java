@@ -1,9 +1,8 @@
 package com.png261.bomberman.utils;
 
-
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class Unit
+public final class Unit
 {
     public static final float PPM = 16;
     public static final float PPT = 16;

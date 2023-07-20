@@ -77,6 +77,6 @@ public class PhysicContactListener implements ContactListener
         Fixture bombermanFixture =
             fixtureA.getFilterData().categoryBits == BitCollision.BOMBERMAN ? fixtureA : fixtureB;
         Bomberman bomberman = (Bomberman)bombermanFixture.getUserData();
-        // bomberman.speedUp(2);
+        bomberman.damage();
     }
 }

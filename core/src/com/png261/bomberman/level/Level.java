@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public final class Level
 {
-    private MapManager mapManager;
-    private ObjectManager objectManager;
-    private ArrayList<Object> spawnObjects;
+    private final MapManager mapManager;
+    private final ObjectManager objectManager;
+    private final ArrayList<Object> spawnObjects;
 
     public Level()
     {

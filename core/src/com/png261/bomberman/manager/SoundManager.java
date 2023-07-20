@@ -7,11 +7,11 @@ import com.badlogic.gdx.utils.Disposable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class SoundManager implements Disposable
+public final class SoundManager implements Disposable
 {
     public static volatile SoundManager instance;
 
-    private AssetManager manager;
+    private final AssetManager manager;
     private final Map<String, String> musicMap;
     private final Map<String, String> soundMap;
 

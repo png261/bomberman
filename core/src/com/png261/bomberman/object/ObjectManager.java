@@ -12,15 +12,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.png261.bomberman.object.Object;
-import com.png261.bomberman.object.item.*;
-import com.png261.bomberman.object.person.*;
-import com.png261.bomberman.object.person.bomberman.*;
-import com.png261.bomberman.object.person.enemy.*;
-import com.png261.bomberman.object.tile.*;
+import com.png261.bomberman.object.person.bomberman.Bomberman;
+import com.png261.bomberman.object.tile.Brick;
+import com.png261.bomberman.object.tile.Wall;
 import com.png261.bomberman.utils.Unit;
 import java.util.ArrayList;
 
-public class ObjectManager implements Disposable
+public final class ObjectManager implements Disposable
 {
     private TiledMap map;
 
@@ -28,8 +26,8 @@ public class ObjectManager implements Disposable
     private ArrayList<Brick> bricks;
     private ArrayList<Object> objects;
 
-    private static final String tiledWallsLayer = "wall";
     private static final String tiledBrickLayer = "brick";
+    private static final String tiledWallsLayer = "wall";
 
     public ObjectManager()
     {
