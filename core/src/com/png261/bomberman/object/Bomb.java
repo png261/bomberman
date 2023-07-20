@@ -82,9 +82,11 @@ public class Bomb extends Object
     @Override public void update(float delta)
     {
         updateSprite();
+
         if (Gdx.input.isKeyPressed(Input.Keys.P)) {
             explode();
         }
+
         if (animationHandle.isCurrentAnimation(State.BOMB_EXPLODE.getValue())
             && animationHandle.isFinished()) {
             disappear();

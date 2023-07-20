@@ -30,7 +30,22 @@ public class Flame extends Object
 
     public Flame(Vector2 position, State direction)
     {
+        createCircleBody(position, BODY_DIAMETER / 2);
+
+        setCollisionFilter(
+            BitCollision.FLAME,
+            BitCollision.orOperation(
+                BitCollision.BOMBERMAN,
+                BitCollision.WALL,
+                BitCollision.BRICK,
+                BitCollision.BOMB,
+                BitCollision.ENEMY));
+
+        setSensor(true);
+
+        sprite = new Sprite();
         animationHandle = new AnimationHandle();
+
         animationHandle.addAnimation(
             State.FLAME_DOWN.getValue(),
             new Animation<TextureRegion>(
@@ -51,31 +66,25 @@ public class Flame extends Object
                 atlas.findRegions(State.FLAME_RIGHT.getValue())));
 
         animationHandle.setCurrentAnimation(direction.getValue(), false);
-        sprite = new Sprite(animationHandle.getCurrentFrame());
-        createCircleBody(position, BODY_DIAMETER / 2);
-
-        setCollisionFilter(
-            BitCollision.FLAME,
-            BitCollision.orOperation(
-                BitCollision.BOMBERMAN,
-                BitCollision.WALL,
-                BitCollision.BRICK,
-                BitCollision.BOMB,
-                BitCollision.ENEMY));
-        setSensor(true);
+        updateSprite();
     }
 
     @Override public void load(Vector2 position) {}
 
-    @Override public void update(float delta)
+    private void updateSprite()
     {
         sprite.setBounds(
             Unit.box2DToScreen(body.getPosition().x, BODY_DIAMETER),
             Unit.box2DToScreen(body.getPosition().y, BODY_DIAMETER),
-            Unit.pixelsToMeters(16),
-            Unit.pixelsToMeters(16));
-        sprite.setRegion(animationHandle.getCurrentFrame());
+            Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
+            Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
 
+        sprite.setRegion(animationHandle.getCurrentFrame());
+    }
+
+    @Override public void update(float delta)
+    {
+        updateSprite();
         if (animationHandle.isFinished()) {
             disappear();
         }

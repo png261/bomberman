@@ -20,8 +20,7 @@ public class Bomberman extends Person
     private int flameLength = 1;
     private int maxBomb = 1;
     private State direction = State.IDLE_DOWN;
-    private static final TextureAtlas textureAtlas =
-        new TextureAtlas("bomberman.atlas");
+    private static final TextureAtlas textureAtlas = new TextureAtlas("bomberman.atlas");
     private boolean canPlaceBomb = true;
 
     private enum State {
