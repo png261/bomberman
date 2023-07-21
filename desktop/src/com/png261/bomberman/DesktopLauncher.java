@@ -14,7 +14,7 @@ public class DesktopLauncher
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setForegroundFPS(60);
         config.setTitle("Bomberman");
-        config.setWindowedMode(game.getWidth(), game.getHeight());
+        config.setWindowedMode(game.width(), game.height());
         new Lwjgl3Application(game, config);
     }
 }
