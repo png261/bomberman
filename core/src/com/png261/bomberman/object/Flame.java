@@ -32,7 +32,6 @@ public class Flame extends GameObject {
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.FLAME_RIGHT.getValue())));
 
         animationHandle.setCurrentAnimation(direction.getValue(), false);
-        updateSprite();
     }
 
     @Override
@@ -43,6 +42,8 @@ public class Flame extends GameObject {
                 BitCollision.BRICK, BitCollision.BOMB, BitCollision.ENEMY));
 
         setSensor(true);
+
+        updateSprite();
     }
 
     private void updateSprite() {

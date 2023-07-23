@@ -20,12 +20,14 @@ public final class ObjectManager implements Disposable {
     private ArrayList<Brick> bricks;
     private ArrayList<GameObject> objects;
     private ArrayList<GameObject> newObjects;
+    private ArrayList<GameObject> trashObjects;
 
     public ObjectManager() {
         walls = new ArrayList<>();
         bricks = new ArrayList<>();
         objects = new ArrayList<>();
         newObjects = new ArrayList<>();
+        trashObjects = new ArrayList<GameObject>();
     }
 
     public void load(TiledMap map) {
@@ -71,10 +73,10 @@ public final class ObjectManager implements Disposable {
     }
 
     public void update(float delta) {
-        ArrayList<GameObject> trashObjects = new ArrayList<GameObject>();
         for (GameObject object : newObjects) {
             objects.add(object);
         }
+        newObjects.clear();
 
         for (GameObject object : objects) {
             if (object.exist()) {
@@ -85,9 +87,10 @@ public final class ObjectManager implements Disposable {
         }
 
         for (GameObject object : trashObjects) {
-            objects.remove(object);
             object.dispose();
+            objects.remove(object);
         }
+        trashObjects.clear();
     }
 
     public void render() {

@@ -16,6 +16,7 @@ public class Brick extends Tile {
     }
 
     public void bonus() {
+        System.out.println("brick bonus");
         emptyCell();
 
         // ItemSpeedUp item = new ItemSpeedUp();

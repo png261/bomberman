@@ -82,6 +82,11 @@ public class Bomb extends GameObject {
 
     private void explode() {
         animationHandle.setCurrentAnimation(State.BOMB_EXPLODE.getValue());
+        createFlame();
+        setSensor(true);
+    }
+
+    private void createFlame() {
         final Level level = Game.getInstance().level();
 
         for (Flame.State direction : Flame.State.values()) {
@@ -106,7 +111,5 @@ public class Bomb extends GameObject {
         Flame flame = new Flame(Flame.State.FLAME_UP);
         flame.load(new LoaderParams(Unit.box2DSnapToGrid(body.getPosition()), 16, 16));
         level.spawnObject(flame);
-
-        setSensor(true);
     }
 }
