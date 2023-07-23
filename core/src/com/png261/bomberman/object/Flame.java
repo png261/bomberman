@@ -11,9 +11,9 @@ import com.png261.bomberman.physic.BitCollision;
 import com.png261.bomberman.utils.Unit;
 
 public class Flame extends GameObject {
-    private static final float FRAME_TIME = 0.3f;
-    private static final float BODY_DIAMETER = 16;
-    private static final TextureAtlas atlas = new TextureAtlas("flame.atlas");
+    private final float FRAME_TIME = 0.3f;
+    private final float BODY_DIAMETER = 10;
+    private final TextureAtlas atlas = new TextureAtlas("flame.atlas");
 
     private Sprite sprite;
     private AnimationHandle animationHandle;
@@ -47,11 +47,11 @@ public class Flame extends GameObject {
     }
 
     private void updateSprite() {
-        sprite.setBounds(Unit.box2DToScreen(body.getPosition().x, Unit.pixelsToMeters(BODY_DIAMETER)),
-                Unit.box2DToScreen(body.getPosition().y, Unit.pixelsToMeters(BODY_DIAMETER)),
-                Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
-                Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
+        float x = body.getPosition().x - Unit.pixelsToMeters(BODY_DIAMETER);
+        float y = body.getPosition().y - Unit.pixelsToMeters(BODY_DIAMETER);
 
+        sprite.setBounds(x, y, Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
+                Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
         sprite.setRegion(animationHandle.getCurrentFrame());
     }
 

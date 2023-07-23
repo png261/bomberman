@@ -11,6 +11,7 @@ import com.png261.bomberman.object.LoaderParams;
 
 public abstract class Person extends GameObject {
     protected final float BODY_DIAMETER = 12;
+    protected final float BODY_RADIUS = 6;
     protected final float FRAME_TIME = 0.6f;
 
     protected int health = 1;
@@ -28,7 +29,7 @@ public abstract class Person extends GameObject {
 
     @Override
     public void load(LoaderParams params) {
-        createCircleBody(params.position(), BODY_DIAMETER / 2);
+        createCircleBody(params.position(), BODY_RADIUS);
     }
 
     @Override
@@ -79,11 +80,11 @@ public abstract class Person extends GameObject {
     }
 
     protected void updateSprite() {
-        sprite.setBounds(Unit.box2DToScreen(body.getPosition().x, Unit.pixelsToMeters(BODY_DIAMETER)),
-                Unit.box2DToScreen(body.getPosition().y, Unit.pixelsToMeters(BODY_DIAMETER)),
-                Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
-                Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
+        float x = body.getPosition().x - Unit.pixelsToMeters(BODY_RADIUS);
+        float y = body.getPosition().y - Unit.pixelsToMeters(BODY_RADIUS);
 
+        sprite.setBounds(x, y, Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
+                Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
         sprite.setRegion(animationHandle.getCurrentFrame());
     }
 }

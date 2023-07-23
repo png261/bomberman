@@ -83,8 +83,8 @@ public class Bomberman extends Person {
 
         canPlaceBomb = false;
         Bomb bomb = new Bomb();
-        LoaderParams params = new LoaderParams(Unit.metersToPixels(body.getPosition()), 16, 16);
-        bomb.load(params);
+        bomb.load(new LoaderParams(Unit.box2DToScreen(Unit.metersToPixels(body.getPosition()),
+                BODY_DIAMETER / 4)));
         Game.getInstance().level().spawnObject(bomb);
     }
 

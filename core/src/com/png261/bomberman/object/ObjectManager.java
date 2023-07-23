@@ -61,9 +61,9 @@ public final class ObjectManager implements Disposable {
                         newObject.load(params);
                         objects.add(newObject);
 
-                        if (type == "Wall") {
+                        if (type.equals("Wall")) {
                             walls.add((Wall) newObject);
-                        } else if (type == "Brick") {
+                        } else if (type.equals("Brick")) {
                             bricks.add((Brick) newObject);
                         }
                     }

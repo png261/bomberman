@@ -29,6 +29,10 @@ public final class Unit {
         return px + scale / 2;
     }
 
+    public static Vector2 box2DToScreen(Vector2 position, float radius) {
+        return box2DToScreen(position.x, position.y, radius);
+    }
+
     public static Vector2 box2DToScreen(float mX, float mY, float radius) {
         return new Vector2(mX - radius, mY - radius);
     }

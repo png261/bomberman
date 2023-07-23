@@ -12,6 +12,10 @@ public class LoaderParams {
         this(position.x, position.y, width, height);
     }
 
+    public LoaderParams(Vector2 position) {
+        this(position.x, position.y, 0, 0);
+    }
+
     public LoaderParams(float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
