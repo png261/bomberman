@@ -47,11 +47,11 @@ public class Flame extends GameObject {
     }
 
     private void updateSprite() {
-        float x = body.getPosition().x - Unit.pixelsToMeters(BODY_DIAMETER);
-        float y = body.getPosition().y - Unit.pixelsToMeters(BODY_DIAMETER);
+        float x = body.getPosition().x - Unit.pixelToMeter(BODY_DIAMETER);
+        float y = body.getPosition().y - Unit.pixelToMeter(BODY_DIAMETER);
 
-        sprite.setBounds(x, y, Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
-                Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
+        sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
+                Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
         sprite.setRegion(animationHandle.getCurrentFrame());
     }
 

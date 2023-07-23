@@ -10,11 +10,11 @@ public final class Unit {
     }
 
     public static Vector2 box2DSnapToGrid(Vector2 position) {
-        return new Vector2(snapMetersToGrid(position.x), snapMetersToGrid(position.y));
+        return new Vector2(snapMeterToGrid(position.x), snapMeterToGrid(position.y));
     }
 
-    public static int snapMetersToGrid(float meters) {
-        return (int) (metersToPixels(meters) / PPT);
+    public static int snapMeterToGrid(float meter) {
+        return (int) (meterToPixel(meter) / PPT);
     }
 
     public static Vector2 screenToBox2D(float pixelX, float pixelY, float radius) {
@@ -41,36 +41,36 @@ public final class Unit {
         return new Vector2(box2DToScreen(mX, width), box2DToScreen(mY, height));
     }
 
-    public static float box2DToScreen(float meters, float scale) {
-        return meters - scale / 2;
+    public static float box2DToScreen(float meter, float scale) {
+        return meter - scale / 2;
     }
 
-    public static Vector2 pixelsToMeters(float pixelX, float pixelY) {
-        return new Vector2(pixelsToMeters(pixelX), pixelsToMeters(pixelY));
+    public static Vector2 pixelToMeter(Vector2 v) {
+        return pixelToMeter(v.x, v.y);
     }
 
-    public static Vector2 pixelsToMeters(Vector2 v) {
-        return new Vector2(pixelsToMeters(v.x), pixelsToMeters(v.y));
+    public static Vector2 pixelToMeter(float x, float y) {
+        return new Vector2(pixelToMeter(x), pixelToMeter(y));
     }
 
-    public static float pixelsToMeters(int pixel) {
+    public static float pixelToMeter(int pixel) {
         return pixel / PPM;
     }
 
-    public static float pixelsToMeters(float pixel) {
-        return pixelsToMeters(Math.round(pixel));
+    public static float pixelToMeter(float pixel) {
+        return pixelToMeter(Math.round(pixel));
     }
 
-    public static Vector2 metersToPixels(float mX, float mY) {
-        return new Vector2(metersToPixels(mX), metersToPixels(mY));
+    public static Vector2 meterToPixel(float x, float y) {
+        return new Vector2(meterToPixel(x), meterToPixel(y));
     }
 
-    public static Vector2 metersToPixels(Vector2 v) {
-        return new Vector2(metersToPixels(v.x), metersToPixels(v.y));
+    public static Vector2 meterToPixel(Vector2 v) {
+        return new Vector2(meterToPixel(v.x), meterToPixel(v.y));
     }
 
-    public static float metersToPixels(float meters) {
-        return meters * PPM;
+    public static float meterToPixel(float meter) {
+        return meter * PPM;
     }
 
     public static float distance(Vector2 v1, Vector2 v2) {

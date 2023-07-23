@@ -73,11 +73,11 @@ public class Bomb extends GameObject {
     }
 
     private void updateSprite() {
-        float x = body.getPosition().x - Unit.pixelsToMeters(BODY_RADIUS);
-        float y = body.getPosition().y - Unit.pixelsToMeters(BODY_RADIUS);
+        float x = body.getPosition().x - Unit.pixelToMeter(BODY_RADIUS);
+        float y = body.getPosition().y - Unit.pixelToMeter(BODY_RADIUS);
 
-        sprite.setBounds(x, y, Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
-                Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
+        sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
+                Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
         sprite.setRegion(animationHandle.getCurrentFrame());
     }
 
@@ -90,7 +90,7 @@ public class Bomb extends GameObject {
     private void createFlame() {
         final Level level = Game.getInstance().level();
         Flame middleFlame = new Flame(Flame.State.FLAME_UP);
-        middleFlame.load(new LoaderParams(Unit.box2DToScreen(Unit.metersToPixels(body.getPosition()),
+        middleFlame.load(new LoaderParams(Unit.box2DToScreen(Unit.meterToPixel(body.getPosition()),
                 BODY_DIAMETER / 4)));
         level.spawnObject(middleFlame);
 
@@ -98,7 +98,7 @@ public class Bomb extends GameObject {
             for (int i = 1; i <= flameLength; ++i) {
                 Vector2 position = body.getPosition();
                 position.add(Flame.State.getOffSet(direction).scl(i));
-                Vector2 positionPixel = Unit.box2DToScreen(Unit.metersToPixels(position),
+                Vector2 positionPixel = Unit.box2DToScreen(Unit.meterToPixel(position),
                         BODY_DIAMETER / 4);
 
                 if (level.isPositionOnWall(positionPixel)) {

@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.png261.bomberman.physic.PhysicManager;
 import com.png261.bomberman.utils.Unit;
 
-public class PhysicObject implements Disposable {
+public abstract class PhysicObject implements Disposable {
     protected Body body;
     protected BodyDef bodyDef;
     protected Fixture fixture;
@@ -40,11 +40,11 @@ public class PhysicObject implements Disposable {
 
     protected void createCircleBody(float x, float y, float radius) {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(Unit.pixelsToMeters(Unit.screenToBox2D(x, y, radius)));
+        bodyDef.position.set(Unit.pixelToMeter(Unit.screenToBox2D(x, y, radius)));
         body = PhysicManager.getInstance().world().createBody(bodyDef);
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(Unit.pixelsToMeters(radius));
+        shape.setRadius(Unit.pixelToMeter(radius));
 
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
@@ -57,14 +57,18 @@ public class PhysicObject implements Disposable {
         createRectangleBody(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
     }
 
+    protected void createRectangleBody(Vector2 position, float width, float height) {
+        createRectangleBody(position.x, position.y, width, height);
+    }
+
     protected void createRectangleBody(float x, float y, float width, float height) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(Unit.pixelsToMeters(Unit.screenToBox2D(x, y, width, height)));
+        bodyDef.position.set(Unit.pixelToMeter(Unit.screenToBox2D(x, y, width, height)));
         body = PhysicManager.getInstance().world().createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(Unit.pixelsToMeters(width / 2), Unit.pixelsToMeters(height / 2));
+        shape.setAsBox(Unit.pixelToMeter(width / 2), Unit.pixelToMeter(height / 2));
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;

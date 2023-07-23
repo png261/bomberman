@@ -80,11 +80,11 @@ public abstract class Person extends GameObject {
     }
 
     protected void updateSprite() {
-        float x = body.getPosition().x - Unit.pixelsToMeters(BODY_RADIUS);
-        float y = body.getPosition().y - Unit.pixelsToMeters(BODY_RADIUS);
+        float x = body.getPosition().x - Unit.pixelToMeter(BODY_RADIUS);
+        float y = body.getPosition().y - Unit.pixelToMeter(BODY_RADIUS);
 
-        sprite.setBounds(x, y, Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionWidth()),
-                Unit.pixelsToMeters(animationHandle.getCurrentFrame().getRegionHeight()));
+        sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
+                Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
         sprite.setRegion(animationHandle.getCurrentFrame());
     }
 }
