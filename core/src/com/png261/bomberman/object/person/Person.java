@@ -47,7 +47,6 @@ public abstract class Person extends GameObject implements DamageableObject, Con
     @Override
     public void dispose() {
         super.dispose();
-        PhysicManager.getInstance().world().destroyBody(body);
     }
 
     @Override
