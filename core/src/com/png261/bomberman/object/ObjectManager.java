@@ -27,7 +27,7 @@ public final class ObjectManager implements Disposable {
         bricks = new ArrayList<>();
         objects = new ArrayList<>();
         newObjects = new ArrayList<>();
-        trashObjects = new ArrayList<GameObject>();
+        trashObjects = new ArrayList<>();
     }
 
     public void load(TiledMap map) {
@@ -38,10 +38,6 @@ public final class ObjectManager implements Disposable {
 
     public void add(GameObject object) {
         newObjects.add(object);
-    }
-
-    public Array<RectangleMapObject> getRectangleMapObjectsFromLayer(String layer) {
-        return map.getLayers().get(layer).getObjects().getByType(RectangleMapObject.class);
     }
 
     private void createObject() {
@@ -87,8 +83,8 @@ public final class ObjectManager implements Disposable {
         }
 
         for (GameObject object : trashObjects) {
-            object.dispose();
             objects.remove(object);
+            object.dispose();
         }
         trashObjects.clear();
     }
@@ -104,7 +100,7 @@ public final class ObjectManager implements Disposable {
 
     public boolean isPositionOnWall(Vector2 position) {
         for (Wall wall : walls) {
-            if (wall.getBounds().contains(position.x, position.y)) {
+            if (wall.contains(position)) {
                 return true;
             }
         }
@@ -114,7 +110,7 @@ public final class ObjectManager implements Disposable {
 
     public boolean isPositionOnBrick(Vector2 position) {
         for (Brick brick : bricks) {
-            if (brick.getBounds().contains(position.x, position.y)) {
+            if (brick.contains(position)) {
                 return true;
             }
         }

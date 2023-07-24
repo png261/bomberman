@@ -6,7 +6,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public final class MapManager {
-    private final float unitScale = 1 / 16f;
+    private final float UNIT_SCALE = 1 / 16f;
 
     private TmxMapLoader loader;
     private TiledMap map;
@@ -16,12 +16,12 @@ public final class MapManager {
         loader = new TmxMapLoader();
     }
 
-    public void load(final String filePath) {
+    public void load(String filePath) {
         map = loader.load(filePath);
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        renderer = new OrthogonalTiledMapRenderer(map, UNIT_SCALE);
     }
 
-    public void render(final OrthographicCamera camera) {
+    public void render(OrthographicCamera camera) {
         renderer.setView(camera);
         renderer.render();
     }

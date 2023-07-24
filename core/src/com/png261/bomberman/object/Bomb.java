@@ -16,7 +16,9 @@ public class Bomb extends GameObject {
     private final float BODY_RADIUS = 8;
     private final float FRAME_TIME = 0.6f;
     private final TextureAtlas atlas = new TextureAtlas("bomb.atlas");
+
     private float timeCountDown = 2f;
+    private boolean isExploded = false;
 
     private int flameLength;
     private AnimationHandle animationHandle;
@@ -41,11 +43,6 @@ public class Bomb extends GameObject {
 
         sprite = new Sprite();
         animationHandle = new AnimationHandle();
-        animationHandle.addAnimation(State.IDLE.getValue(),
-                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.IDLE.getValue())));
-        animationHandle.addAnimation(State.EXPLODE.getValue(),
-                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.EXPLODE.getValue())));
-        animationHandle.setCurrentAnimation(State.IDLE.getValue());
     }
 
     @Override
@@ -54,19 +51,27 @@ public class Bomb extends GameObject {
         setCollisionFilter(BitCollision.BOMB, BitCollision.orOperation(BitCollision.BOMBERMAN, BitCollision.WALL,
                 BitCollision.BRICK, BitCollision.FLAME, BitCollision.ENEMY, BitCollision.BOMB));
         setSensor(true);
+
+        animationHandle.addAnimation(State.IDLE.getValue(),
+                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.IDLE.getValue())));
+        animationHandle.addAnimation(State.EXPLODE.getValue(),
+                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.EXPLODE.getValue())));
+        animationHandle.setCurrentAnimation(State.IDLE.getValue());
     }
 
     @Override
     public void update(float delta) {
         updateSprite();
 
-        timeCountDown -= delta;
-
-        if (timeCountDown <= 0) {
+        if (timeCountDown <= 0 && isExploded == false) {
+            System.out.println("bomb explode");
             explode();
         }
 
+        timeCountDown -= delta;
+
         if (animationHandle.isCurrentAnimation(State.EXPLODE.getValue()) && animationHandle.isFinished()) {
+            System.out.println("bomb disappear");
             disappear();
         }
     }
@@ -89,10 +94,11 @@ public class Bomb extends GameObject {
         animationHandle.setCurrentAnimation(State.EXPLODE.getValue());
         createFlame();
         setSensor(true);
+        isExploded = true;
     }
 
     private void createFlame() {
-        final Level level = Game.getInstance().level();
+        Level level = Game.getInstance().level();
         Flame middleFlame = new Flame(Flame.State.UP);
         middleFlame.load(new LoaderParams(Unit.box2DToScreen(Unit.meterToPixel(body.getPosition()),
                 BODY_DIAMETER / 4)));

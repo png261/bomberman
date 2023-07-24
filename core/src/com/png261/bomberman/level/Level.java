@@ -29,7 +29,6 @@ public final class Level {
 
     public void update(float delta) {
         PhysicManager.getInstance().update();
-
         objectManager.update(delta);
     }
 

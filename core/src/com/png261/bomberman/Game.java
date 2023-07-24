@@ -7,8 +7,8 @@ import com.png261.bomberman.screen.PlayScreen;
 public final class Game extends com.badlogic.gdx.Game {
     private static volatile Game instance;
 
-    private static final int WIDTH = 1280;
-    private static final int HEIGHT = 768;
+    private final int WIDTH = 1280;
+    private final int HEIGHT = 768;
 
     private SpriteBatch batch;
     private Level level;

@@ -48,4 +48,8 @@ public abstract class Tile extends GameObject {
             getCell().setTile(null);
         }
     }
+
+    public boolean contains(Vector2 position) {
+        return getBounds().contains(position.x, position.y);
+    }
 }

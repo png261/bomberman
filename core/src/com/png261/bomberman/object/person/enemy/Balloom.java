@@ -92,7 +92,6 @@ public class Balloom extends Enemy {
     @Override
     public void damage(int damage) {
         super.damage(damage);
-        System.out.println("balloon damage");
     }
 
     @Override
