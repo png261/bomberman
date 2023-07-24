@@ -1,10 +1,13 @@
 package com.png261.bomberman.object.person.bomberman;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.utils.Unit;
 import com.png261.bomberman.object.Bomb;
@@ -14,10 +17,10 @@ import com.png261.bomberman.physic.BitCollision;
 
 public class Bomberman extends Person {
     private int flameLength = 1;
-    private int maxBomb = 1;
+    private int maxBomb = 2;
+    private ArrayList<Bomb> bombs;
     private State direction = State.IDLE_DOWN;
     private static final TextureAtlas textureAtlas = new TextureAtlas("bomberman.atlas");
-    private boolean canPlaceBomb = true;
 
     private enum State {
         IDLE_UP("idle_up"), IDLE_DOWN("idle_down"), IDLE_LEFT("idle_left"), IDLE_RIGHT("idle_right"),
@@ -36,6 +39,7 @@ public class Bomberman extends Person {
 
     public Bomberman() {
         super();
+        bombs = new ArrayList<>();
     }
 
     public void load(LoaderParams params) {
@@ -52,7 +56,7 @@ public class Bomberman extends Person {
             return;
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             placeBomb();
         } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             moveUp();
@@ -77,21 +81,37 @@ public class Bomberman extends Person {
     }
 
     public void placeBomb() {
-        if (!canPlaceBomb) {
+        if (bombs.size() >= maxBomb) {
             return;
         }
 
-        canPlaceBomb = false;
-        Bomb bomb = new Bomb();
-        bomb.load(new LoaderParams(Unit.box2DToScreen(Unit.meterToPixel(body.getPosition()),
-                BODY_DIAMETER / 4)));
+        Bomb bomb = new Bomb(flameLength);
+        Vector2 position = body.getPosition();
+        position = Unit.box2DToScreen(position, Unit.pixelToMeter(BODY_DIAMETER / 2));
+        position = Unit.meterToPixel(Unit.box2DSnapToGrid(position));
+        bomb.load(new LoaderParams(position));
         Game.getInstance().level().spawnObject(bomb);
+        bombs.add(bomb);
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
         handleEvents();
+        handleBomb();
+    }
+
+    public void handleBomb() {
+        ArrayList<Bomb> explodedBomb = new ArrayList<>();
+        for (Bomb bomb : bombs) {
+            if (!bomb.exist()) {
+                explodedBomb.add(bomb);
+            }
+        }
+
+        for (Bomb bomb : explodedBomb) {
+            bombs.remove(bomb);
+        }
     }
 
     public void setupAnimation() {

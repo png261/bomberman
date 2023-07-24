@@ -28,7 +28,7 @@ public final class ObjectFactory {
         } else if (id.equals("Brick")) {
             return new Brick();
         } else if (id.equals("Bomb")) {
-            return new Bomb();
+            return new Bomb(1);
         } else if (id.equals("Bomberman")) {
             return new Bomberman();
         } else if (id.equals("Balloom")) {

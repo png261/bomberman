@@ -94,7 +94,8 @@ public final class ObjectManager implements Disposable {
     }
 
     public void render() {
-        for (GameObject object : objects) {
+        for (int i = objects.size() - 1; i >= 0; --i) {
+            GameObject object = objects.get(i);
             if (object.exist()) {
                 object.render();
             }

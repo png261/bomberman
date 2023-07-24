@@ -18,8 +18,9 @@ public class Bomb extends GameObject {
     private final float BODY_RADIUS = 8;
     private final float FRAME_TIME = 0.6f;
     private final TextureAtlas atlas = new TextureAtlas("bomb.atlas");
+    private float timeCountDown = 2f;
 
-    private int flameLength = 3;
+    private int flameLength;
     private AnimationHandle animationHandle;
     private Sprite sprite;
 
@@ -37,7 +38,9 @@ public class Bomb extends GameObject {
         }
     }
 
-    public Bomb() {
+    public Bomb(int flameLength) {
+        this.flameLength = flameLength;
+
         sprite = new Sprite();
         animationHandle = new AnimationHandle();
         animationHandle.addAnimation(State.BOMB_IDLE.getValue(),
@@ -52,13 +55,16 @@ public class Bomb extends GameObject {
         createCircleBody(params.position(), BODY_RADIUS);
         setCollisionFilter(BitCollision.BOMB, BitCollision.orOperation(BitCollision.BOMBERMAN, BitCollision.WALL,
                 BitCollision.BRICK, BitCollision.FLAME, BitCollision.ENEMY, BitCollision.BOMB));
+        setSensor(true);
     }
 
     @Override
     public void update(float delta) {
         updateSprite();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.P)) {
+        timeCountDown -= delta;
+
+        if (timeCountDown <= 0) {
             explode();
         }
 
@@ -98,18 +104,18 @@ public class Bomb extends GameObject {
             for (int i = 1; i <= flameLength; ++i) {
                 Vector2 position = body.getPosition();
                 position.add(Flame.State.getOffSet(direction).scl(i));
-                Vector2 positionPixel = Unit.box2DToScreen(Unit.meterToPixel(position),
-                        BODY_DIAMETER / 4);
+                position = Unit.box2DSnapToGrid(Unit.box2DToScreen(Unit.meterToPixel(position),
+                        BODY_DIAMETER / 4));
 
-                if (level.isPositionOnWall(positionPixel)) {
+                if (level.isPositionOnWall(position)) {
                     break;
                 }
 
                 Flame flame = new Flame(direction);
-                flame.load(new LoaderParams(Unit.box2DSnapToGrid(positionPixel), 16, 16));
+                flame.load(new LoaderParams(position));
                 level.spawnObject(flame);
 
-                if (level.isPositionOnBrick(positionPixel)) {
+                if (level.isPositionOnBrick(position)) {
                     break;
                 }
             }
