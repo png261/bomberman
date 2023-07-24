@@ -5,11 +5,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.animation.AnimationHandle;
 import com.png261.bomberman.object.GameObject;
+import com.png261.bomberman.object.ControllableObject;
+import com.png261.bomberman.object.DamageableObject;
 import com.png261.bomberman.physic.PhysicManager;
 import com.png261.bomberman.utils.Unit;
 import com.png261.bomberman.object.LoaderParams;
 
-public abstract class Person extends GameObject {
+public abstract class Person extends GameObject implements DamageableObject, ControllableObject {
     protected final float BODY_DIAMETER = 12;
     protected final float BODY_RADIUS = 6;
     protected final float FRAME_TIME = 0.6f;
@@ -48,35 +50,22 @@ public abstract class Person extends GameObject {
         PhysicManager.getInstance().world().destroyBody(body);
     }
 
+    @Override
     public void dead() {
         isDead = true;
     }
 
+    @Override
     public boolean isDead() {
         return isDead;
     }
 
-    public void damage() {
-        health = health - 1;
+    @Override
+    public void damage(int damage) {
+        health = health - damage;
         if (health <= 0) {
             dead();
         }
-    }
-
-    public void moveUp() {
-        this.body.setLinearVelocity(new Vector2(0, speed));
-    }
-
-    public void moveDown() {
-        this.body.setLinearVelocity(new Vector2(0, -speed));
-    }
-
-    public void moveRight() {
-        this.body.setLinearVelocity(new Vector2(speed, 0));
-    }
-
-    public void moveLeft() {
-        this.body.setLinearVelocity(new Vector2(-speed, 0));
     }
 
     protected void updateSprite() {
@@ -86,5 +75,25 @@ public abstract class Person extends GameObject {
         sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
                 Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
         sprite.setRegion(animationHandle.getCurrentFrame());
+    }
+
+    @Override
+    public void moveUp() {
+        this.body.setLinearVelocity(new Vector2(0, speed));
+    }
+
+    @Override
+    public void moveDown() {
+        this.body.setLinearVelocity(new Vector2(0, -speed));
+    }
+
+    @Override
+    public void moveRight() {
+        this.body.setLinearVelocity(new Vector2(speed, 0));
+    }
+
+    @Override
+    public void moveLeft() {
+        this.body.setLinearVelocity(new Vector2(-speed, 0));
     }
 }

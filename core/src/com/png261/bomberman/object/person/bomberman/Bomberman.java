@@ -17,7 +17,7 @@ import com.png261.bomberman.physic.BitCollision;
 
 public class Bomberman extends Person {
     private int flameLength = 1;
-    private int maxBomb = 2;
+    private int maxBomb = 1;
     private ArrayList<Bomb> bombs;
     private State direction = State.IDLE_DOWN;
     private static final TextureAtlas textureAtlas = new TextureAtlas("bomberman.atlas");
@@ -90,7 +90,7 @@ public class Bomberman extends Person {
         position = Unit.box2DToScreen(position, Unit.pixelToMeter(BODY_DIAMETER / 2));
         position = Unit.meterToPixel(Unit.box2DSnapToGrid(position));
         bomb.load(new LoaderParams(position));
-        Game.getInstance().level().spawnObject(bomb);
+        Game.getInstance().level().addObject(bomb);
         bombs.add(bomb);
     }
 
@@ -148,6 +148,7 @@ public class Bomberman extends Person {
     @Override
     public void dead() {
         super.dead();
+        stopMovement();
         animationHandle.setCurrentAnimation(State.DEAD.getValue());
     }
 

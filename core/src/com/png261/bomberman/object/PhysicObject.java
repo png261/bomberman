@@ -92,4 +92,8 @@ public abstract class PhysicObject implements Disposable {
     protected void setBodyToStatic() {
         body.setType(BodyDef.BodyType.StaticBody);
     }
+
+    protected void stopMovement() {
+        body.setLinearVelocity(0, 0);
+    }
 }

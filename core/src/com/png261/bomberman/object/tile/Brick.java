@@ -1,9 +1,20 @@
 package com.png261.bomberman.object.tile;
 
 import com.png261.bomberman.physic.BitCollision;
+import com.png261.bomberman.utils.Unit;
+import com.png261.bomberman.Game;
+import com.badlogic.gdx.ai.btree.decorator.Random;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.png261.bomberman.object.GameObject;
 import com.png261.bomberman.object.LoaderParams;
+import com.png261.bomberman.object.ObjectFactory;
+import com.png261.bomberman.object.item.Item;
+import com.png261.bomberman.object.item.ItemSpeedUp;
 
 public class Brick extends Tile {
+    private boolean isBroken;
+
     public Brick() {
         super();
     }
@@ -15,15 +26,47 @@ public class Brick extends Tile {
                 BitCollision.FLAME, BitCollision.ENEMY));
     }
 
+    @Override
+    public void update(float delta) {
+        if (isBroken) {
+            bonus();
+        }
+    }
+
+    public void broken() {
+        isBroken = true;
+    }
+
     public void bonus() {
-        System.out.println("brick bonus");
+        spawnItem();
+
         emptyCell();
-
-        // ItemSpeedUp item = new ItemSpeedUp();
-        // Vector2 position = body.getPosition();
-        // item.load(position);
-        // Game.getInstance().getLevel().spawnObject(item);
-
         disappear();
+    }
+
+    public boolean isBroken() {
+        return isBroken;
+    }
+
+    public void setBroken(boolean isBroken) {
+        this.isBroken = isBroken;
+    }
+
+    public void spawnItem() {
+        float SPAWN_PROBABILITY = 0.3f;
+        if (MathUtils.random() > SPAWN_PROBABILITY) {
+            return;
+        }
+
+        Item.ItemType[] itemTypes = Item.ItemType.values();
+
+        String randomType = itemTypes[MathUtils.random(itemTypes.length - 1)].value();
+        GameObject item = ObjectFactory.getInstance().create(randomType);
+
+        Vector2 position = body.getPosition();
+        position = Unit.box2DToScreen(Unit.meterToPixel(position),
+                16, 16);
+        item.load(new LoaderParams(position, 16, 16));
+        Game.getInstance().level().addObject(item);
     }
 }

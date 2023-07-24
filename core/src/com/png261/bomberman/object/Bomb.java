@@ -1,7 +1,5 @@
 package com.png261.bomberman.object;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -98,7 +96,7 @@ public class Bomb extends GameObject {
         Flame middleFlame = new Flame(Flame.State.FLAME_UP);
         middleFlame.load(new LoaderParams(Unit.box2DToScreen(Unit.meterToPixel(body.getPosition()),
                 BODY_DIAMETER / 4)));
-        level.spawnObject(middleFlame);
+        level.addObject(middleFlame);
 
         for (Flame.State direction : Flame.State.values()) {
             for (int i = 1; i <= flameLength; ++i) {
@@ -113,7 +111,7 @@ public class Bomb extends GameObject {
 
                 Flame flame = new Flame(direction);
                 flame.load(new LoaderParams(position));
-                level.spawnObject(flame);
+                level.addObject(flame);
 
                 if (level.isPositionOnBrick(position)) {
                     break;
@@ -121,4 +119,5 @@ public class Bomb extends GameObject {
             }
         }
     }
+
 }

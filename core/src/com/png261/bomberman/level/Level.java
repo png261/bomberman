@@ -50,7 +50,7 @@ public final class Level {
         return objectManager.isPositionOnBrick(position);
     }
 
-    public void spawnObject(GameObject object) {
+    public void addObject(GameObject object) {
         objectManager.add(object);
     }
 }

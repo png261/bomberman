@@ -63,7 +63,7 @@ public class PhysicContactListener implements ContactListener {
 
         Fixture brickFixture = fixtureA.getFilterData().categoryBits == BitCollision.BRICK ? fixtureA : fixtureB;
         Brick brick = (Brick) brickFixture.getUserData();
-        brick.bonus();
+        brick.broken();
     }
 
     public void FlameAndBombermanBeginContact(Contact contact) {
@@ -80,6 +80,6 @@ public class PhysicContactListener implements ContactListener {
         Fixture bombermanFixture = fixtureA.getFilterData().categoryBits == BitCollision.BOMBERMAN ? fixtureA
                 : fixtureB;
         Bomberman bomberman = (Bomberman) bombermanFixture.getUserData();
-        bomberman.damage();
+        bomberman.damage(1);
     }
 }

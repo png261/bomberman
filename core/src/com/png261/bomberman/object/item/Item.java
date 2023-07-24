@@ -1,7 +1,6 @@
 package com.png261.bomberman.object.item;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.object.GameObject;
 import com.png261.bomberman.object.LoaderParams;
@@ -15,9 +14,23 @@ public abstract class Item extends GameObject {
         super();
     }
 
+    public static enum ItemType {
+        ITEM_SPEED_UP("ItemSpeedUp"), ITEM_FLAME_UP("ItemFlameUp"), ITEM_BOMB_UP("ItemBombUp");
+
+        String value;
+
+        private ItemType(String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return value;
+        }
+    }
+
     @Override
     public void load(LoaderParams params) {
-        createRectangleBody(params.x(), params.y(), 16, 16);
+        createRectangleBody(params.x(), params.y(), params.width(), params.height());
         setSensor(true);
         setCollisionFilter(BitCollision.ITEM, BitCollision.orOperation(BitCollision.BOMBERMAN));
     }
