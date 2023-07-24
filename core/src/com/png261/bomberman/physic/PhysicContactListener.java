@@ -12,9 +12,8 @@ import com.png261.bomberman.object.tile.Brick;
 public class PhysicContactListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
-        ItemBeginContact(contact);
-        FlameAndBrickBeginContact(contact);
-        FlameAndBombermanBeginContact(contact);
+        handleItemContact(contact);
+        handleFlameContact(contact);
     }
 
     @Override
@@ -29,7 +28,7 @@ public class PhysicContactListener implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse impulse) {
     }
 
-    public void ItemBeginContact(Contact contact) {
+    public void handleItemContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
 
@@ -50,7 +49,12 @@ public class PhysicContactListener implements ContactListener {
         item.bonus(bomberman);
     }
 
-    public void FlameAndBrickBeginContact(Contact contact) {
+    public void handleFlameContact(Contact contact) {
+        handleFlameBrickContact(contact);
+        handleFlameBombermanContact(contact);
+    }
+
+    public void handleFlameBrickContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
 
@@ -61,12 +65,12 @@ public class PhysicContactListener implements ContactListener {
             return;
         }
 
-        Fixture brickFixture = fixtureA.getFilterData().categoryBits == BitCollision.BRICK ? fixtureA : fixtureB;
+        Fixture brickFixture = categoryA == BitCollision.BRICK ? fixtureA : fixtureB;
         Brick brick = (Brick) brickFixture.getUserData();
         brick.broken();
     }
 
-    public void FlameAndBombermanBeginContact(Contact contact) {
+    public void handleFlameBombermanContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
 
@@ -77,7 +81,7 @@ public class PhysicContactListener implements ContactListener {
             return;
         }
 
-        Fixture bombermanFixture = fixtureA.getFilterData().categoryBits == BitCollision.BOMBERMAN ? fixtureA
+        Fixture bombermanFixture = categoryA == BitCollision.BOMBERMAN ? fixtureA
                 : fixtureB;
         Bomberman bomberman = (Bomberman) bombermanFixture.getUserData();
         bomberman.damage(1);

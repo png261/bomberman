@@ -22,14 +22,14 @@ public class Flame extends GameObject {
         sprite = new Sprite();
         animationHandle = new AnimationHandle();
 
-        animationHandle.addAnimation(State.FLAME_DOWN.getValue(),
-                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.FLAME_DOWN.getValue())));
-        animationHandle.addAnimation(State.FLAME_UP.getValue(),
-                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.FLAME_UP.getValue())));
-        animationHandle.addAnimation(State.FLAME_LEFT.getValue(),
-                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.FLAME_LEFT.getValue())));
-        animationHandle.addAnimation(State.FLAME_RIGHT.getValue(),
-                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.FLAME_RIGHT.getValue())));
+        animationHandle.addAnimation(State.DOWN.getValue(),
+                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.DOWN.getValue())));
+        animationHandle.addAnimation(State.UP.getValue(),
+                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.UP.getValue())));
+        animationHandle.addAnimation(State.LEFT.getValue(),
+                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.LEFT.getValue())));
+        animationHandle.addAnimation(State.RIGHT.getValue(),
+                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.RIGHT.getValue())));
 
         animationHandle.setCurrentAnimation(direction.getValue(), false);
     }
@@ -69,7 +69,7 @@ public class Flame extends GameObject {
     }
 
     public static enum State {
-        FLAME_UP("flame_y"), FLAME_DOWN("flame_y"), FLAME_LEFT("flame_x"), FLAME_RIGHT("flame_x");
+        UP("y"), DOWN("y"), LEFT("x"), RIGHT("x");
 
         String stateName;
 
@@ -83,13 +83,13 @@ public class Flame extends GameObject {
 
         public static Vector2 getOffSet(State state) {
             switch (state) {
-                case FLAME_UP:
+                case UP:
                     return new Vector2(0, 1);
-                case FLAME_DOWN:
+                case DOWN:
                     return new Vector2(0, -1);
-                case FLAME_LEFT:
+                case LEFT:
                     return new Vector2(-1, 0);
-                case FLAME_RIGHT:
+                case RIGHT:
                     return new Vector2(1, 0);
                 default:
                     return new Vector2(0, 0);

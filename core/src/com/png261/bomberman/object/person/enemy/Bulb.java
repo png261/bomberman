@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.png261.bomberman.object.LoaderParams;
 
 public class Bulb extends Enemy {
-    private static final TextureAtlas textureAtlas = new TextureAtlas("bulb.atlas");
+    private final TextureAtlas textureAtlas = new TextureAtlas("bulb.atlas");
 
     private enum State {
-        BULB_IDLE("bulb_idle"), BULB_DEAD("bulb_dead");
+        IDLE("idle"), DEAD("dead");
 
         private String value;
 
@@ -32,11 +32,29 @@ public class Bulb extends Enemy {
         setupAnimation();
     }
 
+    @Override
+    public void update(float delta) {
+        super.update(delta);
+        if (isDead()) {
+            if (animationHandle.isCurrentAnimation(State.DEAD.getValue()) && animationHandle.isFinished()) {
+                disappear();
+            }
+            return;
+        }
+    }
+
     private void setupAnimation() {
-        animationHandle.addAnimation(State.BULB_DEAD.getValue(),
-                new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.BULB_DEAD.getValue())));
-        animationHandle.addAnimation(State.BULB_IDLE.getValue(),
-                new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.BULB_IDLE.getValue())));
-        animationHandle.setCurrentAnimation(State.BULB_IDLE.getValue(), false);
+        animationHandle.addAnimation(State.DEAD.getValue(),
+                new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE.getValue())));
+        animationHandle.addAnimation(State.IDLE.getValue(),
+                new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.DEAD.getValue())));
+        animationHandle.setCurrentAnimation(State.DEAD.getValue(), false);
+    }
+
+    @Override
+    public void dead() {
+        super.dead();
+        stopMovement();
+        animationHandle.setCurrentAnimation(State.DEAD.getValue());
     }
 }

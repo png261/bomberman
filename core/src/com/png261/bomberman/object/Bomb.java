@@ -23,7 +23,7 @@ public class Bomb extends GameObject {
     private Sprite sprite;
 
     private enum State {
-        BOMB_IDLE("bomb_idle"), BOMB_EXPLODE("bomb_explode");
+        IDLE("idle"), EXPLODE("explode");
 
         String value;
 
@@ -41,11 +41,11 @@ public class Bomb extends GameObject {
 
         sprite = new Sprite();
         animationHandle = new AnimationHandle();
-        animationHandle.addAnimation(State.BOMB_IDLE.getValue(),
-                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.BOMB_IDLE.getValue())));
-        animationHandle.addAnimation(State.BOMB_EXPLODE.getValue(),
-                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.BOMB_EXPLODE.getValue())));
-        animationHandle.setCurrentAnimation(State.BOMB_IDLE.getValue());
+        animationHandle.addAnimation(State.IDLE.getValue(),
+                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.IDLE.getValue())));
+        animationHandle.addAnimation(State.EXPLODE.getValue(),
+                new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.EXPLODE.getValue())));
+        animationHandle.setCurrentAnimation(State.IDLE.getValue());
     }
 
     @Override
@@ -66,7 +66,7 @@ public class Bomb extends GameObject {
             explode();
         }
 
-        if (animationHandle.isCurrentAnimation(State.BOMB_EXPLODE.getValue()) && animationHandle.isFinished()) {
+        if (animationHandle.isCurrentAnimation(State.EXPLODE.getValue()) && animationHandle.isFinished()) {
             disappear();
         }
     }
@@ -86,14 +86,14 @@ public class Bomb extends GameObject {
     }
 
     private void explode() {
-        animationHandle.setCurrentAnimation(State.BOMB_EXPLODE.getValue());
+        animationHandle.setCurrentAnimation(State.EXPLODE.getValue());
         createFlame();
         setSensor(true);
     }
 
     private void createFlame() {
         final Level level = Game.getInstance().level();
-        Flame middleFlame = new Flame(Flame.State.FLAME_UP);
+        Flame middleFlame = new Flame(Flame.State.UP);
         middleFlame.load(new LoaderParams(Unit.box2DToScreen(Unit.meterToPixel(body.getPosition()),
                 BODY_DIAMETER / 4)));
         level.addObject(middleFlame);

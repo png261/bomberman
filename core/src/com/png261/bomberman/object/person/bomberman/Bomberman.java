@@ -20,7 +20,7 @@ public class Bomberman extends Person {
     private int maxBomb = 1;
     private ArrayList<Bomb> bombs;
     private State direction = State.IDLE_DOWN;
-    private static final TextureAtlas textureAtlas = new TextureAtlas("bomberman.atlas");
+    private TextureAtlas textureAtlas = new TextureAtlas("bomberman.atlas");
 
     private enum State {
         IDLE_UP("idle_up"), IDLE_DOWN("idle_down"), IDLE_LEFT("idle_left"), IDLE_RIGHT("idle_right"),

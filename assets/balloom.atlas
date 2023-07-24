@@ -4,140 +4,140 @@ size: 512, 32
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-balloom_dead
+dead
   rotate: false
   xy: 2, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 2
-balloom_dead
+dead
   rotate: false
   xy: 53, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 4
-balloom_dead
+dead
   rotate: false
   xy: 121, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 1
-balloom_dead
+dead
   rotate: false
   xy: 206, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 3
-balloom_down
+down
   rotate: false
   xy: 19, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 1
-balloom_down
+down
   rotate: false
   xy: 87, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 3
-balloom_down
+down
   rotate: false
   xy: 240, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 2
-balloom_down
+down
   rotate: false
   xy: 308, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 4
-balloom_left
+left
   rotate: false
   xy: 70, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 2
-balloom_left
+left
   rotate: false
   xy: 155, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 4
-balloom_left
+left
   rotate: false
   xy: 223, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 1
-balloom_left
+left
   rotate: false
   xy: 291, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 3
-balloom_right
+right
   rotate: false
   xy: 104, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 2
-balloom_right
+right
   rotate: false
   xy: 189, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 4
-balloom_right
+right
   rotate: false
   xy: 257, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 1
-balloom_right
+right
   rotate: false
   xy: 325, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 3
-balloom_up
+up
   rotate: false
   xy: 36, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 2
-balloom_up
+up
   rotate: false
   xy: 138, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 4
-balloom_up
+up
   rotate: false
   xy: 172, 2
   size: 15, 26
   orig: 15, 26
   offset: 0, 0
   index: 1
-balloom_up
+up
   rotate: false
   xy: 274, 2
   size: 15, 26
