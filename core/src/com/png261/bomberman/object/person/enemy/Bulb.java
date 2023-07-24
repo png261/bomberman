@@ -44,11 +44,12 @@ public class Bulb extends Enemy {
     }
 
     private void setupAnimation() {
-        animationHandle.addAnimation(State.DEAD.getValue(),
-                new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE.getValue())));
         animationHandle.addAnimation(State.IDLE.getValue(),
+                new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE.getValue())));
+        animationHandle.addAnimation(State.DEAD.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.DEAD.getValue())));
-        animationHandle.setCurrentAnimation(State.DEAD.getValue(), false);
+
+        animationHandle.setCurrentAnimation(State.IDLE.getValue(), false);
     }
 
     @Override
