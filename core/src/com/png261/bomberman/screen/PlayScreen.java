@@ -28,13 +28,13 @@ public final class PlayScreen implements Screen {
         level.load("map1.tmx");
     }
 
-    public void update(final float delta) {
+    public void update(float delta) {
         camera.update();
         level.update(delta);
     }
 
     @Override
-    public void render(final float delta) {
+    public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
 
         update(delta);

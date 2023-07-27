@@ -25,7 +25,6 @@ public class ItemSpeedUp extends Item {
 
     @Override
     public void bonus(Bomberman bomberman) {
-        System.out.println("item bonus");
         super.bonus(bomberman);
         bomberman.speedUp(1);
     }

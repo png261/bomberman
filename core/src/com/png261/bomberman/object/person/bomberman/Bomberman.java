@@ -1,13 +1,12 @@
 package com.png261.bomberman.object.person.bomberman;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.utils.Unit;
 import com.png261.bomberman.object.Bomb;
@@ -18,7 +17,7 @@ import com.png261.bomberman.physic.BitCollision;
 public class Bomberman extends Person {
     private int flameLength = 1;
     private int maxBomb = 1;
-    private ArrayList<Bomb> bombs;
+    private Array<Bomb> bombs;
     private State direction = State.IDLE_DOWN;
     private TextureAtlas textureAtlas = new TextureAtlas("bomberman.atlas");
 
@@ -39,7 +38,7 @@ public class Bomberman extends Person {
 
     public Bomberman() {
         super();
-        bombs = new ArrayList<>();
+        bombs = new Array<>();
     }
 
     public void load(LoaderParams params) {
@@ -81,7 +80,7 @@ public class Bomberman extends Person {
     }
 
     public void placeBomb() {
-        if (bombs.size() >= maxBomb) {
+        if (bombs.size >= maxBomb) {
             return;
         }
 
@@ -102,15 +101,10 @@ public class Bomberman extends Person {
     }
 
     public void handleBomb() {
-        ArrayList<Bomb> explodedBomb = new ArrayList<>();
-        for (Bomb bomb : bombs) {
-            if (!bomb.exist()) {
-                explodedBomb.add(bomb);
+        for (int i = 0; i < bombs.size; ++i) {
+            if (!bombs.get(i).exist()) {
+                bombs.removeIndex(i);
             }
-        }
-
-        for (Bomb bomb : explodedBomb) {
-            bombs.remove(bomb);
         }
     }
 

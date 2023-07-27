@@ -3,16 +3,16 @@ package com.png261.bomberman.animation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import java.util.HashMap;
+import com.badlogic.gdx.utils.ObjectMap;
 
 public final class AnimationHandle {
 	private float timer = 0;
 	private String currentAnimation = "";
 	private boolean looping = true;
-	private final HashMap<String, Animation<TextureRegion>> animations;
+	private final ObjectMap<String, Animation<TextureRegion>> animations;
 
 	public AnimationHandle() {
-		animations = new HashMap<>();
+		animations = new ObjectMap<>();
 	}
 
 	public void addAnimation(String name, Animation<TextureRegion> animation) {

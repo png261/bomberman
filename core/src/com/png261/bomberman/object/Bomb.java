@@ -64,14 +64,12 @@ public class Bomb extends GameObject {
         updateSprite();
 
         if (timeCountDown <= 0 && isExploded == false) {
-            System.out.println("bomb explode");
             explode();
         }
 
         timeCountDown -= delta;
 
         if (animationHandle.isCurrentAnimation(State.EXPLODE.getValue()) && animationHandle.isFinished()) {
-            System.out.println("bomb disappear");
             disappear();
         }
     }

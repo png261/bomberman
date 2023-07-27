@@ -1,7 +1,5 @@
 package com.png261.bomberman.object;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -9,25 +7,24 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.IntArray;
 import com.png261.bomberman.object.tile.Brick;
 import com.png261.bomberman.object.tile.Wall;
 
 public final class ObjectManager implements Disposable {
 
     private TiledMap map;
-    private ArrayList<Wall> walls;
+    private Array<Wall> walls;
 
-    private ArrayList<Brick> bricks;
-    private ArrayList<GameObject> objects;
-    private ArrayList<GameObject> newObjects;
-    private ArrayList<GameObject> trashObjects;
+    private Array<Brick> bricks;
+    private Array<GameObject> objects;
+    private Array<GameObject> newObjects;
 
     public ObjectManager() {
-        walls = new ArrayList<>();
-        bricks = new ArrayList<>();
-        objects = new ArrayList<>();
-        newObjects = new ArrayList<>();
-        trashObjects = new ArrayList<>();
+        walls = new Array<>();
+        bricks = new Array<>();
+        objects = new Array<>();
+        newObjects = new Array<>();
     }
 
     public void load(TiledMap map) {
@@ -74,23 +71,19 @@ public final class ObjectManager implements Disposable {
         }
         newObjects.clear();
 
-        for (GameObject object : objects) {
+        for (int i = 0; i < objects.size; ++i) {
+            GameObject object = objects.get(i);
             if (object.exist()) {
                 object.update(delta);
             } else {
-                trashObjects.add(object);
+                object.dispose();
+                objects.removeIndex(i);
             }
         }
-
-        for (GameObject object : trashObjects) {
-            objects.remove(object);
-            object.dispose();
-        }
-        trashObjects.clear();
     }
 
     public void render() {
-        for (int i = objects.size() - 1; i >= 0; --i) {
+        for (int i = objects.size - 1; i >= 0; --i) {
             GameObject object = objects.get(i);
             if (object.exist()) {
                 object.render();

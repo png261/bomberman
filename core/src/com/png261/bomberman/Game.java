@@ -2,7 +2,7 @@ package com.png261.bomberman;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.png261.bomberman.level.Level;
-import com.png261.bomberman.screen.PlayScreen;
+import com.png261.bomberman.screen.MainMenuScreen;
 
 public final class Game extends com.badlogic.gdx.Game {
     private static volatile Game instance;
@@ -23,7 +23,7 @@ public final class Game extends com.badlogic.gdx.Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        this.setScreen(new PlayScreen());
+        this.setScreen(new MainMenuScreen());
     }
 
     @Override
