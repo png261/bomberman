@@ -1,7 +1,6 @@
 package com.png261.bomberman.object.person.bomberman;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,12 +14,6 @@ import com.png261.bomberman.object.person.Person;
 import com.png261.bomberman.physic.BitCollision;
 
 public class Bomberman extends Person {
-    private int flameLength = 1;
-    private int maxBomb = 1;
-    private Array<Bomb> bombs;
-    private State direction = State.IDLE_DOWN;
-    private TextureAtlas textureAtlas = new TextureAtlas("bomberman.atlas");
-
     private enum State {
         IDLE_UP("idle_up"), IDLE_DOWN("idle_down"), IDLE_LEFT("idle_left"), IDLE_RIGHT("idle_right"),
         WALK_LEFT("walk_left"), WALK_RIGHT("walk_right"), WALK_UP("walk_up"), WALK_DOWN("walk_down"), DEAD("dead");
@@ -36,6 +29,13 @@ public class Bomberman extends Person {
         }
     }
 
+    private int flameLength = 1;
+    private int maxBomb = 1;
+    private Array<Bomb> bombs;
+    private State direction = State.IDLE_DOWN;
+
+    private TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("bomberman.atlas"));
+
     public Bomberman() {
         super();
         bombs = new Array<>();
@@ -50,53 +50,79 @@ public class Bomberman extends Person {
         setupAnimation();
     }
 
-    public void handleEvents() {
+    public void idle() {
         if (isDead()) {
             return;
         }
+        animationHandle.setCurrentAnimation(direction.getValue());
+        body.setLinearVelocity(0, 0);
+    }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            placeBomb();
-        } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-            moveUp();
-            animationHandle.setCurrentAnimation(State.WALK_UP.getValue());
-            direction = State.IDLE_UP;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-            moveDown();
-            animationHandle.setCurrentAnimation(State.WALK_DOWN.getValue());
-            direction = State.IDLE_DOWN;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            moveLeft();
-            animationHandle.setCurrentAnimation(State.WALK_LEFT.getValue());
-            direction = State.IDLE_LEFT;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            moveRight();
-            animationHandle.setCurrentAnimation(State.WALK_RIGHT.getValue());
-            direction = State.IDLE_RIGHT;
-        } else {
-            animationHandle.setCurrentAnimation(direction.getValue());
-            body.setLinearVelocity(0, 0);
+    @Override
+    public void moveUp() {
+        if (isDead()) {
+            return;
         }
+        super.moveUp();
+        animationHandle.setCurrentAnimation(State.WALK_UP.getValue());
+        direction = State.IDLE_UP;
+    }
+
+    @Override
+    public void moveDown() {
+        if (isDead()) {
+            return;
+        }
+        super.moveDown();
+        animationHandle.setCurrentAnimation(State.WALK_DOWN.getValue());
+        direction = State.IDLE_DOWN;
+    }
+
+    @Override
+    public void moveRight() {
+        if (isDead()) {
+            return;
+        }
+        super.moveRight();
+        animationHandle.setCurrentAnimation(State.WALK_RIGHT.getValue());
+        direction = State.IDLE_RIGHT;
+    }
+
+    @Override
+    public void moveLeft() {
+        if (isDead()) {
+            return;
+        }
+        super.moveLeft();
+        animationHandle.setCurrentAnimation(State.WALK_LEFT.getValue());
+        direction = State.IDLE_LEFT;
     }
 
     public void placeBomb() {
         if (bombs.size >= maxBomb) {
             return;
         }
+        System.out.println("place bomb");
 
+        System.out.println("before new");
         Bomb bomb = new Bomb(flameLength);
+        System.out.println("after new");
+
         Vector2 position = body.getPosition();
         position = Unit.box2DToScreen(position, Unit.pixelToMeter(BODY_DIAMETER / 2));
         position = Unit.meterToPixel(Unit.box2DSnapToGrid(position));
+        System.out.println("before bomb load");
         bomb.load(new LoaderParams(position));
+        System.out.println("before leve add");
         Game.getInstance().level().addObject(bomb);
+        System.out.println("after level add");
         bombs.add(bomb);
+        System.out.println("after place bomb");
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
-        handleEvents();
         handleBomb();
     }
 

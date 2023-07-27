@@ -1,5 +1,6 @@
 package com.png261.bomberman.object.person.enemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -7,7 +8,7 @@ import com.png261.bomberman.object.LoaderParams;
 import com.png261.bomberman.utils.Util;
 
 public class Balloom extends Enemy {
-    private final TextureAtlas textureAtlas = new TextureAtlas("balloom.atlas");
+    private final TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("balloom.atlas"));
     private float timeMove;
 
     private enum State {

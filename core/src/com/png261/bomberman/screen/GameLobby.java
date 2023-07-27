@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.png261.bomberman.Game;
+import com.png261.bomberman.networking.Client;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,19 +33,6 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 public class GameLobby implements Screen {
-    private class Client {
-
-        public String id;
-        public String name;
-        public boolean ready;
-
-        Client(String id, String name, boolean ready) {
-            this.id = id;
-            this.name = name;
-            this.ready = ready;
-        }
-    }
-
     private Socket socket;
 
     private String clientId;
@@ -270,14 +258,14 @@ public class GameLobby implements Screen {
 
             if (time > waitTime) {
 
-                // for (Client p : clients)
-                // p.ready = false;
+                for (Client p : clients)
+                    p.ready = false;
 
-                // socket.off();
-                // // playScreen.start_multiplayer_game(socket, clients, mapIndex);
+                socket.off();
+                Game.getInstance().setScreen(new MultiPlayerGame(socket, clients));
 
-                // waitTime = 0;
-                // waiting = false;
+                waitTime = 0;
+                waiting = false;
 
             }
         }

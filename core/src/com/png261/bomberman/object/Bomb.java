@@ -1,5 +1,6 @@
 package com.png261.bomberman.object;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -15,7 +16,7 @@ public class Bomb extends GameObject {
     private final float BODY_DIAMETER = 16;
     private final float BODY_RADIUS = 8;
     private final float FRAME_TIME = 0.6f;
-    private final TextureAtlas atlas = new TextureAtlas("bomb.atlas");
+    private TextureAtlas atlas;
 
     private float timeCountDown = 2f;
     private boolean isExploded = false;
@@ -52,6 +53,9 @@ public class Bomb extends GameObject {
                 BitCollision.BRICK, BitCollision.FLAME, BitCollision.ENEMY, BitCollision.BOMB));
         setSensor(true);
 
+        System.out.println("before atlas");
+        atlas = new TextureAtlas(Gdx.files.internal("bomb.atlas"));
+        System.out.println("after atlas");
         animationHandle.addAnimation(State.IDLE.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.IDLE.getValue())));
         animationHandle.addAnimation(State.EXPLODE.getValue(),

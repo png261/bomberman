@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.IntArray;
+import com.png261.bomberman.object.person.bomberman.Bomberman;
 import com.png261.bomberman.object.tile.Brick;
 import com.png261.bomberman.object.tile.Wall;
 
@@ -19,12 +20,14 @@ public final class ObjectManager implements Disposable {
     private Array<Brick> bricks;
     private Array<GameObject> objects;
     private Array<GameObject> newObjects;
+    private Array<Bomberman> bombermans;
 
     public ObjectManager() {
         walls = new Array<>();
         bricks = new Array<>();
         objects = new Array<>();
         newObjects = new Array<>();
+        bombermans = new Array<>();
     }
 
     public void load(TiledMap map) {
@@ -34,6 +37,7 @@ public final class ObjectManager implements Disposable {
     }
 
     public void add(GameObject object) {
+        System.out.println("objectmanager add object");
         newObjects.add(object);
     }
 
@@ -52,13 +56,17 @@ public final class ObjectManager implements Disposable {
                     GameObject newObject = ObjectFactory.getInstance().create(type);
                     if (newObject != null) {
                         newObject.load(params);
-                        objects.add(newObject);
-
-                        if (type.equals("Wall")) {
-                            walls.add((Wall) newObject);
-                        } else if (type.equals("Brick")) {
-                            bricks.add((Brick) newObject);
+                        if (type.equals("Bomberman")) {
+                            bombermans.add((Bomberman) newObject);
+                        } else {
+                            objects.add(newObject);
+                            if (type.equals("Wall")) {
+                                walls.add((Wall) newObject);
+                            } else if (type.equals("Brick")) {
+                                bricks.add((Brick) newObject);
+                            }
                         }
+
                     }
                 }
             }
@@ -89,6 +97,10 @@ public final class ObjectManager implements Disposable {
                 object.render();
             }
         }
+    }
+
+    public Array<Bomberman> getBombermans() {
+        return bombermans;
     }
 
     public boolean isPositionOnWall(Vector2 position) {

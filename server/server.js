@@ -32,6 +32,28 @@ io.on("connection", socket => {
             }
         }
     });
+
+    socket.on("placeBomb", function() {
+        io.emit("placeBomb", socket.id);
+    })
+    socket.on("moveUp", function() {
+        io.emit("moveUp", socket.id);
+    })
+    socket.on("moveDown", function() {
+        io.emit("moveDown", socket.id);
+    })
+    socket.on("moveRight", function() {
+        io.emit("moveRight", socket.id);
+    })
+    socket.on("moveLeft", function() {
+        io.emit("moveLeft", socket.id);
+    })
+    socket.on("idle", function() {
+        io.emit("idle", socket.id);
+    })
+    socket.on("dead", function() {
+        io.emit("dead", socket.id);
+    })
 });
 
 io.listen(3000);

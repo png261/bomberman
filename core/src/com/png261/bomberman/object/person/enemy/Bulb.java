@@ -1,12 +1,13 @@
 package com.png261.bomberman.object.person.enemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.png261.bomberman.object.LoaderParams;
 
 public class Bulb extends Enemy {
-    private final TextureAtlas textureAtlas = new TextureAtlas("bulb.atlas");
+    private final TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("bulb.atlas"));
 
     private enum State {
         IDLE("idle"), DEAD("dead");

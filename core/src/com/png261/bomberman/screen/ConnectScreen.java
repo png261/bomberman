@@ -67,7 +67,6 @@ public class ConnectScreen implements Screen {
         rootTable.row();
         rootTable.add(submitButton).width(100);
         rootTable.setFillParent(true);
-        rootTable.setDebug(true);
         stage.addActor(rootTable);
     }
 

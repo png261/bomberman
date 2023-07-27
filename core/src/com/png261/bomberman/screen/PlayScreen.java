@@ -1,5 +1,7 @@
 package com.png261.bomberman.screen;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -8,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.level.Level;
+import com.png261.bomberman.object.person.bomberman.Bomberman;
 
 public final class PlayScreen implements Screen {
     private final int MAP_WIDTH = 17;
@@ -16,6 +19,7 @@ public final class PlayScreen implements Screen {
     private OrthographicCamera camera;
     private Viewport viewport;
     private Level level;
+    private Bomberman bomberman;
 
     @Override
     public void show() {
@@ -26,11 +30,31 @@ public final class PlayScreen implements Screen {
         level = new Level();
         Game.getInstance().setLevel(level);
         level.load("map1.tmx");
+        bomberman = level.getBombermans().get(0);
     }
 
     public void update(float delta) {
         camera.update();
         level.update(delta);
+
+        handleInput();
+        bomberman.update(delta);
+    }
+
+    public void handleInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            bomberman.placeBomb();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            bomberman.moveUp();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            bomberman.moveDown();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            bomberman.moveLeft();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            bomberman.moveRight();
+        } else {
+            bomberman.idle();
+        }
     }
 
     @Override
@@ -44,6 +68,7 @@ public final class PlayScreen implements Screen {
         Game.getInstance().batch().begin();
 
         level.renderObject();
+        bomberman.render();
 
         Game.getInstance().batch().end();
     }
