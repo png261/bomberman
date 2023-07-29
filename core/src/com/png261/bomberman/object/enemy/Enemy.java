@@ -32,8 +32,7 @@ public abstract class Enemy extends GameObject implements DamageableObject, Cont
     public void load(LoaderParams params) {
         createCircleBody(params.position(), BODY_RADIUS);
 
-        setCollisionFilter(BitCollision.ENEMY, BitCollision.orOperation(BitCollision.WALL, BitCollision.BRICK,
-                BitCollision.BOMB, BitCollision.FLAME, BitCollision.BOMBERMAN));
+        setCollisionFilter(BitCollision.ENEMY, BitCollision.ALL);
     }
 
     @Override

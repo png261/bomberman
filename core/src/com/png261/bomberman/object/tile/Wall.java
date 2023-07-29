@@ -11,7 +11,6 @@ public class Wall extends Tile {
     @Override
     public void load(LoaderParams params) {
         super.load(params);
-        setCollisionFilter(BitCollision.WALL, BitCollision.orOperation(BitCollision.BOMBERMAN, BitCollision.BOMB,
-                BitCollision.FLAME, BitCollision.ENEMY));
+        setCollisionFilter(BitCollision.WALL, BitCollision.ALL);
     }
 }

@@ -49,8 +49,7 @@ public class Bomb extends GameObject {
     @Override
     public void load(LoaderParams params) {
         createCircleBody(params.position(), BODY_RADIUS);
-        setCollisionFilter(BitCollision.BOMB, BitCollision.orOperation(BitCollision.BOMBERMAN, BitCollision.WALL,
-                BitCollision.BRICK, BitCollision.FLAME, BitCollision.ENEMY, BitCollision.BOMB));
+        setCollisionFilter(BitCollision.BOMB, BitCollision.ALL);
         setSensor(true);
 
         System.out.println("before atlas");

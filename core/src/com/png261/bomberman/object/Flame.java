@@ -39,8 +39,7 @@ public class Flame extends GameObject {
     public void load(LoaderParams params) {
         createCircleBody(params.position(), BODY_DIAMETER / 2);
 
-        setCollisionFilter(BitCollision.FLAME, BitCollision.orOperation(BitCollision.BOMBERMAN, BitCollision.WALL,
-                BitCollision.BRICK, BitCollision.BOMB, BitCollision.ENEMY));
+        setCollisionFilter(BitCollision.FLAME, BitCollision.ALL);
 
         setSensor(true);
 

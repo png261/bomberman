@@ -32,6 +32,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
             return value;
         }
     }
+
     protected final float BODY_DIAMETER = 12;
     protected final float BODY_RADIUS = 6;
 
@@ -61,8 +62,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     public void load(LoaderParams params) {
         createCircleBody(params.position(), BODY_RADIUS);
 
-        setCollisionFilter(BitCollision.BOMBERMAN, BitCollision.orOperation(BitCollision.WALL, BitCollision.BRICK,
-                BitCollision.BOMB, BitCollision.FLAME, BitCollision.ENEMY, BitCollision.ITEM));
+        setCollisionFilter(BitCollision.BOMBERMAN, BitCollision.ALL);
 
         setupAnimation();
     }

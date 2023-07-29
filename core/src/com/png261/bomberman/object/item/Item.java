@@ -32,7 +32,7 @@ public abstract class Item extends GameObject {
     public void load(LoaderParams params) {
         createRectangleBody(params.x(), params.y(), params.width(), params.height());
         setSensor(true);
-        setCollisionFilter(BitCollision.ITEM, BitCollision.orOperation(BitCollision.BOMBERMAN));
+        setCollisionFilter(BitCollision.ITEM, BitCollision.BOMBERMAN);
     }
 
     public void bonus(Bomberman bomberman) {

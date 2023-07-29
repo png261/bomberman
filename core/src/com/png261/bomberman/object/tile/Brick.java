@@ -22,8 +22,7 @@ public class Brick extends Tile {
     @Override
     public void load(LoaderParams params) {
         super.load(params);
-        setCollisionFilter(BitCollision.BRICK, BitCollision.orOperation(BitCollision.BOMBERMAN, BitCollision.BOMB,
-                BitCollision.FLAME, BitCollision.ENEMY));
+        setCollisionFilter(BitCollision.BRICK, BitCollision.ALL);
     }
 
     @Override
