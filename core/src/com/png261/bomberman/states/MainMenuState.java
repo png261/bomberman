@@ -1,4 +1,4 @@
-package com.png261.bomberman.screen;
+package com.png261.bomberman.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -17,14 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.png261.bomberman.Game;
+import com.png261.bomberman.manager.GameStateManager;
 
-public final class MainMenuScreen implements Screen {
+public final class MainMenuState extends GameState {
     private Stage stage;
     private Skin skin;
 
@@ -45,7 +42,7 @@ public final class MainMenuScreen implements Screen {
         singleButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Game.getInstance().setScreen(new PlayScreen());
+                Game.getInstance().setScreen(new PlayState());
             }
 
         });
@@ -54,7 +51,7 @@ public final class MainMenuScreen implements Screen {
         multipleButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Game.getInstance().setScreen(new ConnectScreen());
+                GameStateManager.getInstance().changeState(new ConnectState());
             }
 
         });

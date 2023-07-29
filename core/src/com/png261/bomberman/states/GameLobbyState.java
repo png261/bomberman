@@ -1,4 +1,4 @@
-package com.png261.bomberman.screen;
+package com.png261.bomberman.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -32,7 +32,7 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
-public class GameLobby implements Screen {
+public class GameLobbyState extends GameState {
     private Socket socket;
 
     private String clientId;
@@ -45,7 +45,6 @@ public class GameLobby implements Screen {
 
     private Table rootTable;
 
-    private Table mapTable;
     private Table gameInfoTable;
 
     private Table chatTable;
@@ -63,7 +62,7 @@ public class GameLobby implements Screen {
     private Label timeIndicator;
     private TextButton cancelButton;
 
-    public GameLobby(Socket socket, String clientId) {
+    public GameLobbyState(Socket socket, String clientId) {
         this.socket = socket;
         this.clientId = clientId;
         clients = new Array<>();
@@ -262,7 +261,7 @@ public class GameLobby implements Screen {
                     p.ready = false;
 
                 socket.off();
-                Game.getInstance().setScreen(new MultiPlayerGame(socket, clients));
+                Game.getInstance().setScreen(new MultiPlayerGameState(socket, clients));
 
                 waitTime = 0;
                 waiting = false;

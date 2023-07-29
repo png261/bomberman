@@ -1,4 +1,4 @@
-package com.png261.bomberman.screen;
+package com.png261.bomberman.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -21,7 +21,7 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
-public final class MultiPlayerGame implements Screen {
+public final class MultiPlayerGameState extends GameState {
     private final int MAP_WIDTH = 17;
     private final int MAP_HEIGHT = 13;
 
@@ -35,7 +35,7 @@ public final class MultiPlayerGame implements Screen {
     private Array<Bomberman> bombermans;
     private ObjectMap<String, Bomberman> mapBomberman;
 
-    public MultiPlayerGame(Socket socket, Array<Client> clients) {
+    public MultiPlayerGameState(Socket socket, Array<Client> clients) {
         this.socket = socket;
         this.clients = clients;
     }

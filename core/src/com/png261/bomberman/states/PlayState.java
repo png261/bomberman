@@ -1,8 +1,7 @@
-package com.png261.bomberman.screen;
+package com.png261.bomberman.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -12,12 +11,13 @@ import com.png261.bomberman.Game;
 import com.png261.bomberman.level.Level;
 import com.png261.bomberman.object.bomberman.Bomberman;
 
-public final class PlayScreen implements Screen {
+public final class PlayState extends GameState {
     private final int MAP_WIDTH = 17;
     private final int MAP_HEIGHT = 13;
 
     private OrthographicCamera camera;
     private Viewport viewport;
+
     private Level level;
     private Bomberman bomberman;
 
@@ -88,6 +88,7 @@ public final class PlayScreen implements Screen {
 
     @Override
     public void pause() {
+        System.out.println("play state pause");
     }
 
     @Override

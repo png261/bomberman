@@ -1,4 +1,4 @@
-package com.png261.bomberman.screen;
+package com.png261.bomberman.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -18,7 +18,7 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
-public class ConnectScreen implements Screen {
+public class ConnectState extends GameState {
     private Stage stage;
     private Skin skin;
 
@@ -53,7 +53,7 @@ public class ConnectScreen implements Screen {
                 String name = nameField.getText();
                 connectServer(serverUrl, name);
                 if (socket != null) {
-                    Game.getInstance().setScreen(new GameLobby(socket, clientId));
+                    Game.getInstance().setScreen(new GameLobbyState(socket, clientId));
                 }
             }
         });
