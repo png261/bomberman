@@ -3,9 +3,9 @@ package com.png261.bomberman.object;
 import com.png261.bomberman.object.item.ItemBombUp;
 import com.png261.bomberman.object.item.ItemFlameUp;
 import com.png261.bomberman.object.item.ItemSpeedUp;
-import com.png261.bomberman.object.person.bomberman.Bomberman;
-import com.png261.bomberman.object.person.enemy.Balloom;
-import com.png261.bomberman.object.person.enemy.Bulb;
+import com.png261.bomberman.object.bomberman.Bomberman;
+import com.png261.bomberman.object.enemy.Balloom;
+import com.png261.bomberman.object.enemy.Bulb;
 import com.png261.bomberman.object.tile.Brick;
 import com.png261.bomberman.object.tile.Wall;
 

@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.png261.bomberman.manager.MapManager;
 import com.png261.bomberman.object.GameObject;
 import com.png261.bomberman.object.ObjectManager;
-import com.png261.bomberman.object.person.bomberman.Bomberman;
+import com.png261.bomberman.object.bomberman.Bomberman;
 import com.png261.bomberman.physic.PhysicManager;
 
 public final class Level {

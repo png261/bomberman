@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.level.Level;
-import com.png261.bomberman.object.person.bomberman.Bomberman;
+import com.png261.bomberman.object.bomberman.Bomberman;
 
 public final class PlayScreen implements Screen {
     private final int MAP_WIDTH = 17;

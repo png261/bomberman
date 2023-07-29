@@ -1,4 +1,4 @@
-package com.png261.bomberman.object.person.enemy;
+package com.png261.bomberman.object.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;

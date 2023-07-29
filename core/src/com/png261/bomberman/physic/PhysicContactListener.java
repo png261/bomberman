@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.png261.bomberman.object.DamageableObject;
 import com.png261.bomberman.object.GameObject;
 import com.png261.bomberman.object.item.Item;
-import com.png261.bomberman.object.person.bomberman.Bomberman;
+import com.png261.bomberman.object.bomberman.Bomberman;
 import com.png261.bomberman.object.tile.Brick;
 
 public class PhysicContactListener implements ContactListener {

@@ -1,19 +1,23 @@
-package com.png261.bomberman.object.person.bomberman;
+package com.png261.bomberman.object.bomberman;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.png261.bomberman.Game;
-import com.png261.bomberman.utils.Unit;
+import com.png261.bomberman.animation.AnimationHandle;
 import com.png261.bomberman.object.Bomb;
+import com.png261.bomberman.object.ControllableObject;
+import com.png261.bomberman.object.DamageableObject;
+import com.png261.bomberman.object.GameObject;
 import com.png261.bomberman.object.LoaderParams;
-import com.png261.bomberman.object.person.Person;
 import com.png261.bomberman.physic.BitCollision;
+import com.png261.bomberman.utils.Unit;
 
-public class Bomberman extends Person {
+public class Bomberman extends GameObject implements DamageableObject, ControllableObject {
     private enum State {
         IDLE_UP("idle_up"), IDLE_DOWN("idle_down"), IDLE_LEFT("idle_left"), IDLE_RIGHT("idle_right"),
         WALK_LEFT("walk_left"), WALK_RIGHT("walk_right"), WALK_UP("walk_up"), WALK_DOWN("walk_down"), DEAD("dead");
@@ -28,6 +32,17 @@ public class Bomberman extends Person {
             return value;
         }
     }
+    protected final float BODY_DIAMETER = 12;
+    protected final float BODY_RADIUS = 6;
+
+    protected final float FRAME_TIME = 0.6f;
+    protected int health = 1;
+
+    protected boolean isDead = false;
+    protected float speed = 2.5f;
+    protected AnimationHandle animationHandle;
+
+    protected Sprite sprite;
 
     private int flameLength = 1;
     private int maxBomb = 1;
@@ -38,11 +53,13 @@ public class Bomberman extends Person {
 
     public Bomberman() {
         super();
+        animationHandle = new AnimationHandle();
+        sprite = new Sprite();
         bombs = new Array<>();
     }
 
     public void load(LoaderParams params) {
-        super.load(params);
+        createCircleBody(params.position(), BODY_RADIUS);
 
         setCollisionFilter(BitCollision.BOMBERMAN, BitCollision.orOperation(BitCollision.WALL, BitCollision.BRICK,
                 BitCollision.BOMB, BitCollision.FLAME, BitCollision.ENEMY, BitCollision.ITEM));
@@ -63,7 +80,7 @@ public class Bomberman extends Person {
         if (isDead()) {
             return;
         }
-        super.moveUp();
+        this.body.setLinearVelocity(new Vector2(0, speed));
         animationHandle.setCurrentAnimation(State.WALK_UP.getValue());
         direction = State.IDLE_UP;
     }
@@ -73,7 +90,7 @@ public class Bomberman extends Person {
         if (isDead()) {
             return;
         }
-        super.moveDown();
+        this.body.setLinearVelocity(new Vector2(0, -speed));
         animationHandle.setCurrentAnimation(State.WALK_DOWN.getValue());
         direction = State.IDLE_DOWN;
     }
@@ -83,7 +100,7 @@ public class Bomberman extends Person {
         if (isDead()) {
             return;
         }
-        super.moveRight();
+        this.body.setLinearVelocity(new Vector2(speed, 0));
         animationHandle.setCurrentAnimation(State.WALK_RIGHT.getValue());
         direction = State.IDLE_RIGHT;
     }
@@ -93,7 +110,7 @@ public class Bomberman extends Person {
         if (isDead()) {
             return;
         }
-        super.moveLeft();
+        this.body.setLinearVelocity(new Vector2(-speed, 0));
         animationHandle.setCurrentAnimation(State.WALK_LEFT.getValue());
         direction = State.IDLE_LEFT;
     }
@@ -122,8 +139,13 @@ public class Bomberman extends Person {
 
     @Override
     public void update(float delta) {
-        super.update(delta);
+        updateSprite();
         handleBomb();
+    }
+
+    @Override
+    public void render() {
+        sprite.draw(Game.getInstance().batch());
     }
 
     public void handleBomb() {
@@ -167,7 +189,7 @@ public class Bomberman extends Person {
 
     @Override
     public void dead() {
-        super.dead();
+        isDead = true;
         stopMovement();
         animationHandle.setCurrentAnimation(State.DEAD.getValue());
     }
@@ -182,5 +204,32 @@ public class Bomberman extends Person {
 
     public void bombUp(float n) {
         maxBomb += n;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
+
+    @Override
+    public boolean isDead() {
+        return isDead;
+    }
+
+    @Override
+    public void damage(int damage) {
+        health = health - damage;
+        if (health <= 0) {
+            dead();
+        }
+    }
+
+    protected void updateSprite() {
+        float x = body.getPosition().x - Unit.pixelToMeter(BODY_RADIUS);
+        float y = body.getPosition().y - Unit.pixelToMeter(BODY_RADIUS);
+
+        sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
+                Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
+        sprite.setRegion(animationHandle.getCurrentFrame());
     }
 }

@@ -3,7 +3,7 @@ package com.png261.bomberman.object.item;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.png261.bomberman.object.LoaderParams;
-import com.png261.bomberman.object.person.bomberman.Bomberman;
+import com.png261.bomberman.object.bomberman.Bomberman;
 import com.png261.bomberman.utils.Unit;
 
 public class ItemBombUp extends Item {

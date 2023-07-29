@@ -15,7 +15,7 @@ import com.png261.bomberman.Game;
 import com.png261.bomberman.level.Level;
 import com.png261.bomberman.networking.Client;
 import com.png261.bomberman.object.LoaderParams;
-import com.png261.bomberman.object.person.bomberman.Bomberman;
+import com.png261.bomberman.object.bomberman.Bomberman;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
