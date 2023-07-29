@@ -88,7 +88,6 @@ public final class PlayState extends GameState {
 
     @Override
     public void pause() {
-        System.out.println("play state pause");
     }
 
     @Override

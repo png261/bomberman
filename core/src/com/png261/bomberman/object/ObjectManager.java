@@ -37,7 +37,6 @@ public final class ObjectManager implements Disposable {
     }
 
     public void add(GameObject object) {
-        System.out.println("objectmanager add object");
         newObjects.add(object);
     }
 

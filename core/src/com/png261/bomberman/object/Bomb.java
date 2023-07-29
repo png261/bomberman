@@ -52,9 +52,7 @@ public class Bomb extends GameObject {
         setCollisionFilter(BitCollision.BOMB, BitCollision.ALL);
         setSensor(true);
 
-        System.out.println("before atlas");
         atlas = new TextureAtlas(Gdx.files.internal("bomb.atlas"));
-        System.out.println("after atlas");
         animationHandle.addAnimation(State.IDLE.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.IDLE.getValue())));
         animationHandle.addAnimation(State.EXPLODE.getValue(),

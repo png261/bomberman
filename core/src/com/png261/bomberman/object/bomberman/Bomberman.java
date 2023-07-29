@@ -119,22 +119,15 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
         if (bombs.size >= maxBomb) {
             return;
         }
-        System.out.println("place bomb");
 
-        System.out.println("before new");
         Bomb bomb = new Bomb(flameLength);
-        System.out.println("after new");
 
         Vector2 position = body.getPosition();
         position = Unit.box2DToScreen(position, Unit.pixelToMeter(BODY_DIAMETER / 2));
         position = Unit.meterToPixel(Unit.box2DSnapToGrid(position));
-        System.out.println("before bomb load");
         bomb.load(new LoaderParams(position));
-        System.out.println("before leve add");
         Game.getInstance().level().addObject(bomb);
-        System.out.println("after level add");
         bombs.add(bomb);
-        System.out.println("after place bomb");
     }
 
     @Override
