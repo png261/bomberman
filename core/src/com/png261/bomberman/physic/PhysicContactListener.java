@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.png261.bomberman.object.DamageableObject;
-import com.png261.bomberman.object.GameObject;
 import com.png261.bomberman.object.item.Item;
 import com.png261.bomberman.object.bomberman.Bomberman;
 import com.png261.bomberman.object.tile.Brick;
@@ -16,6 +15,7 @@ public class PhysicContactListener implements ContactListener {
     public void beginContact(Contact contact) {
         handleItemContact(contact);
         handleFlameContact(contact);
+        handleEnemyConntact(contact);
     }
 
     @Override
@@ -88,5 +88,22 @@ public class PhysicContactListener implements ContactListener {
                 : fixtureB;
         DamageableObject object = (DamageableObject) objectFixture.getUserData();
         object.damage(1);
+    }
+
+    public void handleEnemyConntact(Contact contact) {
+        Fixture fixtureA = contact.getFixtureA();
+        Fixture fixtureB = contact.getFixtureB();
+
+        short categoryA = fixtureA.getFilterData().categoryBits;
+        short categoryB = fixtureB.getFilterData().categoryBits;
+
+        if (((categoryA | categoryB) != (BitCollision.ENEMY | BitCollision.BOMBERMAN))) {
+            return;
+        }
+
+        Fixture bombermanFixture = categoryA == BitCollision.BOMBERMAN ? fixtureA
+                : fixtureB;
+        Bomberman bomberman = (Bomberman) bombermanFixture.getUserData();
+        bomberman.damage(1);
     }
 }
