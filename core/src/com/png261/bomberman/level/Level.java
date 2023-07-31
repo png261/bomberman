@@ -44,25 +44,17 @@ public final class Level implements Disposable {
         objectManager.render();
     }
 
-    public boolean isPositionOnWall(Vector2 position) {
-        return objectManager.isPositionOnWall(position);
-    }
-
-    public boolean isPositionOnBrick(Vector2 position) {
-        return objectManager.isPositionOnBrick(position);
-    }
-
-    public void addObject(GameObject object) {
-        objectManager.add(object);
-    }
-
-    public Array<Bomberman> getBombermans() {
-        return objectManager.getBombermans();
-    }
-
     @Override
     public void dispose() {
         objectManager.dispose();
         mapManager.dispose();
+    }
+
+    public MapManager mapManager() {
+        return mapManager;
+    }
+
+    public ObjectManager objectManager() {
+        return objectManager;
     }
 }

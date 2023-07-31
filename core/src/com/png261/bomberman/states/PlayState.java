@@ -32,7 +32,7 @@ public final class PlayState extends GameState {
         level = new Level();
         Game.getInstance().setLevel(level);
         level.load("map1.tmx");
-        bomberman = level.getBombermans().get(0);
+        bomberman = level.objectManager().getBombermans().get(0);
     }
 
     public void update(float delta) {

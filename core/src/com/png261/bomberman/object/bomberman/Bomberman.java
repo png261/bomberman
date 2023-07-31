@@ -129,8 +129,12 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
         Vector2 position = body.getPosition();
         position = Unit.box2DToScreen(position, Unit.pixelToMeter(BODY_DIAMETER / 2));
         position = Unit.meterToPixel(Unit.box2DSnapToGrid(position));
+        if (Game.getInstance().level().objectManager().hasBombAtPosition(position)) {
+            return;
+        }
+
         bomb.load(new LoaderParams(position));
-        Game.getInstance().level().addObject(bomb);
+        Game.getInstance().level().objectManager().add(bomb);
         bombs.add(bomb);
     }
 

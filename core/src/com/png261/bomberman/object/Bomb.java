@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.animation.AnimationHandle;
@@ -25,6 +26,7 @@ public class Bomb extends GameObject {
     private AnimationHandle animationHandle;
     private Sprite sprite;
     private LoaderParams params;
+    private Circle bounds;
 
     private enum State {
         IDLE("idle"), EXPLODE("explode");
@@ -50,6 +52,11 @@ public class Bomb extends GameObject {
     @Override
     public void load(LoaderParams params) {
         this.params = params;
+
+        bounds = new Circle();
+        bounds.setPosition(params.position());
+        bounds.setRadius(BODY_RADIUS);
+
         atlas = new TextureAtlas(Gdx.files.internal("bomb.atlas"));
         animationHandle.addAnimation(State.IDLE.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.IDLE.getValue())));
@@ -107,7 +114,7 @@ public class Bomb extends GameObject {
         Flame middleFlame = new Flame(Flame.State.UP);
         middleFlame.load(new LoaderParams(Unit.box2DToScreen(Unit.meterToPixel(body.getPosition()),
                 BODY_DIAMETER / 4)));
-        level.addObject(middleFlame);
+        level.objectManager().add(middleFlame);
 
         for (Flame.State direction : Flame.State.values()) {
             for (int i = 1; i <= flameLength; ++i) {
@@ -116,19 +123,23 @@ public class Bomb extends GameObject {
                 position = Unit.box2DSnapToGrid(Unit.box2DToScreen(Unit.meterToPixel(position),
                         BODY_DIAMETER / 4));
 
-                if (level.isPositionOnWall(position)) {
+                if (level.objectManager().hasWallAtPosition(position)) {
                     break;
                 }
 
                 Flame flame = new Flame(direction);
                 flame.load(new LoaderParams(position));
-                level.addObject(flame);
+                level.objectManager().add(flame);
 
-                if (level.isPositionOnBrick(position)) {
+                if (level.objectManager().hasBrickAtPosition(position)) {
                     break;
                 }
             }
         }
+    }
+
+    public boolean contains(Vector2 position) {
+        return bounds.contains(position);
     }
 
 }

@@ -49,7 +49,7 @@ public final class MultiPlayerGameState extends GameState {
         level = new Level();
         Game.getInstance().setLevel(level);
         level.load("multiplayer.tmx");
-        bombermans = level.getBombermans();
+        bombermans = level.objectManager().getBombermans();
 
         mapBomberman = new ObjectMap<>();
         for (int i = 0; i < clients.size; ++i) {

@@ -60,6 +60,6 @@ public class Brick extends Tile {
         position = Unit.box2DToScreen(Unit.meterToPixel(position),
                 16, 16);
         item.load(new LoaderParams(position, 16, 16));
-        Game.getInstance().level().addObject(item);
+        Game.getInstance().level().objectManager().add(item);
     }
 }

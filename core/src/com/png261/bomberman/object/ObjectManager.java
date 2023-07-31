@@ -103,7 +103,7 @@ public final class ObjectManager implements Disposable {
         return bombermans;
     }
 
-    public boolean isPositionOnWall(Vector2 position) {
+    public boolean hasWallAtPosition(Vector2 position) {
         for (Wall wall : walls) {
             if (wall.contains(position)) {
                 return true;
@@ -113,7 +113,7 @@ public final class ObjectManager implements Disposable {
         return false;
     }
 
-    public boolean isPositionOnBrick(Vector2 position) {
+    public boolean hasBrickAtPosition(Vector2 position) {
         for (Brick brick : bricks) {
             if (brick.contains(position)) {
                 return true;
@@ -134,5 +134,15 @@ public final class ObjectManager implements Disposable {
 
         objects.clear();
         bombermans.clear();
+    }
+
+    public boolean hasBombAtPosition(Vector2 position) {
+        for (Object object : objects) {
+            if (object instanceof Bomb) {
+                Bomb bomb = (Bomb) object;
+                return bomb.contains(position);
+            }
+        }
+        return false;
     }
 }
