@@ -33,6 +33,8 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
         }
     }
 
+    private boolean isHasKey = false;
+
     protected final float BODY_DIAMETER = 12;
     protected final float BODY_RADIUS = 6;
 
@@ -238,5 +240,14 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
         sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
                 Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
         sprite.setRegion(animationHandle.getCurrentFrame());
+    }
+
+    public void recivedKey() {
+        System.out.println("bomberman recived key");
+        isHasKey = true;
+    }
+
+    public boolean isHasKey() {
+        return isHasKey;
     }
 }

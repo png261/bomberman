@@ -9,7 +9,7 @@ import com.png261.bomberman.physic.BitCollision;
 
 public abstract class Item extends GameObject {
     protected Sprite sprite;
-    private LoaderParams params;
+    protected LoaderParams params;
 
     public Item() {
         super();

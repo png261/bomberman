@@ -3,6 +3,7 @@ package com.png261.bomberman.object;
 import com.png261.bomberman.object.item.ItemBombUp;
 import com.png261.bomberman.object.item.ItemFlameUp;
 import com.png261.bomberman.object.item.ItemSpeedUp;
+import com.png261.bomberman.object.item.Key;
 import com.png261.bomberman.object.bomberman.Bomberman;
 import com.png261.bomberman.object.enemy.Balloom;
 import com.png261.bomberman.object.enemy.Bulb;
@@ -41,6 +42,8 @@ public final class ObjectFactory {
             return new ItemFlameUp();
         } else if (id.equals("ItemBombUp")) {
             return new ItemBombUp();
+        } else if (id.equals("Key")) {
+            return new Key();
         }
 
         return null;
