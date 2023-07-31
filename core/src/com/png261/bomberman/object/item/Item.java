@@ -9,6 +9,7 @@ import com.png261.bomberman.physic.BitCollision;
 
 public abstract class Item extends GameObject {
     protected Sprite sprite;
+    private LoaderParams params;
 
     public Item() {
         super();
@@ -30,6 +31,11 @@ public abstract class Item extends GameObject {
 
     @Override
     public void load(LoaderParams params) {
+        this.params = params;
+    }
+
+    @Override
+    public void createBody() {
         createRectangleBody(params.x(), params.y(), params.width(), params.height());
         setSensor(true);
         setCollisionFilter(BitCollision.ITEM, BitCollision.BOMBERMAN);

@@ -2,12 +2,10 @@ package com.png261.bomberman.object;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.IntArray;
 import com.png261.bomberman.object.bomberman.Bomberman;
 import com.png261.bomberman.object.tile.Brick;
 import com.png261.bomberman.object.tile.Wall;
@@ -55,6 +53,8 @@ public final class ObjectManager implements Disposable {
                     GameObject newObject = ObjectFactory.getInstance().create(type);
                     if (newObject != null) {
                         newObject.load(params);
+                        newObject.createBody();
+
                         if (type.equals("Bomberman")) {
                             bombermans.add((Bomberman) newObject);
                         } else {
@@ -75,6 +75,7 @@ public final class ObjectManager implements Disposable {
     public void update(float delta) {
         for (GameObject object : newObjects) {
             objects.add(object);
+            object.createBody();
         }
         newObjects.clear();
 
@@ -123,5 +124,15 @@ public final class ObjectManager implements Disposable {
 
     @Override
     public void dispose() {
+        for (GameObject object : objects) {
+            object.dispose();
+        }
+
+        for (GameObject object : bombermans) {
+            object.dispose();
+        }
+
+        objects.clear();
+        bombermans.clear();
     }
 }

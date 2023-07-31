@@ -9,7 +9,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.level.Level;
+import com.png261.bomberman.manager.GameStateManager;
 import com.png261.bomberman.object.bomberman.Bomberman;
+import com.png261.bomberman.physic.PhysicManager;
 
 public final class PlayState extends GameState {
     private final int MAP_WIDTH = 17;
@@ -62,6 +64,12 @@ public final class PlayState extends GameState {
         ScreenUtils.clear(Color.BLACK);
 
         update(delta);
+
+        if (!bomberman.exist()) {
+            GameStateManager.getInstance().changeState(new GameOverState());
+            return;
+        }
+
         level.renderMap(camera);
 
         Game.getInstance().batch().setProjectionMatrix(camera.combined);
@@ -80,10 +88,12 @@ public final class PlayState extends GameState {
 
     @Override
     public void dispose() {
+        level.dispose();
     }
 
     @Override
     public void hide() {
+        level.dispose();
     }
 
     @Override

@@ -30,6 +30,8 @@ public abstract class PhysicObject implements Disposable {
         PhysicManager.getInstance().world().destroyBody(body);
     }
 
+    public abstract void createBody();
+
     protected void createCircleBody(Circle circle) {
         createCircleBody(circle.x, circle.y, circle.radius);
     }

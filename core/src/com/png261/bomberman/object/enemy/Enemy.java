@@ -22,6 +22,7 @@ public abstract class Enemy extends GameObject implements DamageableObject, Cont
     protected float speed = 2.5f;
     protected AnimationHandle animationHandle;
     protected Sprite sprite;
+    private LoaderParams params;
 
     public Enemy() {
         super();
@@ -30,8 +31,12 @@ public abstract class Enemy extends GameObject implements DamageableObject, Cont
     }
 
     public void load(LoaderParams params) {
-        createCircleBody(params.position(), BODY_RADIUS);
+        this.params = params;
+    }
 
+    @Override
+    public void createBody() {
+        createCircleBody(params.position(), BODY_RADIUS);
         setCollisionFilter(BitCollision.ENEMY, BitCollision.ALL);
     }
 

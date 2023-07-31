@@ -3,25 +3,19 @@ package com.png261.bomberman.object.tile;
 import com.png261.bomberman.physic.BitCollision;
 import com.png261.bomberman.utils.Unit;
 import com.png261.bomberman.Game;
-import com.badlogic.gdx.ai.btree.decorator.Random;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.object.GameObject;
 import com.png261.bomberman.object.LoaderParams;
 import com.png261.bomberman.object.ObjectFactory;
 import com.png261.bomberman.object.item.Item;
-import com.png261.bomberman.object.item.ItemSpeedUp;
 
 public class Brick extends Tile {
     private boolean isBroken;
 
-    public Brick() {
-        super();
-    }
-
     @Override
-    public void load(LoaderParams params) {
-        super.load(params);
+    public void createBody() {
+        super.createBody();
         setCollisionFilter(BitCollision.BRICK, BitCollision.ALL);
     }
 

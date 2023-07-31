@@ -24,6 +24,7 @@ public class Bomb extends GameObject {
     private int flameLength;
     private AnimationHandle animationHandle;
     private Sprite sprite;
+    private LoaderParams params;
 
     private enum State {
         IDLE("idle"), EXPLODE("explode");
@@ -48,16 +49,21 @@ public class Bomb extends GameObject {
 
     @Override
     public void load(LoaderParams params) {
-        createCircleBody(params.position(), BODY_RADIUS);
-        setCollisionFilter(BitCollision.BOMB, BitCollision.ALL);
-        setSensor(true);
-
+        this.params = params;
         atlas = new TextureAtlas(Gdx.files.internal("bomb.atlas"));
         animationHandle.addAnimation(State.IDLE.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.IDLE.getValue())));
         animationHandle.addAnimation(State.EXPLODE.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.EXPLODE.getValue())));
         animationHandle.setCurrentAnimation(State.IDLE.getValue());
+    }
+
+    @Override
+    public void createBody() {
+        createCircleBody(params.position(), BODY_RADIUS);
+        setCollisionFilter(BitCollision.BOMB, BitCollision.ALL);
+        setSensor(true);
+
     }
 
     @Override

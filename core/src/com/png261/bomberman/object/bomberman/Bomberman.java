@@ -49,6 +49,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     private int maxBomb = 1;
     private Array<Bomb> bombs;
     private State direction = State.IDLE_DOWN;
+    private LoaderParams params;
 
     private TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("bomberman.atlas"));
 
@@ -60,11 +61,14 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     }
 
     public void load(LoaderParams params) {
-        createCircleBody(params.position(), BODY_RADIUS);
-
-        setCollisionFilter(BitCollision.BOMBERMAN, BitCollision.ALL);
-
+        this.params = params;
         setupAnimation();
+    }
+
+    @Override
+    public void createBody() {
+        createCircleBody(params.position(), BODY_RADIUS);
+        setCollisionFilter(BitCollision.BOMBERMAN, BitCollision.ALL);
     }
 
     public void idle() {
@@ -133,6 +137,12 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     @Override
     public void update(float delta) {
         updateSprite();
+        if (isDead()) {
+            if (animationHandle.isCurrentAnimation(State.DEAD.getValue()) && animationHandle.isFinished()) {
+                disappear();
+            }
+            return;
+        }
         handleBomb();
     }
 
@@ -175,7 +185,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE_UP.getValue())));
 
         animationHandle.addAnimation(State.DEAD.getValue(),
-                new Animation<TextureRegion>(FRAME_TIME + 1, textureAtlas.findRegions(State.DEAD.getValue())));
+                new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.DEAD.getValue())));
 
         animationHandle.setCurrentAnimation(State.IDLE_DOWN.getValue());
     }

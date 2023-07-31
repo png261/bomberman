@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.Disposable;
 
-public final class MapManager {
+public final class MapManager implements Disposable {
     private final float UNIT_SCALE = 1 / 16f;
 
     private TmxMapLoader loader;
@@ -28,5 +29,9 @@ public final class MapManager {
 
     public TiledMap map() {
         return map;
+    }
+
+    @Override
+    public void dispose() {
     }
 }

@@ -9,6 +9,7 @@ import com.png261.bomberman.object.LoaderParams;
 
 public abstract class Tile extends GameObject {
     private Rectangle bounds;
+    protected LoaderParams params;
 
     public Tile() {
         super();
@@ -17,12 +18,16 @@ public abstract class Tile extends GameObject {
 
     @Override
     public void load(LoaderParams params) {
-        createRectangleBody(params.x(), params.y(), params.width(), params.height());
-        setBodyToStatic();
-
+        this.params = params;
         bounds.setPosition(params.position());
         bounds.setWidth(params.width());
         bounds.setHeight(params.height());
+    }
+
+    @Override
+    public void createBody() {
+        createRectangleBody(params.x(), params.y(), params.width(), params.height());
+        setBodyToStatic();
     }
 
     @Override

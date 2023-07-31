@@ -18,6 +18,7 @@ public class Flame extends GameObject {
 
     private Sprite sprite;
     private AnimationHandle animationHandle;
+    private LoaderParams params;
 
     public Flame(State direction) {
         sprite = new Sprite();
@@ -37,13 +38,14 @@ public class Flame extends GameObject {
 
     @Override
     public void load(LoaderParams params) {
+        this.params = params;
+    }
+
+    @Override
+    public void createBody() {
         createCircleBody(params.position(), BODY_DIAMETER / 2);
-
         setCollisionFilter(BitCollision.FLAME, BitCollision.ALL);
-
         setSensor(true);
-
-        updateSprite();
     }
 
     private void updateSprite() {

@@ -4,13 +4,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.png261.bomberman.manager.MapManager;
 import com.png261.bomberman.object.GameObject;
 import com.png261.bomberman.object.ObjectManager;
 import com.png261.bomberman.object.bomberman.Bomberman;
 import com.png261.bomberman.physic.PhysicManager;
 
-public final class Level {
+public final class Level implements Disposable {
     private final MapManager mapManager;
     private final ObjectManager objectManager;
 
@@ -57,5 +58,11 @@ public final class Level {
 
     public Array<Bomberman> getBombermans() {
         return objectManager.getBombermans();
+    }
+
+    @Override
+    public void dispose() {
+        objectManager.dispose();
+        mapManager.dispose();
     }
 }
