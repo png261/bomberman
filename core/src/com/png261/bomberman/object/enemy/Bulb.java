@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.png261.bomberman.object.LoaderParams;
 
 public class Bulb extends Enemy {
-    private final TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("bulb.atlas"));
+    private final TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("atlas/bulb.atlas"));
 
     private enum State {
         IDLE("idle"), DEAD("dead");

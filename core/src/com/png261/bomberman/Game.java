@@ -28,7 +28,7 @@ public final class Game extends com.badlogic.gdx.Game {
     public void create() {
         batch = new SpriteBatch();
 
-        Pixmap pixmap = new Pixmap(Gdx.files.internal("cursor.png"));
+        Pixmap pixmap = new Pixmap(Gdx.files.internal("image/cursor/cursor-normal.png"));
         int xHotspot = 15, yHotspot = 15;
         Cursor cursor = Gdx.graphics.newCursor(pixmap, xHotspot, yHotspot);
         pixmap.dispose();

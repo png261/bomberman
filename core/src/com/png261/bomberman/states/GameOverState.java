@@ -22,7 +22,7 @@ public class GameOverState extends GameState {
         viewport = new FitViewport(640, 480);
         stage = new Stage(viewport);
 
-        font = new BitmapFont(Gdx.files.internal("fonts/foo.fnt"));
+        font = new BitmapFont(Gdx.files.internal("font/foo.fnt"));
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
         Label gameOverLabel = new Label("Game Over", labelStyle);

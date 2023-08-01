@@ -43,7 +43,7 @@ public abstract class Tile extends GameObject {
     }
 
     public TiledMapTileLayer.Cell getCell() {
-        TiledMapTileLayer layer = (TiledMapTileLayer) Game.getInstance().level().map().getLayers().get("tile");
+        TiledMapTileLayer layer = (TiledMapTileLayer) Game.getInstance().level().map().getLayers().get("Tile");
         return layer.getCell((int) body.getPosition().x, (int) body.getPosition().y);
     }
 

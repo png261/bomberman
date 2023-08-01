@@ -15,7 +15,7 @@ public class ItemFlameUp extends Item {
     public void load(LoaderParams params) {
         super.load(params);
 
-        sprite = new Sprite(new Texture("flameup-sticker.png"));
+        sprite = new Sprite(new Texture("image/item/flameup.png"));
         sprite.setBounds(
                 Unit.pixelToMeter(params.x()),
                 Unit.pixelToMeter(params.y()),

@@ -40,7 +40,7 @@ public class Key extends Item {
     public void load(LoaderParams params) {
         super.load(params);
 
-        atlas = new TextureAtlas(Gdx.files.internal("key.atlas"));
+        atlas = new TextureAtlas(Gdx.files.internal("image/atlas/key.atlas"));
         animationHandle.addAnimation(State.NORMAL.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.NORMAL.getValue())));
         animationHandle.addAnimation(State.EMPTY.getValue(),

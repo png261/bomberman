@@ -8,7 +8,7 @@ import com.png261.bomberman.object.LoaderParams;
 import com.png261.bomberman.utils.Util;
 
 public class Balloom extends Enemy {
-    private final TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("balloom.atlas"));
+    private final TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("image/atlas/balloom.atlas"));
     private float timeMove;
 
     private enum State {

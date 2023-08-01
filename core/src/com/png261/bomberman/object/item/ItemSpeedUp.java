@@ -15,7 +15,7 @@ public class ItemSpeedUp extends Item {
     public void load(LoaderParams params) {
         super.load(params);
 
-        sprite = new Sprite(new Texture("speedup-sticker.png"));
+        sprite = new Sprite(new Texture("image/item/speedup.png"));
         sprite.setBounds(
                 Unit.pixelToMeter(params.x()),
                 Unit.pixelToMeter(params.y()),

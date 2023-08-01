@@ -57,7 +57,7 @@ public class Bomb extends GameObject {
         bounds.setPosition(params.position());
         bounds.setRadius(BODY_RADIUS);
 
-        atlas = new TextureAtlas(Gdx.files.internal("bomb.atlas"));
+        atlas = new TextureAtlas(Gdx.files.internal("image/atlas/bomb.atlas"));
         animationHandle.addAnimation(State.IDLE.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.IDLE.getValue())));
         animationHandle.addAnimation(State.EXPLODE.getValue(),

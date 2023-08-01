@@ -14,7 +14,7 @@ import com.png261.bomberman.utils.Unit;
 public class Flame extends GameObject {
     private final float FRAME_TIME = 0.3f;
     private final float BODY_DIAMETER = 10;
-    private final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("flame.atlas"));
+    private final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("image/atlas/flame.atlas"));
 
     private Sprite sprite;
     private AnimationHandle animationHandle;
