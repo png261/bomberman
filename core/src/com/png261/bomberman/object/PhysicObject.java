@@ -32,20 +32,20 @@ public abstract class PhysicObject implements Disposable {
 
     public abstract void createBody();
 
-    protected void createCircleBody(Circle circle) {
+    protected void createCircleBody(final Circle circle) {
         createCircleBody(circle.x, circle.y, circle.radius);
     }
 
-    protected void createCircleBody(Vector2 position, float radius) {
+    protected void createCircleBody(final Vector2 position, final float radius) {
         createCircleBody(position.x, position.y, radius);
     }
 
-    protected void createCircleBody(float x, float y, float radius) {
+    protected void createCircleBody(final float x, final float y, final float radius) {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(Unit.pixelToMeter(Unit.screenToBox2D(x, y, radius)));
         body = PhysicManager.getInstance().world().createBody(bodyDef);
 
-        CircleShape shape = new CircleShape();
+        final CircleShape shape = new CircleShape();
         shape.setRadius(Unit.pixelToMeter(radius));
 
         fixtureDef.shape = shape;
@@ -55,24 +55,24 @@ public abstract class PhysicObject implements Disposable {
         shape.dispose();
     }
 
-    protected void createRectangleBody(Rectangle bounds) {
+    protected void createRectangleBody(final Rectangle bounds) {
         createRectangleBody(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
     }
 
-    protected void createRectangleBody(Vector2 position, float width, float height) {
+    protected void createRectangleBody(final Vector2 position, final float width, final float height) {
         createRectangleBody(position.x, position.y, width, height);
     }
 
-    protected void createRectangleBody(float x, float y, float width, float height) {
-        BodyDef bodyDef = new BodyDef();
+    protected void createRectangleBody(final float x, final float y, final float width, final float height) {
+        final BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(Unit.pixelToMeter(Unit.screenToBox2D(x, y, width, height)));
         body = PhysicManager.getInstance().world().createBody(bodyDef);
 
-        PolygonShape shape = new PolygonShape();
+        final PolygonShape shape = new PolygonShape();
         shape.setAsBox(Unit.pixelToMeter(width / 2), Unit.pixelToMeter(height / 2));
 
-        FixtureDef fixtureDef = new FixtureDef();
+        final FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
         fixture.setUserData(this);
@@ -80,14 +80,14 @@ public abstract class PhysicObject implements Disposable {
         shape.dispose();
     }
 
-    protected void setCollisionFilter(short categoryBit, short maskBits) {
-        Filter filter = new Filter();
+    protected void setCollisionFilter(final short categoryBit, final short maskBits) {
+        final Filter filter = new Filter();
         filter.categoryBits = categoryBit;
         filter.maskBits = maskBits;
         fixture.setFilterData(filter);
     }
 
-    protected void setSensor(boolean isSensor) {
+    protected void setSensor(final boolean isSensor) {
         fixture.setSensor(isSensor);
     }
 

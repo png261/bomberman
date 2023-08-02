@@ -11,7 +11,6 @@ import com.png261.bomberman.Game;
 import com.png261.bomberman.level.Level;
 import com.png261.bomberman.manager.GameStateManager;
 import com.png261.bomberman.object.bomberman.Bomberman;
-import com.png261.bomberman.physic.PhysicManager;
 
 public final class PlayState extends GameState {
     private final int MAP_WIDTH = 17;
@@ -35,7 +34,7 @@ public final class PlayState extends GameState {
         bomberman = level.objectManager().getBombermans().get(0);
     }
 
-    public void update(float delta) {
+    public void update(final float delta) {
         camera.update();
         level.update(delta);
 
@@ -60,7 +59,7 @@ public final class PlayState extends GameState {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(final float delta) {
         ScreenUtils.clear(Color.BLACK);
 
         update(delta);
@@ -82,7 +81,7 @@ public final class PlayState extends GameState {
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(final int width, final int height) {
         viewport.update(width, height);
     }
 

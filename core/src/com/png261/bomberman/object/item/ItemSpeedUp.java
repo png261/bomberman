@@ -12,7 +12,7 @@ public class ItemSpeedUp extends Item {
     }
 
     @Override
-    public void load(LoaderParams params) {
+    public void load(final LoaderParams params) {
         super.load(params);
 
         sprite = new Sprite(new Texture("image/item/speedup.png"));
@@ -24,7 +24,7 @@ public class ItemSpeedUp extends Item {
     }
 
     @Override
-    public void bonus(Bomberman bomberman) {
+    public void bonus(final Bomberman bomberman) {
         super.bonus(bomberman);
         bomberman.speedUp(1);
     }

@@ -24,7 +24,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
 
         private String value;
 
-        private State(String value) {
+        private State(final String value) {
             this.value = value;
         }
 
@@ -49,11 +49,11 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
 
     private int flameLength = 1;
     private int maxBomb = 1;
-    private Array<Bomb> bombs;
+    private final Array<Bomb> bombs;
     private State direction = State.IDLE_DOWN;
     private LoaderParams params;
 
-    private TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("image/atlas/bomberman.atlas"));
+    private final TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("image/atlas/bomberman.atlas"));
 
     public Bomberman() {
         super();
@@ -62,7 +62,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
         bombs = new Array<>();
     }
 
-    public void load(LoaderParams params) {
+    public void load(final LoaderParams params) {
         this.params = params;
         setupAnimation();
     }
@@ -126,7 +126,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
             return;
         }
 
-        Bomb bomb = new Bomb(flameLength);
+        final Bomb bomb = new Bomb(flameLength);
 
         Vector2 position = body.getPosition();
         position = Unit.box2DToScreen(position, Unit.pixelToMeter(BODY_DIAMETER / 2));
@@ -141,7 +141,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     }
 
     @Override
-    public void update(float delta) {
+    public void update(final float delta) {
         updateSprite();
         if (isDead()) {
             if (animationHandle.isCurrentAnimation(State.DEAD.getValue()) && animationHandle.isFinished()) {
@@ -203,15 +203,15 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
         animationHandle.setCurrentAnimation(State.DEAD.getValue());
     }
 
-    public void speedUp(float n) {
+    public void speedUp(final float n) {
         speed += n;
     }
 
-    public void flameUp(float n) {
+    public void flameUp(final float n) {
         flameLength += n;
     }
 
-    public void bombUp(float n) {
+    public void bombUp(final float n) {
         maxBomb += n;
     }
 
@@ -226,7 +226,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     }
 
     @Override
-    public void damage(int damage) {
+    public void damage(final int damage) {
         health = health - damage;
         if (health <= 0) {
             dead();
@@ -234,8 +234,8 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     }
 
     protected void updateSprite() {
-        float x = body.getPosition().x - Unit.pixelToMeter(BODY_RADIUS);
-        float y = body.getPosition().y - Unit.pixelToMeter(BODY_RADIUS);
+        final float x = body.getPosition().x - Unit.pixelToMeter(BODY_RADIUS);
+        final float y = body.getPosition().y - Unit.pixelToMeter(BODY_RADIUS);
 
         sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
                 Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));

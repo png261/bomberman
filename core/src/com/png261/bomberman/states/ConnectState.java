@@ -1,7 +1,6 @@
 package com.png261.bomberman.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -48,9 +47,9 @@ public class ConnectState extends GameState {
         submitButton = new TextButton("Submit", skin);
         submitButton.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
-                String serverUrl = serverUrlField.getText();
-                String name = nameField.getText();
+            public void clicked(final InputEvent event, final float x, final float y) {
+                final String serverUrl = serverUrlField.getText();
+                final String name = nameField.getText();
                 connectServer(serverUrl, name);
                 if (socket != null) {
                     Game.getInstance().setScreen(new GameLobbyState(socket, clientId));
@@ -70,37 +69,37 @@ public class ConnectState extends GameState {
         stage.addActor(rootTable);
     }
 
-    public void connectServer(String serverUrl, final String name) {
+    public void connectServer(final String serverUrl, final String name) {
         try {
             socket = IO.socket(serverUrl);
             socket.connect();
             socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
                 @Override
-                public void call(Object... args) {
+                public void call(final Object... args) {
                     socket.emit("join", name);
                 }
             });
             socket.on("clientId", new Emitter.Listener() {
                 @Override
-                public void call(Object... args) {
+                public void call(final Object... args) {
                     clientId = (String) args[0];
                 }
             });
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
 
     }
 
     @Override
-    public void render(float delta) {
+    public void render(final float delta) {
         ScreenUtils.clear(Color.BLACK);
         stage.act(delta);
         stage.draw();
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(final int width, final int height) {
         stage.getViewport().update(width, height, true);
     }
 

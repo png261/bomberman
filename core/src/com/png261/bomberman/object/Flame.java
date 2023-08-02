@@ -16,11 +16,11 @@ public class Flame extends GameObject {
     private final float BODY_DIAMETER = 10;
     private final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("image/atlas/flame.atlas"));
 
-    private Sprite sprite;
-    private AnimationHandle animationHandle;
+    private final Sprite sprite;
+    private final AnimationHandle animationHandle;
     private LoaderParams params;
 
-    public Flame(State direction) {
+    public Flame(final State direction) {
         sprite = new Sprite();
         animationHandle = new AnimationHandle();
 
@@ -37,7 +37,7 @@ public class Flame extends GameObject {
     }
 
     @Override
-    public void load(LoaderParams params) {
+    public void load(final LoaderParams params) {
         this.params = params;
     }
 
@@ -49,8 +49,8 @@ public class Flame extends GameObject {
     }
 
     private void updateSprite() {
-        float x = body.getPosition().x - Unit.pixelToMeter(BODY_DIAMETER);
-        float y = body.getPosition().y - Unit.pixelToMeter(BODY_DIAMETER);
+        final float x = body.getPosition().x - Unit.pixelToMeter(BODY_DIAMETER);
+        final float y = body.getPosition().y - Unit.pixelToMeter(BODY_DIAMETER);
 
         sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
                 Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
@@ -58,7 +58,7 @@ public class Flame extends GameObject {
     }
 
     @Override
-    public void update(float delta) {
+    public void update(final float delta) {
         updateSprite();
         if (animationHandle.isFinished()) {
             disappear();
@@ -75,7 +75,7 @@ public class Flame extends GameObject {
 
         String stateName;
 
-        private State(String stateName) {
+        private State(final String stateName) {
             this.stateName = stateName;
         }
 
@@ -83,7 +83,7 @@ public class Flame extends GameObject {
             return stateName;
         }
 
-        public static Vector2 getOffSet(State state) {
+        public static Vector2 getOffSet(final State state) {
             switch (state) {
                 case UP:
                     return new Vector2(0, 1);

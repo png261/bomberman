@@ -22,9 +22,9 @@ public class Bomb extends GameObject {
     private float timeCountDown = 2f;
     private boolean isExploded = false;
 
-    private int flameLength;
-    private AnimationHandle animationHandle;
-    private Sprite sprite;
+    private final int flameLength;
+    private final AnimationHandle animationHandle;
+    private final Sprite sprite;
     private LoaderParams params;
     private Circle bounds;
 
@@ -33,7 +33,7 @@ public class Bomb extends GameObject {
 
         String value;
 
-        private State(String value) {
+        private State(final String value) {
             this.value = value;
         }
 
@@ -42,7 +42,7 @@ public class Bomb extends GameObject {
         }
     }
 
-    public Bomb(int flameLength) {
+    public Bomb(final int flameLength) {
         this.flameLength = flameLength;
 
         sprite = new Sprite();
@@ -50,7 +50,7 @@ public class Bomb extends GameObject {
     }
 
     @Override
-    public void load(LoaderParams params) {
+    public void load(final LoaderParams params) {
         this.params = params;
 
         bounds = new Circle();
@@ -74,7 +74,7 @@ public class Bomb extends GameObject {
     }
 
     @Override
-    public void update(float delta) {
+    public void update(final float delta) {
         updateSprite();
 
         if (timeCountDown <= 0 && isExploded == false) {
@@ -94,8 +94,8 @@ public class Bomb extends GameObject {
     }
 
     private void updateSprite() {
-        float x = body.getPosition().x - Unit.pixelToMeter(BODY_RADIUS);
-        float y = body.getPosition().y - Unit.pixelToMeter(BODY_RADIUS);
+        final float x = body.getPosition().x - Unit.pixelToMeter(BODY_RADIUS);
+        final float y = body.getPosition().y - Unit.pixelToMeter(BODY_RADIUS);
 
         sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
                 Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
@@ -110,13 +110,13 @@ public class Bomb extends GameObject {
     }
 
     private void createFlame() {
-        Level level = Game.getInstance().level();
-        Flame middleFlame = new Flame(Flame.State.UP);
+        final Level level = Game.getInstance().level();
+        final Flame middleFlame = new Flame(Flame.State.UP);
         middleFlame.load(new LoaderParams(Unit.box2DToScreen(Unit.meterToPixel(body.getPosition()),
                 BODY_DIAMETER / 4)));
         level.objectManager().add(middleFlame);
 
-        for (Flame.State direction : Flame.State.values()) {
+        for (final Flame.State direction : Flame.State.values()) {
             for (int i = 1; i <= flameLength; ++i) {
                 Vector2 position = body.getPosition();
                 position.add(Flame.State.getOffSet(direction).scl(i));
@@ -127,7 +127,7 @@ public class Bomb extends GameObject {
                     break;
                 }
 
-                Flame flame = new Flame(direction);
+                final Flame flame = new Flame(direction);
                 flame.load(new LoaderParams(position));
                 level.objectManager().add(flame);
 
@@ -138,7 +138,7 @@ public class Bomb extends GameObject {
         }
     }
 
-    public boolean contains(Vector2 position) {
+    public boolean contains(final Vector2 position) {
         return bounds.contains(position);
     }
 

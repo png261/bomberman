@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Disposable;
 public final class MapManager implements Disposable {
     private final float UNIT_SCALE = 1 / 16f;
 
-    private TmxMapLoader loader;
+    private final TmxMapLoader loader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
@@ -17,12 +17,12 @@ public final class MapManager implements Disposable {
         loader = new TmxMapLoader();
     }
 
-    public void load(String filePath) {
+    public void load(final String filePath) {
         map = loader.load(filePath);
         renderer = new OrthogonalTiledMapRenderer(map, UNIT_SCALE);
     }
 
-    public void render(OrthographicCamera camera) {
+    public void render(final OrthographicCamera camera) {
         renderer.setView(camera);
         renderer.render();
     }

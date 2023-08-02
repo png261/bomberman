@@ -20,7 +20,7 @@ public class Brick extends Tile {
     }
 
     @Override
-    public void update(float delta) {
+    public void update(final float delta) {
         if (isBroken) {
             bonus();
         }
@@ -41,20 +41,20 @@ public class Brick extends Tile {
         return isBroken;
     }
 
-    public void setBroken(boolean isBroken) {
+    public void setBroken(final boolean isBroken) {
         this.isBroken = isBroken;
     }
 
     public void spawnItem() {
-        float SPAWN_PROBABILITY = 0.3f;
+        final float SPAWN_PROBABILITY = 0.3f;
         if (MathUtils.random() > SPAWN_PROBABILITY) {
             return;
         }
 
-        Item.ItemType[] itemTypes = Item.ItemType.values();
+        final Item.ItemType[] itemTypes = Item.ItemType.values();
 
-        String randomType = itemTypes[MathUtils.random(itemTypes.length - 1)].value();
-        GameObject item = ObjectFactory.getInstance().create(randomType);
+        final String randomType = itemTypes[MathUtils.random(itemTypes.length - 1)].value();
+        final GameObject item = ObjectFactory.getInstance().create(randomType);
 
         Vector2 position = body.getPosition();
         position = Unit.box2DToScreen(Unit.meterToPixel(position),

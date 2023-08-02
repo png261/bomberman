@@ -24,8 +24,8 @@ public class GameOverState extends GameState {
 
         font = new BitmapFont(Gdx.files.internal("font/foo.fnt"));
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
-        Label gameOverLabel = new Label("Game Over", labelStyle);
+        final Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
+        final Label gameOverLabel = new Label("Game Over", labelStyle);
         gameOverLabel.setPosition((640 - gameOverLabel.getWidth()) / 2, 226f);
 
         stage.addActor(gameOverLabel);
@@ -43,7 +43,7 @@ public class GameOverState extends GameState {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(final float delta) {
         Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -52,7 +52,7 @@ public class GameOverState extends GameState {
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(final int width, final int height) {
         viewport.update(width, height);
     }
 

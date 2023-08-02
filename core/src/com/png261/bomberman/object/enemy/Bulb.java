@@ -7,14 +7,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.png261.bomberman.object.LoaderParams;
 
 public class Bulb extends Enemy {
-    private final TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("atlas/bulb.atlas"));
+    private final TextureAtlas textureAtlas ;
 
     private enum State {
         IDLE("idle"), DEAD("dead");
 
         private String value;
 
-        private State(String value) {
+        private State(final String value) {
             this.value = value;
         }
 
@@ -25,16 +25,17 @@ public class Bulb extends Enemy {
 
     public Bulb() {
         super();
+        textureAtlas = new TextureAtlas(Gdx.files.internal("atlas/bulb.atlas"));
     }
 
     @Override
-    public void load(LoaderParams params) {
+    public void load(final LoaderParams params) {
         super.load(params);
         setupAnimation();
     }
 
     @Override
-    public void update(float delta) {
+    public void update(final float delta) {
         super.update(delta);
         if (isDead()) {
             if (animationHandle.isCurrentAnimation(State.DEAD.getValue()) && animationHandle.isFinished()) {

@@ -2,12 +2,10 @@ package com.png261.bomberman.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
@@ -25,17 +23,15 @@ import com.png261.bomberman.Game;
 import com.png261.bomberman.networking.Client;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 public class GameLobbyState extends GameState {
-    private Socket socket;
+    private final Socket socket;
 
-    private String clientId;
+    private final String clientId;
     private Stage stage;
 
     private Skin skin;
@@ -62,7 +58,7 @@ public class GameLobbyState extends GameState {
     private Label timeIndicator;
     private TextButton cancelButton;
 
-    public GameLobbyState(Socket socket, String clientId) {
+    public GameLobbyState(final Socket socket, final String clientId) {
         this.socket = socket;
         this.clientId = clientId;
         clients = new Array<>();
@@ -97,19 +93,19 @@ public class GameLobbyState extends GameState {
     public void handleSocketEvents() {
         socket.on("updateClients", new Emitter.Listener() {
             @Override
-            public void call(Object... args) {
+            public void call(final Object... args) {
                 try {
                     clients = new Array<>();
-                    JSONArray updatedList = (JSONArray) args[0];
+                    final JSONArray updatedList = (JSONArray) args[0];
                     for (int i = 0; i < updatedList.length(); ++i) {
-                        JSONObject jsonClient = updatedList.getJSONObject(i);
-                        String id = jsonClient.getString("id");
-                        String name = jsonClient.getString("name");
-                        Boolean ready = jsonClient.getBoolean("ready");
+                        final JSONObject jsonClient = updatedList.getJSONObject(i);
+                        final String id = jsonClient.getString("id");
+                        final String name = jsonClient.getString("name");
+                        final Boolean ready = jsonClient.getBoolean("ready");
                         clients.add(new Client(id, name, ready));
                     }
                     updateClientList();
-                } catch (Exception e) {
+                } catch (final Exception e) {
                 }
 
             }
@@ -117,10 +113,9 @@ public class GameLobbyState extends GameState {
 
         socket.on("newMessage", new Emitter.Listener() {
             @Override
-            public void call(Object... args) {
-
-                String name = (String) args[0];
-                String message = (String) args[1];
+            public void call(final Object... args) {
+                final String name = (String) args[0];
+                final String message = (String) args[1];
 
                 chatLabel.setText(chatLabel.getText() + "<" + name + "> : " + message);
             }
@@ -128,7 +123,7 @@ public class GameLobbyState extends GameState {
 
         socket.on("gameReady", new Emitter.Listener() {
             @Override
-            public void call(Object... args) {
+            public void call(final Object... args) {
                 waiting = true;
                 startingWindow = new Window("Starting Game", skin);
                 timeIndicator = new Label("Starting Game In: " + (5 - (int) time), skin);
@@ -146,7 +141,7 @@ public class GameLobbyState extends GameState {
 
                 cancelButton.addListener(new ClickListener() {
                     @Override
-                    public void clicked(InputEvent event, float x, float y) {
+                    public void clicked(final InputEvent event, final float x, final float y) {
                         socket.emit("toggleReady");
                     }
                 });
@@ -156,7 +151,7 @@ public class GameLobbyState extends GameState {
 
         socket.on("gameCanceled", new Emitter.Listener() {
             @Override
-            public void call(Object... args) {
+            public void call(final Object... args) {
                 if (waiting) {
                     waiting = false;
                     time = 0;
@@ -167,21 +162,21 @@ public class GameLobbyState extends GameState {
     }
 
     public Table buildGameInfoTable() {
-        Table table = new Table();
+        final Table table = new Table();
 
         clientsList = new List<String>(skin);
 
         readyButton = new TextButton("READY", skin);
         readyButton.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public void clicked(final InputEvent event, final float x, final float y) {
                 socket.emit("toggleReady");
             }
         });
 
         updateClientList();
 
-        Label titles = new Label(" Player                      State", skin);
+        final Label titles = new Label(" Player                      State", skin);
         titles.setColor(Color.RED);
 
         table.add(new ScrollPane(titles, skin)).align(Align.left).width(220);
@@ -192,15 +187,15 @@ public class GameLobbyState extends GameState {
     }
 
     public void updateClientList() {
-        Array<String> list = new Array<String>();
+        final Array<String> list = new Array<String>();
 
         for (int i = 0; i < clients.size; ++i) {
-            Client client = clients.get(i);
+            final Client client = clients.get(i);
 
-            int length = 24 - client.name.length();
-            String name = client.name;
-            String space = " ".repeat(length);
-            String ready = (client.ready ? "Ready" : "Not Ready");
+            final int length = 24 - client.name.length();
+            final String name = client.name;
+            final String space = " ".repeat(length);
+            final String ready = (client.ready ? "Ready" : "Not Ready");
             list.add(name + space + ready);
 
             if (client.id.equals(clientId)) {
@@ -212,7 +207,7 @@ public class GameLobbyState extends GameState {
     }
 
     public Table buildChatTable() {
-        Table table = new Table();
+        final Table table = new Table();
 
         chatLabel = new Label("", skin);
         chatLabel.setWrap(true);
@@ -229,7 +224,7 @@ public class GameLobbyState extends GameState {
 
         messageField.addListener(new InputListener() {
             @Override
-            public boolean keyUp(InputEvent event, int keycode) {
+            public boolean keyUp(final InputEvent event, final int keycode) {
 
                 if (keycode == Input.Keys.ENTER && !messageField.getText().isEmpty()) {
                     socket.emit("message", messageField.getText() + "\n");
@@ -248,7 +243,7 @@ public class GameLobbyState extends GameState {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(final float delta) {
         if (waiting) {
             time += delta;
             if (time > 1) {
@@ -257,7 +252,7 @@ public class GameLobbyState extends GameState {
 
             if (time > waitTime) {
 
-                for (Client p : clients)
+                for (final Client p : clients)
                     p.ready = false;
 
                 socket.off();
@@ -275,7 +270,7 @@ public class GameLobbyState extends GameState {
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(final int width, final int height) {
         stage.getViewport().update(width, height, true);
     }
 

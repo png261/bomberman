@@ -11,9 +11,9 @@ public final class BitCollision {
     public static final short ITEM = 0x040;
     public static final short ALL = 0xFFF;
 
-    public static short orOperation(short... bits) {
+    public static short orOperation(final short... bits) {
         short res = 0;
-        for (short bit : bits)
+        for (final short bit : bits)
             res |= bit;
         return res;
     }

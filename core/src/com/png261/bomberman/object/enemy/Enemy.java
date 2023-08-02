@@ -30,7 +30,7 @@ public abstract class Enemy extends GameObject implements DamageableObject, Cont
         sprite = new Sprite();
     }
 
-    public void load(LoaderParams params) {
+    public void load(final LoaderParams params) {
         this.params = params;
     }
 
@@ -41,7 +41,7 @@ public abstract class Enemy extends GameObject implements DamageableObject, Cont
     }
 
     @Override
-    public void update(float delta) {
+    public void update(final float delta) {
         updateSprite();
     };
 
@@ -66,7 +66,7 @@ public abstract class Enemy extends GameObject implements DamageableObject, Cont
     }
 
     @Override
-    public void damage(int damage) {
+    public void damage(final int damage) {
         health = health - damage;
         if (health <= 0) {
             dead();
@@ -94,8 +94,8 @@ public abstract class Enemy extends GameObject implements DamageableObject, Cont
     }
 
     protected void updateSprite() {
-        float x = body.getPosition().x - Unit.pixelToMeter(BODY_RADIUS);
-        float y = body.getPosition().y - Unit.pixelToMeter(BODY_RADIUS);
+        final float x = body.getPosition().x - Unit.pixelToMeter(BODY_RADIUS);
+        final float y = body.getPosition().y - Unit.pixelToMeter(BODY_RADIUS);
 
         sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
                 Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));

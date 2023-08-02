@@ -8,7 +8,7 @@ import com.png261.bomberman.object.GameObject;
 import com.png261.bomberman.object.LoaderParams;
 
 public abstract class Tile extends GameObject {
-    private Rectangle bounds;
+    private final Rectangle bounds;
     protected LoaderParams params;
 
     public Tile() {
@@ -17,7 +17,7 @@ public abstract class Tile extends GameObject {
     }
 
     @Override
-    public void load(LoaderParams params) {
+    public void load(final LoaderParams params) {
         this.params = params;
         bounds.setPosition(params.position());
         bounds.setWidth(params.width());
@@ -31,7 +31,7 @@ public abstract class Tile extends GameObject {
     }
 
     @Override
-    public void update(float delta) {
+    public void update(final float delta) {
     }
 
     @Override
@@ -43,18 +43,18 @@ public abstract class Tile extends GameObject {
     }
 
     public TiledMapTileLayer.Cell getCell() {
-        TiledMapTileLayer layer = (TiledMapTileLayer) Game.getInstance().level().map().getLayers().get("Tile");
+        final TiledMapTileLayer layer = (TiledMapTileLayer) Game.getInstance().level().map().getLayers().get("Tile");
         return layer.getCell((int) body.getPosition().x, (int) body.getPosition().y);
     }
 
     public void emptyCell() {
-        TiledMapTileLayer.Cell cell = getCell();
+        final TiledMapTileLayer.Cell cell = getCell();
         if (cell != null) {
             getCell().setTile(null);
         }
     }
 
-    public boolean contains(Vector2 position) {
+    public boolean contains(final Vector2 position) {
         return getBounds().contains(position.x, position.y);
     }
 }

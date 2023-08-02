@@ -9,7 +9,7 @@ public class GameStateManager {
     private Game game;
     private static volatile GameStateManager INSTANCE;
 
-    private Stack<GameState> states;
+    private final Stack<GameState> states;
 
     private GameStateManager() {
         states = new Stack<>();
@@ -23,11 +23,11 @@ public class GameStateManager {
         return INSTANCE;
     }
 
-    public void init(Game game) {
+    public void init(final Game game) {
         this.game = game;
     }
 
-    public void pushState(GameState state) {
+    public void pushState(final GameState state) {
         states.push(state);
         game.setScreen(state);
     }
@@ -38,7 +38,7 @@ public class GameStateManager {
         }
     }
 
-    public void changeState(GameState state) {
+    public void changeState(final GameState state) {
         popState();
         pushState(state);
     }

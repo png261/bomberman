@@ -13,12 +13,12 @@ import com.png261.bomberman.object.tile.Wall;
 public final class ObjectManager implements Disposable {
 
     private TiledMap map;
-    private Array<Wall> walls;
+    private final Array<Wall> walls;
 
-    private Array<Brick> bricks;
-    private Array<GameObject> objects;
-    private Array<GameObject> newObjects;
-    private Array<Bomberman> bombermans;
+    private final Array<Brick> bricks;
+    private final Array<GameObject> objects;
+    private final Array<GameObject> newObjects;
+    private final Array<Bomberman> bombermans;
 
     public ObjectManager() {
         walls = new Array<>();
@@ -28,29 +28,29 @@ public final class ObjectManager implements Disposable {
         bombermans = new Array<>();
     }
 
-    public void load(TiledMap map) {
+    public void load(final TiledMap map) {
         this.map = map;
 
         createObject();
     }
 
-    public void add(GameObject object) {
+    public void add(final GameObject object) {
         newObjects.add(object);
     }
 
     private void createObject() {
-        for (MapLayer layer : map.getLayers()) {
-            for (MapObject object : layer.getObjects()) {
-                float x = object.getProperties().get("x", float.class);
-                float y = object.getProperties().get("y", float.class);
-                float width = object.getProperties().get("width", float.class);
-                float height = object.getProperties().get("height", float.class);
+        for (final MapLayer layer : map.getLayers()) {
+            for (final MapObject object : layer.getObjects()) {
+                final float x = object.getProperties().get("x", float.class);
+                final float y = object.getProperties().get("y", float.class);
+                final float width = object.getProperties().get("width", float.class);
+                final float height = object.getProperties().get("height", float.class);
 
-                LoaderParams params = new LoaderParams(x, y, width, height);
+                final LoaderParams params = new LoaderParams(x, y, width, height);
 
-                String type = object.getProperties().get("type", String.class);
+                final String type = object.getProperties().get("type", String.class);
                 if (type != null) {
-                    GameObject newObject = ObjectFactory.getInstance().create(type);
+                    final GameObject newObject = ObjectFactory.getInstance().create(type);
                     if (newObject != null) {
                         newObject.load(params);
                         newObject.createBody();
@@ -72,15 +72,15 @@ public final class ObjectManager implements Disposable {
         }
     }
 
-    public void update(float delta) {
-        for (GameObject object : newObjects) {
+    public void update(final float delta) {
+        for (final GameObject object : newObjects) {
             objects.add(object);
             object.createBody();
         }
         newObjects.clear();
 
         for (int i = 0; i < objects.size; ++i) {
-            GameObject object = objects.get(i);
+            final GameObject object = objects.get(i);
             if (object.exist()) {
                 object.update(delta);
             } else {
@@ -92,7 +92,7 @@ public final class ObjectManager implements Disposable {
 
     public void render() {
         for (int i = objects.size - 1; i >= 0; --i) {
-            GameObject object = objects.get(i);
+            final GameObject object = objects.get(i);
             if (object.exist()) {
                 object.render();
             }
@@ -103,8 +103,8 @@ public final class ObjectManager implements Disposable {
         return bombermans;
     }
 
-    public boolean hasWallAtPosition(Vector2 position) {
-        for (Wall wall : walls) {
+    public boolean hasWallAtPosition(final Vector2 position) {
+        for (final Wall wall : walls) {
             if (wall.contains(position)) {
                 return true;
             }
@@ -113,8 +113,8 @@ public final class ObjectManager implements Disposable {
         return false;
     }
 
-    public boolean hasBrickAtPosition(Vector2 position) {
-        for (Brick brick : bricks) {
+    public boolean hasBrickAtPosition(final Vector2 position) {
+        for (final Brick brick : bricks) {
             if (brick.contains(position)) {
                 return true;
             }
@@ -124,11 +124,11 @@ public final class ObjectManager implements Disposable {
 
     @Override
     public void dispose() {
-        for (GameObject object : objects) {
+        for (final GameObject object : objects) {
             object.dispose();
         }
 
-        for (GameObject object : bombermans) {
+        for (final GameObject object : bombermans) {
             object.dispose();
         }
 
@@ -136,10 +136,10 @@ public final class ObjectManager implements Disposable {
         bombermans.clear();
     }
 
-    public boolean hasBombAtPosition(Vector2 position) {
-        for (Object object : objects) {
+    public boolean hasBombAtPosition(final Vector2 position) {
+        for (final Object object : objects) {
             if (object instanceof Bomb) {
-                Bomb bomb = (Bomb) object;
+                final Bomb bomb = (Bomb) object;
                 return bomb.contains(position);
             }
         }

@@ -9,20 +9,19 @@ import com.png261.bomberman.Game;
 import com.png261.bomberman.animation.AnimationHandle;
 import com.png261.bomberman.object.LoaderParams;
 import com.png261.bomberman.object.bomberman.Bomberman;
-import com.png261.bomberman.object.item.Key;
 import com.png261.bomberman.utils.Unit;
 
 public class Key extends Item {
     private final float FRAME_TIME = 0.6f;
     private TextureAtlas atlas;
-    private AnimationHandle animationHandle;
+    private final AnimationHandle animationHandle;
 
     private enum State {
         NORMAL("normal"), EMPTY("empty");
 
         String value;
 
-        private State(String value) {
+        private State(final String value) {
             this.value = value;
         }
 
@@ -37,7 +36,7 @@ public class Key extends Item {
     }
 
     @Override
-    public void load(LoaderParams params) {
+    public void load(final LoaderParams params) {
         super.load(params);
 
         atlas = new TextureAtlas(Gdx.files.internal("image/atlas/key.atlas"));
@@ -50,7 +49,7 @@ public class Key extends Item {
     }
 
     @Override
-    public void update(float delta) {
+    public void update(final float delta) {
         updateSprite();
     }
 
@@ -60,8 +59,8 @@ public class Key extends Item {
     }
 
     private void updateSprite() {
-        float x = body.getPosition().x - Unit.pixelToMeter(params.width() / 2);
-        float y = body.getPosition().y - Unit.pixelToMeter(params.height() / 2);
+        final float x = body.getPosition().x - Unit.pixelToMeter(params.width() / 2);
+        final float y = body.getPosition().y - Unit.pixelToMeter(params.height() / 2);
 
         sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
                 Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
@@ -69,7 +68,7 @@ public class Key extends Item {
     }
 
     @Override
-    public void bonus(Bomberman bomberman) {
+    public void bonus(final Bomberman bomberman) {
         bomberman.recivedKey();
         animationHandle.setCurrentAnimation(State.EMPTY.getValue());
     }

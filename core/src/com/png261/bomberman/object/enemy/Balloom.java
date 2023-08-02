@@ -17,7 +17,7 @@ public class Balloom extends Enemy {
 
         private String value;
 
-        private State(String value) {
+        private State(final String value) {
             this.value = value;
         }
 
@@ -31,7 +31,7 @@ public class Balloom extends Enemy {
     }
 
     @Override
-    public void load(LoaderParams params) {
+    public void load(final LoaderParams params) {
         super.load(params);
         setupAnimation();
     }
@@ -52,10 +52,10 @@ public class Balloom extends Enemy {
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.DEAD.getValue())));
     }
 
-    private void randomMove(float delta) {
+    private void randomMove(final float delta) {
         timeMove -= delta;
         if (timeMove <= 0) {
-            int random = Util.getRandomInRange(1, 5);
+            final int random = Util.getRandomInRange(1, 5);
             switch (random) {
                 case 1:
                     animationHandle.setCurrentAnimation(State.RIGHT.getValue());
@@ -79,7 +79,7 @@ public class Balloom extends Enemy {
     }
 
     @Override
-    public void update(float delta) {
+    public void update(final float delta) {
         super.update(delta);
         if (isDead()) {
             if (animationHandle.isCurrentAnimation(State.DEAD.getValue()) && animationHandle.isFinished()) {
@@ -91,7 +91,7 @@ public class Balloom extends Enemy {
     }
 
     @Override
-    public void damage(int damage) {
+    public void damage(final int damage) {
         super.damage(damage);
     }
 

@@ -15,11 +15,11 @@ public final class AnimationHandle {
 		animations = new ObjectMap<>();
 	}
 
-	public void addAnimation(String name, Animation<TextureRegion> animation) {
+	public void addAnimation(final String name, final Animation<TextureRegion> animation) {
 		animations.put(name, animation);
 	}
 
-	public void setCurrentAnimation(String name) {
+	public void setCurrentAnimation(final String name) {
 		if (currentAnimation.equals(name)) {
 			return;
 		}
@@ -29,17 +29,17 @@ public final class AnimationHandle {
 		looping = true;
 	}
 
-	public void setCurrentAnimation(String name, boolean looping) {
+	public void setCurrentAnimation(final String name, final boolean looping) {
 		setCurrentAnimation(name);
 		this.looping = looping;
 	}
 
-	public void setAnimationDuration(long duration) {
+	public void setAnimationDuration(final long duration) {
 		animations.get(currentAnimation)
 				.setFrameDuration(duration / ((float) animations.get(currentAnimation).getKeyFrames().length * 1000));
 	}
 
-	public boolean isCurrentAnimation(String name) {
+	public boolean isCurrentAnimation(final String name) {
 		return currentAnimation.equals(name);
 	}
 
@@ -52,7 +52,7 @@ public final class AnimationHandle {
 	}
 
 	public void setFrameToLeft() {
-		for (TextureRegion textureRegion : animations.get(currentAnimation).getKeyFrames()) {
+		for (final TextureRegion textureRegion : animations.get(currentAnimation).getKeyFrames()) {
 			textureRegion.flip(true, false);
 		}
 	}

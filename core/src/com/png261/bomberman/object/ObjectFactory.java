@@ -23,7 +23,7 @@ public final class ObjectFactory {
         return instance;
     }
 
-    public GameObject create(String id) {
+    public GameObject create(final String id) {
         if (id.equals("Wall")) {
             return new Wall();
         } else if (id.equals("Brick")) {

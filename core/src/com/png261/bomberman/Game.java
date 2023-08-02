@@ -16,6 +16,7 @@ public final class Game extends com.badlogic.gdx.Game {
 
     private SpriteBatch batch;
     private Level level;
+    private Cursor cursor;
 
     public static Game getInstance() {
         if (instance == null) {
@@ -24,13 +25,11 @@ public final class Game extends com.badlogic.gdx.Game {
         return instance;
     }
 
-    @Override
     public void create() {
         batch = new SpriteBatch();
 
-        Pixmap pixmap = new Pixmap(Gdx.files.internal("image/cursor/cursor-normal.png"));
-        int xHotspot = 15, yHotspot = 15;
-        Cursor cursor = Gdx.graphics.newCursor(pixmap, xHotspot, yHotspot);
+        final Pixmap pixmap = new Pixmap(Gdx.files.internal("image/cursor/cursor-normal.png"));
+        cursor = Gdx.graphics.newCursor(pixmap, 15, 15);
         pixmap.dispose();
         Gdx.graphics.setCursor(cursor);
 
@@ -55,7 +54,7 @@ public final class Game extends com.badlogic.gdx.Game {
         return HEIGHT;
     }
 
-    public void setLevel(Level level) {
+    public void setLevel(final Level level) {
         this.level = level;
     }
 

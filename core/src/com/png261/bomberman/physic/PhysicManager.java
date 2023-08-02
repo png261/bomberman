@@ -10,8 +10,8 @@ public final class PhysicManager implements Disposable {
     private static volatile PhysicManager instance;
 
     private final Vector2 GRAVITY = new Vector2(0, 0);
-    private World world;
-    private Box2DDebugRenderer debugRenderer;
+    private final World world;
+    private final Box2DDebugRenderer debugRenderer;
     private boolean isDebug = false;
 
     private PhysicManager() {
@@ -31,7 +31,7 @@ public final class PhysicManager implements Disposable {
         world.step(1 / 60f, 6, 2);
     }
 
-    public void debugDraw(Camera camera) {
+    public void debugDraw(final Camera camera) {
         if (isDebug) {
             debugRenderer.render(world, camera.combined);
         }

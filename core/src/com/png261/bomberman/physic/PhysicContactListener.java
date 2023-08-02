@@ -12,98 +12,98 @@ import com.png261.bomberman.object.tile.Brick;
 
 public class PhysicContactListener implements ContactListener {
     @Override
-    public void beginContact(Contact contact) {
+    public void beginContact(final Contact contact) {
         handleItemContact(contact);
         handleFlameContact(contact);
         handleEnemyConntact(contact);
     }
 
     @Override
-    public void endContact(Contact contact) {
+    public void endContact(final Contact contact) {
     }
 
     @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
+    public void preSolve(final Contact contact, final Manifold oldManifold) {
     }
 
     @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
+    public void postSolve(final Contact contact, final ContactImpulse impulse) {
     }
 
-    public void handleItemContact(Contact contact) {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
+    public void handleItemContact(final Contact contact) {
+        final Fixture fixtureA = contact.getFixtureA();
+        final Fixture fixtureB = contact.getFixtureB();
 
-        short categoryA = fixtureA.getFilterData().categoryBits;
-        short categoryB = fixtureB.getFilterData().categoryBits;
+        final short categoryA = fixtureA.getFilterData().categoryBits;
+        final short categoryB = fixtureB.getFilterData().categoryBits;
 
         if ((categoryA | categoryB) != (BitCollision.ITEM | BitCollision.BOMBERMAN)) {
             return;
         }
 
-        Fixture itemFixture = fixtureA.getFilterData().categoryBits == BitCollision.ITEM ? fixtureA : fixtureB;
-        Fixture bombermanFixture = fixtureA.getFilterData().categoryBits == BitCollision.BOMBERMAN ? fixtureA
+        final Fixture itemFixture = fixtureA.getFilterData().categoryBits == BitCollision.ITEM ? fixtureA : fixtureB;
+        final Fixture bombermanFixture = fixtureA.getFilterData().categoryBits == BitCollision.BOMBERMAN ? fixtureA
                 : fixtureB;
 
-        Item item = (Item) itemFixture.getUserData();
-        Bomberman bomberman = (Bomberman) bombermanFixture.getUserData();
+        final Item item = (Item) itemFixture.getUserData();
+        final Bomberman bomberman = (Bomberman) bombermanFixture.getUserData();
 
         item.bonus(bomberman);
     }
 
-    public void handleFlameContact(Contact contact) {
+    public void handleFlameContact(final Contact contact) {
         handleFlameBrickContact(contact);
         handleFlameDamageableObjectContact(contact);
     }
 
-    public void handleFlameBrickContact(Contact contact) {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
+    public void handleFlameBrickContact(final Contact contact) {
+        final Fixture fixtureA = contact.getFixtureA();
+        final Fixture fixtureB = contact.getFixtureB();
 
-        short categoryA = fixtureA.getFilterData().categoryBits;
-        short categoryB = fixtureB.getFilterData().categoryBits;
+        final short categoryA = fixtureA.getFilterData().categoryBits;
+        final short categoryB = fixtureB.getFilterData().categoryBits;
 
         if ((categoryA | categoryB) != (BitCollision.FLAME | BitCollision.BRICK)) {
             return;
         }
 
-        Fixture brickFixture = categoryA == BitCollision.BRICK ? fixtureA : fixtureB;
-        Brick brick = (Brick) brickFixture.getUserData();
+        final Fixture brickFixture = categoryA == BitCollision.BRICK ? fixtureA : fixtureB;
+        final Brick brick = (Brick) brickFixture.getUserData();
         brick.broken();
     }
 
-    public void handleFlameDamageableObjectContact(Contact contact) {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
+    public void handleFlameDamageableObjectContact(final Contact contact) {
+        final Fixture fixtureA = contact.getFixtureA();
+        final Fixture fixtureB = contact.getFixtureB();
 
-        short categoryA = fixtureA.getFilterData().categoryBits;
-        short categoryB = fixtureB.getFilterData().categoryBits;
+        final short categoryA = fixtureA.getFilterData().categoryBits;
+        final short categoryB = fixtureB.getFilterData().categoryBits;
 
         if (((categoryA | categoryB) != (BitCollision.FLAME | BitCollision.BOMBERMAN))
                 && ((categoryA | categoryB) != (BitCollision.FLAME | BitCollision.ENEMY))) {
             return;
         }
 
-        Fixture objectFixture = categoryB == BitCollision.FLAME ? fixtureA
+        final Fixture objectFixture = categoryB == BitCollision.FLAME ? fixtureA
                 : fixtureB;
-        DamageableObject object = (DamageableObject) objectFixture.getUserData();
+        final DamageableObject object = (DamageableObject) objectFixture.getUserData();
         object.damage(1);
     }
 
-    public void handleEnemyConntact(Contact contact) {
-        Fixture fixtureA = contact.getFixtureA();
-        Fixture fixtureB = contact.getFixtureB();
+    public void handleEnemyConntact(final Contact contact) {
+        final Fixture fixtureA = contact.getFixtureA();
+        final Fixture fixtureB = contact.getFixtureB();
 
-        short categoryA = fixtureA.getFilterData().categoryBits;
-        short categoryB = fixtureB.getFilterData().categoryBits;
+        final short categoryA = fixtureA.getFilterData().categoryBits;
+        final short categoryB = fixtureB.getFilterData().categoryBits;
 
         if (((categoryA | categoryB) != (BitCollision.ENEMY | BitCollision.BOMBERMAN))) {
             return;
         }
 
-        Fixture bombermanFixture = categoryA == BitCollision.BOMBERMAN ? fixtureA
+        final Fixture bombermanFixture = categoryA == BitCollision.BOMBERMAN ? fixtureA
                 : fixtureB;
-        Bomberman bomberman = (Bomberman) bombermanFixture.getUserData();
+        final Bomberman bomberman = (Bomberman) bombermanFixture.getUserData();
         bomberman.damage(1);
     }
 }

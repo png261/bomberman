@@ -20,7 +20,7 @@ public abstract class Item extends GameObject {
 
         String value;
 
-        private ItemType(String value) {
+        private ItemType(final String value) {
             this.value = value;
         }
 
@@ -30,7 +30,7 @@ public abstract class Item extends GameObject {
     }
 
     @Override
-    public void load(LoaderParams params) {
+    public void load(final LoaderParams params) {
         this.params = params;
     }
 
@@ -41,11 +41,11 @@ public abstract class Item extends GameObject {
         setCollisionFilter(BitCollision.ITEM, BitCollision.BOMBERMAN);
     }
 
-    public void bonus(Bomberman bomberman) {
+    public void bonus(final Bomberman bomberman) {
         disappear();
     };
 
-    public void update(float delta) {
+    public void update(final float delta) {
     }
 
     public void render() {
