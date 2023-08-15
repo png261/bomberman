@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.Game;
-import com.png261.bomberman.animation.AnimationHandle;
+import com.png261.bomberman.manager.AnimationManager;
 import com.png261.bomberman.level.Level;
 import com.png261.bomberman.physic.BitCollision;
 import com.png261.bomberman.utils.Unit;
@@ -23,7 +23,7 @@ public class Bomb extends GameObject {
     private boolean isExploded = false;
 
     private final int flameLength;
-    private final AnimationHandle animationHandle;
+    private final AnimationManager animationHandle;
     private final Sprite sprite;
     private LoaderParams params;
     private Circle bounds;
@@ -46,7 +46,7 @@ public class Bomb extends GameObject {
         this.flameLength = flameLength;
 
         sprite = new Sprite();
-        animationHandle = new AnimationHandle();
+        animationHandle = new AnimationManager();
     }
 
     @Override

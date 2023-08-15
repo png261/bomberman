@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.png261.bomberman.Game;
-import com.png261.bomberman.animation.AnimationHandle;
+import com.png261.bomberman.manager.AnimationManager;
 import com.png261.bomberman.object.LoaderParams;
 import com.png261.bomberman.object.bomberman.Bomberman;
 import com.png261.bomberman.utils.Unit;
@@ -14,7 +14,7 @@ import com.png261.bomberman.utils.Unit;
 public class Key extends Item {
     private final float FRAME_TIME = 0.6f;
     private TextureAtlas atlas;
-    private final AnimationHandle animationHandle;
+    private final AnimationManager animationHandle;
 
     private enum State {
         NORMAL("normal"), EMPTY("empty");
@@ -32,7 +32,7 @@ public class Key extends Item {
 
     public Key() {
         sprite = new Sprite();
-        animationHandle = new AnimationHandle();
+        animationHandle = new AnimationManager();
     }
 
     @Override

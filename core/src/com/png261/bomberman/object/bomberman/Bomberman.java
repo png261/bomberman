@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.png261.bomberman.Game;
-import com.png261.bomberman.animation.AnimationHandle;
+import com.png261.bomberman.manager.AnimationManager;
 import com.png261.bomberman.object.Bomb;
 import com.png261.bomberman.object.ControllableObject;
 import com.png261.bomberman.object.DamageableObject;
@@ -43,7 +43,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
 
     protected boolean isDead = false;
     protected float speed = 2.5f;
-    protected AnimationHandle animationHandle;
+    protected AnimationManager animationHandle;
 
     protected Sprite sprite;
 
@@ -57,7 +57,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
 
     public Bomberman() {
         super();
-        animationHandle = new AnimationHandle();
+        animationHandle = new AnimationManager();
         sprite = new Sprite();
         bombs = new Array<>();
     }

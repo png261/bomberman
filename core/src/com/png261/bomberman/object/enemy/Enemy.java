@@ -3,7 +3,7 @@ package com.png261.bomberman.object.enemy;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.Game;
-import com.png261.bomberman.animation.AnimationHandle;
+import com.png261.bomberman.manager.AnimationManager;
 import com.png261.bomberman.object.ControllableObject;
 import com.png261.bomberman.object.DamageableObject;
 import com.png261.bomberman.object.GameObject;
@@ -20,13 +20,13 @@ public abstract class Enemy extends GameObject implements DamageableObject, Cont
     protected boolean isDead = false;
 
     protected float speed = 2.5f;
-    protected AnimationHandle animationHandle;
+    protected AnimationManager animationHandle;
     protected Sprite sprite;
     private LoaderParams params;
 
     public Enemy() {
         super();
-        animationHandle = new AnimationHandle();
+        animationHandle = new AnimationManager();
         sprite = new Sprite();
     }
 

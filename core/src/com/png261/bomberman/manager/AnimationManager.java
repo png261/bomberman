@@ -1,17 +1,17 @@
-package com.png261.bomberman.animation;
+package com.png261.bomberman.manager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ObjectMap;
 
-public final class AnimationHandle {
+public final class AnimationManager {
 	private float timer = 0;
 	private String currentAnimation = "";
 	private boolean looping = true;
 	private final ObjectMap<String, Animation<TextureRegion>> animations;
 
-	public AnimationHandle() {
+	public AnimationManager() {
 		animations = new ObjectMap<>();
 	}
 

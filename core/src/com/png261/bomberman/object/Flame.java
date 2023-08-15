@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.Game;
-import com.png261.bomberman.animation.AnimationHandle;
+import com.png261.bomberman.manager.AnimationManager;
 import com.png261.bomberman.physic.BitCollision;
 import com.png261.bomberman.utils.Unit;
 
@@ -17,12 +17,12 @@ public class Flame extends GameObject {
     private final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("image/atlas/flame.atlas"));
 
     private final Sprite sprite;
-    private final AnimationHandle animationHandle;
+    private final AnimationManager animationHandle;
     private LoaderParams params;
 
     public Flame(final State direction) {
         sprite = new Sprite();
-        animationHandle = new AnimationHandle();
+        animationHandle = new AnimationManager();
 
         animationHandle.addAnimation(State.DOWN.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.DOWN.getValue())));
