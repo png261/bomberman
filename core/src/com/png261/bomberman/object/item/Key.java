@@ -14,7 +14,7 @@ import com.png261.bomberman.utils.Unit;
 public class Key extends Item {
     private final float FRAME_TIME = 0.6f;
     private TextureAtlas atlas;
-    private final AnimationManager animationHandle;
+    private final AnimationManager animationManager;
 
     private enum State {
         NORMAL("normal"), EMPTY("empty");
@@ -32,7 +32,7 @@ public class Key extends Item {
 
     public Key() {
         sprite = new Sprite();
-        animationHandle = new AnimationManager();
+        animationManager = new AnimationManager();
     }
 
     @Override
@@ -40,12 +40,12 @@ public class Key extends Item {
         super.load(params);
 
         atlas = new TextureAtlas(Gdx.files.internal("image/atlas/key.atlas"));
-        animationHandle.addAnimation(State.NORMAL.getValue(),
+        animationManager.addAnimation(State.NORMAL.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.NORMAL.getValue())));
-        animationHandle.addAnimation(State.EMPTY.getValue(),
+        animationManager.addAnimation(State.EMPTY.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.EMPTY.getValue())));
 
-        animationHandle.setCurrentAnimation(State.NORMAL.getValue());
+        animationManager.setCurrentAnimation(State.NORMAL.getValue());
     }
 
     @Override
@@ -62,14 +62,14 @@ public class Key extends Item {
         final float x = body.getPosition().x - Unit.pixelToMeter(params.width() / 2);
         final float y = body.getPosition().y - Unit.pixelToMeter(params.height() / 2);
 
-        sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
-                Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
-        sprite.setRegion(animationHandle.getCurrentFrame());
+        sprite.setBounds(x, y, Unit.pixelToMeter(animationManager.getCurrentFrame().getRegionWidth()),
+                Unit.pixelToMeter(animationManager.getCurrentFrame().getRegionHeight()));
+        sprite.setRegion(animationManager.getCurrentFrame());
     }
 
     @Override
     public void bonus(final Bomberman bomberman) {
         bomberman.recivedKey();
-        animationHandle.setCurrentAnimation(State.EMPTY.getValue());
+        animationManager.setCurrentAnimation(State.EMPTY.getValue());
     }
 }

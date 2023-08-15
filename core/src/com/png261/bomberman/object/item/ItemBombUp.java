@@ -1,5 +1,6 @@
 package com.png261.bomberman.object.item;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.png261.bomberman.object.LoaderParams;
@@ -15,7 +16,7 @@ public class ItemBombUp extends Item {
     public void load(final LoaderParams params) {
         super.load(params);
 
-        sprite = new Sprite(new Texture("image/item/bombup.png"));
+        sprite.setRegion(new Texture(Gdx.files.internal("image/item/bombup.png")));
         sprite.setBounds(
                 Unit.pixelToMeter(params.x()),
                 Unit.pixelToMeter(params.y()),

@@ -28,13 +28,16 @@ public final class Game extends com.badlogic.gdx.Game {
     public void create() {
         batch = new SpriteBatch();
 
-        final Pixmap pixmap = new Pixmap(Gdx.files.internal("image/cursor/cursor-normal.png"));
+        changeCursor("image/cursor/cursor-normal.png");
+        GameStateManager.getInstance().init(this);
+        GameStateManager.getInstance().changeState(new MainMenuState());
+    }
+
+    public void changeCursor(String cursorImage) {
+        final Pixmap pixmap = new Pixmap(Gdx.files.internal(cursorImage));
         cursor = Gdx.graphics.newCursor(pixmap, 15, 15);
         pixmap.dispose();
         Gdx.graphics.setCursor(cursor);
-
-        GameStateManager.getInstance().init(this);
-        GameStateManager.getInstance().changeState(new MainMenuState());
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.png261.bomberman.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Single;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -33,7 +34,7 @@ public final class MainMenuState extends GameState {
         singleButton.addListener(new ClickListener() {
             @Override
             public void clicked(final InputEvent event, final float x, final float y) {
-                Game.getInstance().setScreen(new PlayState());
+                Game.getInstance().setScreen(new SinglePlayerState());
             }
 
         });

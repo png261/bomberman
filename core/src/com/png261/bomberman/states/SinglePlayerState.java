@@ -12,7 +12,7 @@ import com.png261.bomberman.level.Level;
 import com.png261.bomberman.manager.GameStateManager;
 import com.png261.bomberman.object.bomberman.Bomberman;
 
-public final class PlayState extends GameState {
+public final class SinglePlayerState extends GameState {
     private final int MAP_WIDTH = 17;
     private final int MAP_HEIGHT = 13;
 

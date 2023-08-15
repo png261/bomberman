@@ -13,6 +13,7 @@ public abstract class Item extends GameObject {
 
     public Item() {
         super();
+        sprite = new Sprite();
     }
 
     public static enum ItemType {

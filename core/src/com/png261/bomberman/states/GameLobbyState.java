@@ -256,7 +256,7 @@ public class GameLobbyState extends GameState {
                     p.ready = false;
 
                 socket.off();
-                Game.getInstance().setScreen(new MultiPlayerGameState(socket, clients));
+                Game.getInstance().setScreen(new MultiPlayerState(socket, clients));
 
                 waitTime = 0;
                 waiting = false;

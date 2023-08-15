@@ -43,7 +43,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
 
     protected boolean isDead = false;
     protected float speed = 2.5f;
-    protected AnimationManager animationHandle;
+    protected AnimationManager animationManager;
 
     protected Sprite sprite;
 
@@ -57,7 +57,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
 
     public Bomberman() {
         super();
-        animationHandle = new AnimationManager();
+        animationManager = new AnimationManager();
         sprite = new Sprite();
         bombs = new Array<>();
     }
@@ -77,7 +77,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
         if (isDead()) {
             return;
         }
-        animationHandle.setCurrentAnimation(direction.getValue());
+        animationManager.setCurrentAnimation(direction.getValue());
         body.setLinearVelocity(0, 0);
     }
 
@@ -87,7 +87,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
             return;
         }
         this.body.setLinearVelocity(new Vector2(0, speed));
-        animationHandle.setCurrentAnimation(State.WALK_UP.getValue());
+        animationManager.setCurrentAnimation(State.WALK_UP.getValue());
         direction = State.IDLE_UP;
     }
 
@@ -97,7 +97,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
             return;
         }
         this.body.setLinearVelocity(new Vector2(0, -speed));
-        animationHandle.setCurrentAnimation(State.WALK_DOWN.getValue());
+        animationManager.setCurrentAnimation(State.WALK_DOWN.getValue());
         direction = State.IDLE_DOWN;
     }
 
@@ -107,7 +107,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
             return;
         }
         this.body.setLinearVelocity(new Vector2(speed, 0));
-        animationHandle.setCurrentAnimation(State.WALK_RIGHT.getValue());
+        animationManager.setCurrentAnimation(State.WALK_RIGHT.getValue());
         direction = State.IDLE_RIGHT;
     }
 
@@ -117,7 +117,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
             return;
         }
         this.body.setLinearVelocity(new Vector2(-speed, 0));
-        animationHandle.setCurrentAnimation(State.WALK_LEFT.getValue());
+        animationManager.setCurrentAnimation(State.WALK_LEFT.getValue());
         direction = State.IDLE_LEFT;
     }
 
@@ -144,7 +144,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     public void update(final float delta) {
         updateSprite();
         if (isDead()) {
-            if (animationHandle.isCurrentAnimation(State.DEAD.getValue()) && animationHandle.isFinished()) {
+            if (animationManager.isCurrentAnimation(State.DEAD.getValue()) && animationManager.isFinished()) {
                 disappear();
             }
             return;
@@ -166,41 +166,41 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     }
 
     public void setupAnimation() {
-        animationHandle.addAnimation(State.WALK_DOWN.getValue(),
+        animationManager.addAnimation(State.WALK_DOWN.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.WALK_DOWN.getValue())));
 
-        animationHandle.addAnimation(State.WALK_LEFT.getValue(),
+        animationManager.addAnimation(State.WALK_LEFT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.WALK_LEFT.getValue())));
 
-        animationHandle.addAnimation(State.WALK_RIGHT.getValue(),
+        animationManager.addAnimation(State.WALK_RIGHT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.WALK_RIGHT.getValue())));
 
-        animationHandle.addAnimation(State.WALK_UP.getValue(),
+        animationManager.addAnimation(State.WALK_UP.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.WALK_UP.getValue())));
 
-        animationHandle.addAnimation(State.IDLE_DOWN.getValue(),
+        animationManager.addAnimation(State.IDLE_DOWN.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE_DOWN.getValue())));
 
-        animationHandle.addAnimation(State.IDLE_LEFT.getValue(),
+        animationManager.addAnimation(State.IDLE_LEFT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE_LEFT.getValue())));
 
-        animationHandle.addAnimation(State.IDLE_RIGHT.getValue(),
+        animationManager.addAnimation(State.IDLE_RIGHT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE_RIGHT.getValue())));
 
-        animationHandle.addAnimation(State.IDLE_UP.getValue(),
+        animationManager.addAnimation(State.IDLE_UP.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE_UP.getValue())));
 
-        animationHandle.addAnimation(State.DEAD.getValue(),
+        animationManager.addAnimation(State.DEAD.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.DEAD.getValue())));
 
-        animationHandle.setCurrentAnimation(State.IDLE_DOWN.getValue());
+        animationManager.setCurrentAnimation(State.IDLE_DOWN.getValue());
     }
 
     @Override
     public void dead() {
         isDead = true;
         stopMovement();
-        animationHandle.setCurrentAnimation(State.DEAD.getValue());
+        animationManager.setCurrentAnimation(State.DEAD.getValue());
     }
 
     public void speedUp(final float n) {
@@ -237,9 +237,9 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
         final float x = body.getPosition().x - Unit.pixelToMeter(BODY_RADIUS);
         final float y = body.getPosition().y - Unit.pixelToMeter(BODY_RADIUS);
 
-        sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
-                Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
-        sprite.setRegion(animationHandle.getCurrentFrame());
+        sprite.setBounds(x, y, Unit.pixelToMeter(animationManager.getCurrentFrame().getRegionWidth()),
+                Unit.pixelToMeter(animationManager.getCurrentFrame().getRegionHeight()));
+        sprite.setRegion(animationManager.getCurrentFrame());
     }
 
     public void recivedKey() {

@@ -20,13 +20,13 @@ public abstract class Enemy extends GameObject implements DamageableObject, Cont
     protected boolean isDead = false;
 
     protected float speed = 2.5f;
-    protected AnimationManager animationHandle;
+    protected AnimationManager animationManager;
     protected Sprite sprite;
     private LoaderParams params;
 
     public Enemy() {
         super();
-        animationHandle = new AnimationManager();
+        animationManager = new AnimationManager();
         sprite = new Sprite();
     }
 
@@ -97,9 +97,9 @@ public abstract class Enemy extends GameObject implements DamageableObject, Cont
         final float x = body.getPosition().x - Unit.pixelToMeter(BODY_RADIUS);
         final float y = body.getPosition().y - Unit.pixelToMeter(BODY_RADIUS);
 
-        sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
-                Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
-        sprite.setRegion(animationHandle.getCurrentFrame());
+        sprite.setBounds(x, y, Unit.pixelToMeter(animationManager.getCurrentFrame().getRegionWidth()),
+                Unit.pixelToMeter(animationManager.getCurrentFrame().getRegionHeight()));
+        sprite.setRegion(animationManager.getCurrentFrame());
     }
 
 }

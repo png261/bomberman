@@ -23,7 +23,7 @@ public class Bomb extends GameObject {
     private boolean isExploded = false;
 
     private final int flameLength;
-    private final AnimationManager animationHandle;
+    private final AnimationManager animationManager;
     private final Sprite sprite;
     private LoaderParams params;
     private Circle bounds;
@@ -46,7 +46,7 @@ public class Bomb extends GameObject {
         this.flameLength = flameLength;
 
         sprite = new Sprite();
-        animationHandle = new AnimationManager();
+        animationManager = new AnimationManager();
     }
 
     @Override
@@ -58,11 +58,11 @@ public class Bomb extends GameObject {
         bounds.setRadius(BODY_RADIUS);
 
         atlas = new TextureAtlas(Gdx.files.internal("image/atlas/bomb.atlas"));
-        animationHandle.addAnimation(State.IDLE.getValue(),
+        animationManager.addAnimation(State.IDLE.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.IDLE.getValue())));
-        animationHandle.addAnimation(State.EXPLODE.getValue(),
+        animationManager.addAnimation(State.EXPLODE.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.EXPLODE.getValue())));
-        animationHandle.setCurrentAnimation(State.IDLE.getValue());
+        animationManager.setCurrentAnimation(State.IDLE.getValue());
     }
 
     @Override
@@ -83,7 +83,7 @@ public class Bomb extends GameObject {
 
         timeCountDown -= delta;
 
-        if (animationHandle.isCurrentAnimation(State.EXPLODE.getValue()) && animationHandle.isFinished()) {
+        if (animationManager.isCurrentAnimation(State.EXPLODE.getValue()) && animationManager.isFinished()) {
             disappear();
         }
     }
@@ -97,13 +97,13 @@ public class Bomb extends GameObject {
         final float x = body.getPosition().x - Unit.pixelToMeter(BODY_RADIUS);
         final float y = body.getPosition().y - Unit.pixelToMeter(BODY_RADIUS);
 
-        sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
-                Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
-        sprite.setRegion(animationHandle.getCurrentFrame());
+        sprite.setBounds(x, y, Unit.pixelToMeter(animationManager.getCurrentFrame().getRegionWidth()),
+                Unit.pixelToMeter(animationManager.getCurrentFrame().getRegionHeight()));
+        sprite.setRegion(animationManager.getCurrentFrame());
     }
 
     private void explode() {
-        animationHandle.setCurrentAnimation(State.EXPLODE.getValue());
+        animationManager.setCurrentAnimation(State.EXPLODE.getValue());
         createFlame();
         setSensor(true);
         isExploded = true;

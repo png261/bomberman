@@ -17,23 +17,23 @@ public class Flame extends GameObject {
     private final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("image/atlas/flame.atlas"));
 
     private final Sprite sprite;
-    private final AnimationManager animationHandle;
+    private final AnimationManager animationManager;
     private LoaderParams params;
 
     public Flame(final State direction) {
         sprite = new Sprite();
-        animationHandle = new AnimationManager();
+        animationManager = new AnimationManager();
 
-        animationHandle.addAnimation(State.DOWN.getValue(),
+        animationManager.addAnimation(State.DOWN.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.DOWN.getValue())));
-        animationHandle.addAnimation(State.UP.getValue(),
+        animationManager.addAnimation(State.UP.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.UP.getValue())));
-        animationHandle.addAnimation(State.LEFT.getValue(),
+        animationManager.addAnimation(State.LEFT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.LEFT.getValue())));
-        animationHandle.addAnimation(State.RIGHT.getValue(),
+        animationManager.addAnimation(State.RIGHT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.RIGHT.getValue())));
 
-        animationHandle.setCurrentAnimation(direction.getValue(), false);
+        animationManager.setCurrentAnimation(direction.getValue(), false);
     }
 
     @Override
@@ -52,15 +52,15 @@ public class Flame extends GameObject {
         final float x = body.getPosition().x - Unit.pixelToMeter(BODY_DIAMETER);
         final float y = body.getPosition().y - Unit.pixelToMeter(BODY_DIAMETER);
 
-        sprite.setBounds(x, y, Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionWidth()),
-                Unit.pixelToMeter(animationHandle.getCurrentFrame().getRegionHeight()));
-        sprite.setRegion(animationHandle.getCurrentFrame());
+        sprite.setBounds(x, y, Unit.pixelToMeter(animationManager.getCurrentFrame().getRegionWidth()),
+                Unit.pixelToMeter(animationManager.getCurrentFrame().getRegionHeight()));
+        sprite.setRegion(animationManager.getCurrentFrame());
     }
 
     @Override
     public void update(final float delta) {
         updateSprite();
-        if (animationHandle.isFinished()) {
+        if (animationManager.isFinished()) {
             disappear();
         }
     }
