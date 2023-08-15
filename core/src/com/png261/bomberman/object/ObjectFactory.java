@@ -44,6 +44,8 @@ public final class ObjectFactory {
             return new ItemBombUp();
         } else if (id.equals("Key")) {
             return new Key();
+        } else if (id.equals("Door")) {
+            return new Door();
         }
 
         return null;

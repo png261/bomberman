@@ -20,17 +20,14 @@ public final class ObjectManager implements Disposable {
     private final Array<GameObject> newObjects;
     private final Array<Bomberman> bombermans;
 
-    public ObjectManager() {
+    public ObjectManager(final TiledMap map) {
         walls = new Array<>();
         bricks = new Array<>();
         objects = new Array<>();
         newObjects = new Array<>();
         bombermans = new Array<>();
-    }
 
-    public void load(final TiledMap map) {
         this.map = map;
-
         createObject();
     }
 

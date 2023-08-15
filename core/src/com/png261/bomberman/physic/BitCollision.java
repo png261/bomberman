@@ -9,6 +9,7 @@ public final class BitCollision {
     public static final short BOMB = 0x010;
     public static final short FLAME = 0x020;
     public static final short ITEM = 0x040;
+    public static final short DOOR = 0x080;
     public static final short ALL = 0xFFF;
 
     public static short orOperation(final short... bits) {

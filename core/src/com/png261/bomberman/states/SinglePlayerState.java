@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -21,6 +22,10 @@ public final class SinglePlayerState extends GameState {
 
     private Level level;
     private Bomberman bomberman;
+    private boolean nextLevel = false;
+    private Array<String> maps;
+    private boolean hasKey = false;
+    private int mapIndex;
 
     @Override
     public void show() {
@@ -28,18 +33,38 @@ public final class SinglePlayerState extends GameState {
         viewport = new FitViewport(MAP_WIDTH, MAP_HEIGHT, camera);
         camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
-        level = new Level();
+        maps = new Array<>();
+        maps.add("map/map1.tmx");
+        maps.add("map/map2.tmx");
+        mapIndex = 0;
+
+        level = new Level("map/map1.tmx");
         Game.getInstance().setLevel(level);
-        level.load("map/map1.tmx");
         bomberman = level.objectManager().getBombermans().get(0);
     }
 
     public void update(final float delta) {
+        if (nextLevel) {
+            if (hasKey && mapIndex < maps.size - 1) {
+                mapIndex += 1;
+                loadLevel();
+            }
+            nextLevel = false;
+        }
+
         camera.update();
         level.update(delta);
 
         handleInput();
         bomberman.update(delta);
+    }
+
+    public void loadLevel() {
+        Game.getInstance().level().dispose();
+        level = new Level(maps.get(mapIndex));
+        Game.getInstance().setLevel(level);
+        bomberman = level.objectManager().getBombermans().get(0);
+        hasKey = false;
     }
 
     public void handleInput() {
@@ -56,6 +81,18 @@ public final class SinglePlayerState extends GameState {
         } else {
             bomberman.idle();
         }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+            nextLevel();
+        }
+    }
+
+    public void nextLevel() {
+        nextLevel = true;
+    }
+
+    public void receiveKey() {
+        hasKey = true;
     }
 
     @Override

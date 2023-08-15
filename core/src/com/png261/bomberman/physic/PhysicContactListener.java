@@ -5,10 +5,13 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.png261.bomberman.manager.GameStateManager;
 import com.png261.bomberman.object.DamageableObject;
 import com.png261.bomberman.object.item.Item;
 import com.png261.bomberman.object.bomberman.Bomberman;
 import com.png261.bomberman.object.tile.Brick;
+import com.png261.bomberman.states.GameState;
+import com.png261.bomberman.states.SinglePlayerState;
 
 public class PhysicContactListener implements ContactListener {
     @Override
@@ -16,6 +19,7 @@ public class PhysicContactListener implements ContactListener {
         handleItemContact(contact);
         handleFlameContact(contact);
         handleEnemyConntact(contact);
+        handleDoorContact(contact);
     }
 
     @Override
@@ -49,6 +53,22 @@ public class PhysicContactListener implements ContactListener {
         final Bomberman bomberman = (Bomberman) bombermanFixture.getUserData();
 
         item.bonus(bomberman);
+    }
+
+    public void handleDoorContact(final Contact contact) {
+        final Fixture fixtureA = contact.getFixtureA();
+        final Fixture fixtureB = contact.getFixtureB();
+
+        final short categoryA = fixtureA.getFilterData().categoryBits;
+        final short categoryB = fixtureB.getFilterData().categoryBits;
+
+        if ((categoryA | categoryB) != (BitCollision.DOOR | BitCollision.BOMBERMAN)) {
+            return;
+        }
+        SinglePlayerState singlePlayerState = (SinglePlayerState) GameStateManager.getInstance().currentState();
+        if (singlePlayerState != null) {
+            singlePlayerState.nextLevel();
+        }
     }
 
     public void handleFlameContact(final Contact contact) {

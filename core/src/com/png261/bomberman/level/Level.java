@@ -11,15 +11,10 @@ public final class Level implements Disposable {
     private final MapManager mapManager;
     private final ObjectManager objectManager;
 
-    public Level() {
+    public Level(final String mapFile) {
         PhysicManager.getInstance().setDebug(true);
-        mapManager = new MapManager();
-        objectManager = new ObjectManager();
-    }
-
-    public void load(final String mapFile) {
-        mapManager.load(mapFile);
-        objectManager.load(mapManager.map());
+        mapManager = new MapManager(mapFile);
+        objectManager = new ObjectManager(mapManager.map());
     }
 
     public TiledMap map() {

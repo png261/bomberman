@@ -42,9 +42,8 @@ public final class MultiPlayerState extends GameState {
         viewport = new FitViewport(MAP_WIDTH, MAP_HEIGHT, camera);
         camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
-        level = new Level();
+        level = new Level("multiplayer.tmx");
         Game.getInstance().setLevel(level);
-        level.load("multiplayer.tmx");
         bombermans = level.objectManager().getBombermans();
 
         mapBomberman = new ObjectMap<>();

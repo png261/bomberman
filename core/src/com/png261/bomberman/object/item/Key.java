@@ -7,8 +7,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.manager.AnimationManager;
+import com.png261.bomberman.manager.GameStateManager;
 import com.png261.bomberman.object.LoaderParams;
 import com.png261.bomberman.object.bomberman.Bomberman;
+import com.png261.bomberman.states.SinglePlayerState;
 import com.png261.bomberman.utils.Unit;
 
 public class Key extends Item {
@@ -69,7 +71,10 @@ public class Key extends Item {
 
     @Override
     public void bonus(final Bomberman bomberman) {
-        bomberman.recivedKey();
+        SinglePlayerState singlePlayerState = (SinglePlayerState) GameStateManager.getInstance().currentState();
+        if (singlePlayerState != null) {
+            singlePlayerState.receiveKey();
+        }
         animationManager.setCurrentAnimation(State.EMPTY.getValue());
     }
 }

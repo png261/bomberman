@@ -34,7 +34,7 @@ public final class MainMenuState extends GameState {
         singleButton.addListener(new ClickListener() {
             @Override
             public void clicked(final InputEvent event, final float x, final float y) {
-                Game.getInstance().setScreen(new SinglePlayerState());
+                GameStateManager.getInstance().changeState(new SinglePlayerState());
             }
 
         });

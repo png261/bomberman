@@ -13,11 +13,9 @@ public final class MapManager implements Disposable {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
-    public MapManager() {
+    public MapManager(final String filePath) {
         loader = new TmxMapLoader();
-    }
-
-    public void load(final String filePath) {
+        loader.load(filePath);
         map = loader.load(filePath);
         renderer = new OrthogonalTiledMapRenderer(map, UNIT_SCALE);
     }
