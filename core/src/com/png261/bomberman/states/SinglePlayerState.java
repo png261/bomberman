@@ -44,7 +44,17 @@ public final class SinglePlayerState extends GameState {
     }
 
     public void update(final float delta) {
+        if (!bomberman.exist()) {
+            GameStateManager.getInstance().changeState(new GameOverState());
+            return;
+        }
+
         if (nextLevel) {
+            if (hasKey && mapIndex == maps.size - 1) {
+                GameStateManager.getInstance().changeState(new WinState());
+                return;
+            }
+
             if (hasKey && mapIndex < maps.size - 1) {
                 mapIndex += 1;
                 loadLevel();
@@ -100,11 +110,6 @@ public final class SinglePlayerState extends GameState {
         ScreenUtils.clear(Color.BLACK);
 
         update(delta);
-
-        if (!bomberman.exist()) {
-            GameStateManager.getInstance().changeState(new GameOverState());
-            return;
-        }
 
         level.renderMap(camera);
 
