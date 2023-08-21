@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="17" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="191">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="17" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="23" nextobjectid="196">
  <tileset firstgid="1" name="tileset_all" tilewidth="16" tileheight="16" spacing="1" margin="1" tilecount="2881" columns="67">
-  <image source="59912.png" width="1149" height="735"/>
+  <image source="tileset.png" width="1149" height="735"/>
+  <tile id="0" type="TilesetAll"/>
   <tile id="74">
    <animation>
     <frame tileid="74" duration="500"/>
@@ -46,56 +47,36 @@
     <frame tileid="608" duration="120"/>
    </animation>
   </tile>
+  <tile id="2279" type="TilesetAll"/>
  </tileset>
- <tileset firstgid="2882" name="item" tilewidth="15" tileheight="15" spacing="1" margin="1" tilecount="315" columns="15">
-  <image source="item.png" width="250" height="348"/>
- </tileset>
- <tileset firstgid="3197" name="Sticker" tilewidth="17" tileheight="26" tilecount="7" columns="0">
+ <tileset firstgid="2882" name="Sticker" tilewidth="17" tileheight="26" tilecount="8" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
-   <image width="16" height="16" source="bombup-sticker.png"/>
+   <image width="16" height="16" source="sticker/bombup.png"/>
   </tile>
   <tile id="1">
-   <image width="17" height="26" source="bulb-sticker.png"/>
+   <image width="17" height="26" source="sticker/bulb.png"/>
   </tile>
   <tile id="2">
-   <image width="13" height="24" source="bomberman-sticker.png"/>
+   <image width="13" height="24" source="sticker/bomberman.png"/>
   </tile>
   <tile id="3">
-   <image width="16" height="16" source="flameup-sticker.png"/>
+   <image width="16" height="16" source="sticker/flameup.png"/>
   </tile>
   <tile id="4">
-   <image width="16" height="16" source="speedup-sticker.png"/>
+   <image width="16" height="16" source="sticker/speedup.png"/>
   </tile>
   <tile id="5">
-   <image width="15" height="26" source="balloom-sticker.png"/>
+   <image width="15" height="26" source="sticker/balloom.png"/>
   </tile>
   <tile id="6">
-   <image width="16" height="16" source="bomb-sticker.png"/>
+   <image width="16" height="16" source="sticker/bomb.png"/>
+  </tile>
+  <tile id="7">
+   <image width="16" height="16" source="sticker/key.png"/>
   </tile>
  </tileset>
- <tileset firstgid="3204" name="Sticker" tilewidth="17" tileheight="26" tilecount="6" columns="0">
-  <grid orientation="orthogonal" width="1" height="1"/>
-  <tile id="0">
-   <image width="16" height="16" source="bombup-sticker.png"/>
-  </tile>
-  <tile id="1">
-   <image width="17" height="26" source="bulb-sticker.png"/>
-  </tile>
-  <tile id="2">
-   <image width="13" height="24" source="bomberman-sticker.png"/>
-  </tile>
-  <tile id="3">
-   <image width="16" height="16" source="flameup-sticker.png"/>
-  </tile>
-  <tile id="4">
-   <image width="16" height="16" source="speedup-sticker.png"/>
-  </tile>
-  <tile id="5">
-   <image width="15" height="26" source="balloom-sticker.png"/>
-  </tile>
- </tileset>
- <layer id="7" name="floor" width="17" height="13">
+ <layer id="7" name="Floor" width="17" height="13">
   <data encoding="csv">
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
@@ -112,7 +93,7 @@
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
- <layer id="1" name="tile" width="17" height="13">
+ <layer id="1" name="Tile" width="17" height="13">
   <data encoding="csv">
 73,74,75,75,75,75,75,75,75,75,75,11,12,13,75,2147483722,2147483721,
 140,141,142,142,142,142,142,142,142,142,142,78,79,80,142,2147483789,2147483788,
@@ -191,18 +172,14 @@
   <object id="86" name="Brick" type="Brick" x="224" y="176" width="16" height="16"/>
   <object id="87" name="Brick" type="Brick" x="224.455" y="48" width="15.545" height="16"/>
   <object id="88" name="Brick" type="Brick" x="224" y="64" width="16" height="16"/>
-  <object id="104" name="Brick" type="Brick" x="224.125" y="32" width="15.875" height="16"/>
  </objectgroup>
  <objectgroup id="22" name="Bomb"/>
- <objectgroup id="13" name="key">
-  <object id="106" x="224.813" y="32.5" width="14.25" height="14.3125"/>
+ <objectgroup id="13" name="Key">
+  <object id="192" name="Key" type="Key" gid="2889" x="224" y="48" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="14" name="portal">
-  <object id="109" x="192" y="48" width="16" height="16"/>
- </objectgroup>
- <objectgroup id="8" name="enemy"/>
- <objectgroup id="19" name="bomberman">
-  <object id="128" name="Bomberman" type="Bomberman" gid="3199" x="64" y="192" width="13" height="24"/>
-  <object id="189" name="Bomberman" type="Bomberman" gid="3199" x="192" y="96" width="13" height="24"/>
+ <objectgroup id="8" name="Enemy"/>
+ <objectgroup id="19" name="Bomberman">
+  <object id="194" name="Bomberman" type="Bomberman" gid="2884" x="160" y="96" width="13" height="24"/>
+  <object id="195" name="Bomberman" type="Bomberman" gid="2884" x="64" y="192" width="13" height="24"/>
  </objectgroup>
 </map>
