@@ -4,27 +4,32 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.png261.bomberman.Game;
+import com.badlogic.gdx.utils.Disposable;
 
-public final class MapManager
-{
-    private TmxMapLoader loader;
+public final class MapManager implements Disposable {
+    private final float UNIT_SCALE = 1 / 16f;
+
+    private final TmxMapLoader loader;
     private TiledMap map;
-    private final float unitScale = 1 / 16f;
     private OrthogonalTiledMapRenderer renderer;
 
-    public MapManager() { loader = new TmxMapLoader(); }
-
-    public void load(final String filePath)
-    {
+    public MapManager(final String filePath) {
+        loader = new TmxMapLoader();
+        loader.load(filePath);
         map = loader.load(filePath);
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        renderer = new OrthogonalTiledMapRenderer(map, UNIT_SCALE);
     }
 
-    public void render(final OrthographicCamera camera)
-    {
+    public void render(final OrthographicCamera camera) {
         renderer.setView(camera);
         renderer.render();
     }
-    public TiledMap getMap() { return map; }
+
+    public TiledMap map() {
+        return map;
+    }
+
+    @Override
+    public void dispose() {
+    }
 }

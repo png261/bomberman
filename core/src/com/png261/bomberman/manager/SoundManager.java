@@ -1,37 +1,34 @@
 package com.png261.bomberman.manager;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Disposable;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-public class SoundManager implements Disposable
-{
-    public static volatile SoundManager instance;
+public final class SoundManager implements Disposable {
+    private static volatile SoundManager instance;
 
-    private AssetManager manager;
+    private final AssetManager manager;
     private final Map<String, String> musicMap;
     private final Map<String, String> soundMap;
 
-    public static SoundManager getInstance()
-    {
+    public static SoundManager getInstance() {
         if (instance == null) {
             instance = new SoundManager();
         }
         return instance;
     }
 
-    private SoundManager()
-    {
+    private SoundManager() {
         manager = new AssetManager();
         musicMap = new ConcurrentHashMap<>();
         soundMap = new ConcurrentHashMap<>();
     }
 
-    public void loadMusic(String id, String filePath)
-    {
+    public void loadMusic(final String id, final String filePath) {
         if (musicMap.get(id) != null) {
             return;
         }
@@ -41,8 +38,7 @@ public class SoundManager implements Disposable
         manager.finishLoading();
     }
 
-    public void loadSound(String id, String filePath)
-    {
+    public void loadSound(final String id, final String filePath) {
         if (soundMap.get(id) != null) {
             return;
         }
@@ -52,9 +48,8 @@ public class SoundManager implements Disposable
         manager.finishLoading();
     }
 
-    public Music getMusic(String id)
-    {
-        String filePath = musicMap.get(id);
+    public Music getMusic(final String id) {
+        final String filePath = musicMap.get(id);
         if (filePath == null) {
             return null;
         }
@@ -62,9 +57,8 @@ public class SoundManager implements Disposable
         return manager.get(filePath, Music.class);
     }
 
-    public Sound getSound(String id)
-    {
-        String filePath = soundMap.get(id);
+    public Sound getSound(final String id) {
+        final String filePath = soundMap.get(id);
         if (filePath == null) {
             return null;
         }
@@ -72,38 +66,37 @@ public class SoundManager implements Disposable
         return manager.get(filePath, Sound.class);
     }
 
-    public void playMusic(String id, boolean isLooping)
-    {
-        Music music = getMusic(id);
+    public void playMusic(final String id, final boolean isLooping) {
+        final Music music = getMusic(id);
         if (music != null) {
             music.setLooping(isLooping);
             music.play();
         }
     }
 
-    public void playSound(String id)
-    {
-        Sound sound = getSound(id);
+    public void playSound(final String id) {
+        final Sound sound = getSound(id);
         if (sound != null) {
             sound.play();
         }
     }
 
-    public void stopMusic(String id)
-    {
-        Music music = getMusic(id);
+    public void stopMusic(final String id) {
+        final Music music = getMusic(id);
         if (music != null && music.isPlaying()) {
             music.stop();
         }
     }
 
-    public void pauseMusic(String id)
-    {
-        Music music = getMusic(id);
+    public void pauseMusic(final String id) {
+        final Music music = getMusic(id);
         if (music != null && music.isPlaying()) {
             music.pause();
         }
     }
 
-    @Override public void dispose() { manager.clear(); }
+    @Override
+    public void dispose() {
+        manager.clear();
+    }
 }

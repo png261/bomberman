@@ -1,21 +1,21 @@
 package com.png261.bomberman.physic;
 
-public class BitCollision
-{
-    public static final short NULL = 0;
-    public static final short BOMBERMAN = 1;
-    public static final short WALL = 2;
-    public static final short BRICK = 4;
-    public static final short DESTROYED_BRICK = 8;
-    public static final short ENEMY = 16;
-    public static final short BOMB = 32;
-    public static final short FLAME = 64;
-    public static final short ITEM = 128;
+public final class BitCollision {
+    public static final short NULL = 0x000;
+    public static final short BOMBERMAN = 0x001;
+    public static final short WALL = 0x002;
+    public static final short BRICK = 0x004;
+    public static final short ENEMY = 0x008;
+    public static final short BOMB = 0x010;
+    public static final short FLAME = 0x020;
+    public static final short ITEM = 0x040;
+    public static final short DOOR = 0x080;
+    public static final short ALL = 0xFFF;
 
-    public static short orOperation(short... bits)
-    {
+    public static short orOperation(final short... bits) {
         short res = 0;
-        for (short bit : bits) res |= bit;
+        for (final short bit : bits)
+            res |= bit;
         return res;
     }
 }

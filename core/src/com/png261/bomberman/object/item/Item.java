@@ -1,62 +1,61 @@
 package com.png261.bomberman.object.item;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Filter;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.png261.bomberman.object.person.bomberman.Bomberman;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.png261.bomberman.Game;
+import com.png261.bomberman.object.GameObject;
+import com.png261.bomberman.object.LoaderParams;
+import com.png261.bomberman.object.Bomberman;
 import com.png261.bomberman.physic.BitCollision;
-import com.png261.bomberman.physic.PhysicManager;
-import com.png261.bomberman.utils.Unit;
 
-public abstract class Item
-{
-    public Body body;
-    protected Fixture fixture;
-    public Rectangle bounds;
+public abstract class Item extends GameObject {
+    protected Sprite sprite;
+    protected LoaderParams params;
 
-    public Item(Rectangle bounds)
-    {
-        this.bounds = bounds;
-
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(Unit.coordPixelsToMeters(
-            Unit.screenToBox2D(bounds.getX(), bounds.getWidth()),
-            Unit.screenToBox2D(bounds.getY(), bounds.getHeight())));
-        body = PhysicManager.getInstance().getWorld().createBody(bodyDef);
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(
-            Unit.pixelsToMeters(bounds.getWidth() / 2),
-            Unit.pixelsToMeters(bounds.getHeight() / 2));
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.isSensor = true;
-        fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
-
-        setCollisionFilter(BitCollision.ITEM, BitCollision.orOperation(BitCollision.BOMBERMAN));
-
-        shape.dispose();
+    public Item() {
+        super();
+        sprite = new Sprite();
     }
 
+    public static enum ItemType {
+        ITEM_SPEED_UP("ItemSpeedUp"), ITEM_FLAME_UP("ItemFlameUp"), ITEM_BOMB_UP("ItemBombUp");
 
-    protected void setCollisionFilter(short categoryBit, short maskBits)
-    {
-        Filter filter = new Filter();
-        filter.categoryBits = categoryBit;
-        filter.maskBits = maskBits;
-        fixture.setFilterData(filter);
+        String value;
+
+        private ItemType(final String value) {
+            this.value = value;
+        }
+
+        public String value() {
+            return value;
+        }
     }
 
-    public Rectangle getRect() { return bounds; }
+    @Override
+    public void load(final LoaderParams params) {
+        this.params = params;
+    }
 
-    public abstract void bonus(Bomberman bomberman);
+    @Override
+    public void createBody() {
+        createRectangleBody(params.x(), params.y(), params.width(), params.height());
+        setSensor(true);
+        setCollisionFilter(BitCollision.ITEM, BitCollision.BOMBERMAN);
+    }
+
+    public void bonus(final Bomberman bomberman) {
+        disappear();
+    };
+
+    public void update(final float delta) {
+    }
+
+    public void render() {
+        sprite.draw(Game.getInstance().batch());
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        sprite.getTexture().dispose();
+    }
 }

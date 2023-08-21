@@ -1,19 +1,11 @@
 package com.png261.bomberman.object.tile;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.png261.bomberman.physic.BitCollision;
 
-public class Wall extends Tile
-{
-    public Wall(Rectangle rect)
-    {
-        super(rect);
-        setCollisionFilter(
-            BitCollision.WALL,
-            BitCollision.orOperation(
-                BitCollision.BOMBERMAN,
-                BitCollision.BOMB,
-                BitCollision.FLAME,
-                BitCollision.ENEMY));
+public class Wall extends Tile {
+    @Override
+    public void createBody() {
+        super.createBody();
+        setCollisionFilter(BitCollision.WALL, BitCollision.ALL);
     }
 }
