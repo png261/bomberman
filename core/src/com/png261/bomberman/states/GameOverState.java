@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.png261.bomberman.Game;
 import com.png261.bomberman.manager.GameStateManager;
 
 public class GameOverState extends GameState {
@@ -19,7 +20,7 @@ public class GameOverState extends GameState {
 
     @Override
     public void show() {
-        viewport = new FitViewport(640, 480);
+        viewport = new FitViewport(Game.getInstance().width(), Game.getInstance().height());
         stage = new Stage(viewport);
 
         font = new BitmapFont(Gdx.files.internal("font/foo.fnt"));

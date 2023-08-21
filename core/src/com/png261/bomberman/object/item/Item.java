@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.object.GameObject;
 import com.png261.bomberman.object.LoaderParams;
-import com.png261.bomberman.object.bomberman.Bomberman;
+import com.png261.bomberman.object.Bomberman;
 import com.png261.bomberman.physic.BitCollision;
 
 public abstract class Item extends GameObject {

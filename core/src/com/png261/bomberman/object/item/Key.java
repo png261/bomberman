@@ -9,7 +9,7 @@ import com.png261.bomberman.Game;
 import com.png261.bomberman.manager.AnimationManager;
 import com.png261.bomberman.manager.GameStateManager;
 import com.png261.bomberman.object.LoaderParams;
-import com.png261.bomberman.object.bomberman.Bomberman;
+import com.png261.bomberman.object.Bomberman;
 import com.png261.bomberman.states.SinglePlayerState;
 import com.png261.bomberman.utils.Unit;
 

@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.level.Level;
 import com.png261.bomberman.networking.Client;
-import com.png261.bomberman.object.bomberman.Bomberman;
+import com.png261.bomberman.object.Bomberman;
 
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;

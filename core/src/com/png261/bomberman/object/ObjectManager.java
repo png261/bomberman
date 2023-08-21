@@ -6,7 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.png261.bomberman.object.bomberman.Bomberman;
+import com.png261.bomberman.object.Bomberman;
 import com.png261.bomberman.object.tile.Brick;
 import com.png261.bomberman.object.tile.Wall;
 

@@ -1,4 +1,4 @@
-package com.png261.bomberman.object.bomberman;
+package com.png261.bomberman.object;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -9,11 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.manager.AnimationManager;
-import com.png261.bomberman.object.Bomb;
-import com.png261.bomberman.object.ControllableObject;
-import com.png261.bomberman.object.DamageableObject;
-import com.png261.bomberman.object.GameObject;
-import com.png261.bomberman.object.LoaderParams;
 import com.png261.bomberman.physic.BitCollision;
 import com.png261.bomberman.utils.Unit;
 

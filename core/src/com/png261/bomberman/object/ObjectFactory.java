@@ -4,7 +4,7 @@ import com.png261.bomberman.object.item.ItemBombUp;
 import com.png261.bomberman.object.item.ItemFlameUp;
 import com.png261.bomberman.object.item.ItemSpeedUp;
 import com.png261.bomberman.object.item.Key;
-import com.png261.bomberman.object.bomberman.Bomberman;
+import com.png261.bomberman.object.Bomberman;
 import com.png261.bomberman.object.enemy.Balloom;
 import com.png261.bomberman.object.enemy.Bulb;
 import com.png261.bomberman.object.tile.Brick;

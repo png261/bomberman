@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.level.Level;
 import com.png261.bomberman.manager.GameStateManager;
-import com.png261.bomberman.object.bomberman.Bomberman;
+import com.png261.bomberman.object.Bomberman;
 
 public final class SinglePlayerState extends GameState {
     private final int MAP_WIDTH = 17;

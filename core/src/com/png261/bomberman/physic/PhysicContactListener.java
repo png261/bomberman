@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.png261.bomberman.manager.GameStateManager;
 import com.png261.bomberman.object.DamageableObject;
 import com.png261.bomberman.object.item.Item;
-import com.png261.bomberman.object.bomberman.Bomberman;
+import com.png261.bomberman.object.Bomberman;
 import com.png261.bomberman.object.tile.Brick;
 import com.png261.bomberman.states.GameState;
 import com.png261.bomberman.states.SinglePlayerState;
