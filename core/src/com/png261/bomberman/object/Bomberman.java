@@ -44,7 +44,6 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     private int maxBomb = 1;
     private final Array<Bomb> bombs;
     private State direction = State.IDLE_DOWN;
-    private LoaderParams params;
 
     private final TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("image/atlas/bomberman.atlas"));
 
@@ -56,7 +55,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     }
 
     public void load(final LoaderParams params) {
-        this.params = params;
+        super.load(params);
         setupAnimation();
     }
 

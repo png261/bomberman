@@ -25,7 +25,6 @@ public class Bomb extends GameObject {
     private final int flameLength;
     private final AnimationManager animationManager;
     private final Sprite sprite;
-    private LoaderParams params;
     private Circle bounds;
 
     private enum State {
@@ -51,7 +50,7 @@ public class Bomb extends GameObject {
 
     @Override
     public void load(final LoaderParams params) {
-        this.params = params;
+        super.load(params);
 
         bounds = new Circle();
         bounds.setPosition(params.position());

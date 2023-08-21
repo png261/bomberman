@@ -22,16 +22,11 @@ public abstract class Enemy extends GameObject implements DamageableObject, Cont
     protected float speed = 2.5f;
     protected AnimationManager animationManager;
     protected Sprite sprite;
-    private LoaderParams params;
 
     public Enemy() {
         super();
         animationManager = new AnimationManager();
         sprite = new Sprite();
-    }
-
-    public void load(final LoaderParams params) {
-        this.params = params;
     }
 
     @Override

@@ -21,7 +21,6 @@ public class Flame extends GameObject {
 
     private final Sprite sprite;
     private final AnimationManager animationManager;
-    private LoaderParams params;
 
     private PointLight pointLight;
 
@@ -43,11 +42,6 @@ public class Flame extends GameObject {
                 2f, 0, 0);
         pointLight.setSoft(true);
         pointLight.setSoftnessLength(2.0f);
-    }
-
-    @Override
-    public void load(final LoaderParams params) {
-        this.params = params;
     }
 
     @Override
