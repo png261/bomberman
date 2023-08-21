@@ -98,4 +98,8 @@ public abstract class PhysicObject implements Disposable {
     protected void stopMovement() {
         body.setLinearVelocity(0, 0);
     }
+
+    public Body getBody() {
+        return body;
+    }
 }

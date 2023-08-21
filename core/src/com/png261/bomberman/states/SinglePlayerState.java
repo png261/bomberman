@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -12,6 +13,11 @@ import com.png261.bomberman.Game;
 import com.png261.bomberman.level.Level;
 import com.png261.bomberman.manager.GameStateManager;
 import com.png261.bomberman.object.Bomberman;
+import com.png261.bomberman.physic.BitCollision;
+import com.png261.bomberman.physic.PhysicManager;
+
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 
 public final class SinglePlayerState extends GameState {
     private final int MAP_WIDTH = 17;
@@ -26,6 +32,8 @@ public final class SinglePlayerState extends GameState {
     private Array<String> maps;
     private boolean hasKey = false;
     private int mapIndex;
+    private RayHandler rayHandler;
+    private PointLight pointLight;
 
     @Override
     public void show() {
@@ -41,6 +49,13 @@ public final class SinglePlayerState extends GameState {
         level = new Level("map/map1.tmx");
         Game.getInstance().setLevel(level);
         bomberman = level.objectManager().getBombermans().get(0);
+
+        pointLight = new PointLight(PhysicManager.getInstance().getRayHandler(), 50, new Color(0.5f, 0.5f, 0.5f, 1.0f),
+                2f, 0, 0);
+        // pointLight.setContactFilter((short)0, (short)0, BitCollision.WALL);
+        pointLight.setSoft(true);
+        pointLight.setSoftnessLength(2.0f);
+        pointLight.attachToBody(bomberman.getBody());
     }
 
     public void update(final float delta) {
@@ -74,6 +89,7 @@ public final class SinglePlayerState extends GameState {
         level = new Level(maps.get(mapIndex));
         Game.getInstance().setLevel(level);
         bomberman = level.objectManager().getBombermans().get(0);
+        pointLight.attachToBody(bomberman.getBody());
         hasKey = false;
     }
 
@@ -120,6 +136,9 @@ public final class SinglePlayerState extends GameState {
         bomberman.render();
 
         Game.getInstance().batch().end();
+
+        PhysicManager.getInstance().getRayHandler().setCombinedMatrix(camera);
+        PhysicManager.getInstance().getRayHandler().updateAndRender();
     }
 
     @Override
@@ -130,6 +149,7 @@ public final class SinglePlayerState extends GameState {
     @Override
     public void dispose() {
         level.dispose();
+        rayHandler.dispose();
     }
 
     @Override

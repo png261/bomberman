@@ -3,13 +3,16 @@ package com.png261.bomberman.object;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.png261.bomberman.Game;
 import com.png261.bomberman.manager.AnimationManager;
 import com.png261.bomberman.physic.BitCollision;
+import com.png261.bomberman.physic.PhysicManager;
 import com.png261.bomberman.utils.Unit;
+import box2dLight.PointLight;
 
 public class Flame extends GameObject {
     private final float FRAME_TIME = 0.3f;
@@ -19,6 +22,8 @@ public class Flame extends GameObject {
     private final Sprite sprite;
     private final AnimationManager animationManager;
     private LoaderParams params;
+
+    private PointLight pointLight;
 
     public Flame(final State direction) {
         sprite = new Sprite();
@@ -34,6 +39,10 @@ public class Flame extends GameObject {
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.RIGHT.getValue())));
 
         animationManager.setCurrentAnimation(direction.getValue(), false);
+        pointLight = new PointLight(PhysicManager.getInstance().getRayHandler(), 50, new Color(0.5f, 0.5f, 0.5f, 1.0f),
+                2f, 0, 0);
+        pointLight.setSoft(true);
+        pointLight.setSoftnessLength(2.0f);
     }
 
     @Override
@@ -46,6 +55,7 @@ public class Flame extends GameObject {
         createCircleBody(params.position(), BODY_DIAMETER / 2);
         setCollisionFilter(BitCollision.FLAME, BitCollision.ALL);
         setSensor(true);
+        pointLight.attachToBody(getBody());
     }
 
     private void updateSprite() {
@@ -61,6 +71,7 @@ public class Flame extends GameObject {
     public void update(final float delta) {
         updateSprite();
         if (animationManager.isFinished()) {
+            pointLight.setDistance(0);
             disappear();
         }
     }

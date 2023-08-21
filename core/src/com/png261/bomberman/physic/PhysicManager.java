@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
+import box2dLight.RayHandler;
 
 public final class PhysicManager implements Disposable {
     private static volatile PhysicManager instance;
@@ -13,11 +14,13 @@ public final class PhysicManager implements Disposable {
     private final World world;
     private final Box2DDebugRenderer debugRenderer;
     private boolean isDebug = false;
+    private RayHandler rayHandler;
 
     private PhysicManager() {
         world = new World(GRAVITY, true);
         world.setContactListener(new PhysicContactListener());
         debugRenderer = new Box2DDebugRenderer();
+        rayHandler = new RayHandler(world);
     }
 
     public static PhysicManager getInstance() {
@@ -51,5 +54,9 @@ public final class PhysicManager implements Disposable {
 
     @Override
     public void dispose() {
+    }
+
+    public RayHandler getRayHandler() {
+        return rayHandler;
     }
 }
