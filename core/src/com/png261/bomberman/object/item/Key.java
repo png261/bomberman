@@ -42,12 +42,12 @@ public class Key extends Item {
         super.load(params);
 
         atlas = new TextureAtlas(Gdx.files.internal("image/atlas/key.atlas"));
-        animationManager.addAnimation(State.NORMAL.getValue(),
+        animationManager.add(State.NORMAL.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.NORMAL.getValue())));
-        animationManager.addAnimation(State.EMPTY.getValue(),
+        animationManager.add(State.EMPTY.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.EMPTY.getValue())));
 
-        animationManager.setCurrentAnimation(State.NORMAL.getValue());
+        animationManager.run(State.NORMAL.getValue());
     }
 
     @Override
@@ -75,6 +75,6 @@ public class Key extends Item {
         if (singlePlayerState != null) {
             singlePlayerState.receiveKey();
         }
-        animationManager.setCurrentAnimation(State.EMPTY.getValue());
+        animationManager.run(State.EMPTY.getValue());
     }
 }

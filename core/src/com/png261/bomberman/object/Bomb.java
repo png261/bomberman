@@ -57,11 +57,11 @@ public class Bomb extends GameObject {
         bounds.setRadius(BODY_RADIUS);
 
         atlas = new TextureAtlas(Gdx.files.internal("image/atlas/bomb.atlas"));
-        animationManager.addAnimation(State.IDLE.getValue(),
+        animationManager.add(State.IDLE.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.IDLE.getValue())));
-        animationManager.addAnimation(State.EXPLODE.getValue(),
+        animationManager.add(State.EXPLODE.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.EXPLODE.getValue())));
-        animationManager.setCurrentAnimation(State.IDLE.getValue());
+        animationManager.run(State.IDLE.getValue());
     }
 
     @Override
@@ -82,7 +82,7 @@ public class Bomb extends GameObject {
 
         timeCountDown -= delta;
 
-        if (animationManager.isCurrentAnimation(State.EXPLODE.getValue()) && animationManager.isFinished()) {
+        if (animationManager.isRunning(State.EXPLODE.getValue()) && animationManager.isFinished()) {
             disappear();
         }
     }
@@ -102,7 +102,7 @@ public class Bomb extends GameObject {
     }
 
     private void explode() {
-        animationManager.setCurrentAnimation(State.EXPLODE.getValue());
+        animationManager.run(State.EXPLODE.getValue());
         createFlame();
         setSensor(true);
         isExploded = true;

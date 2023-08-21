@@ -69,7 +69,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
         if (isDead()) {
             return;
         }
-        animationManager.setCurrentAnimation(direction.getValue());
+        animationManager.run(direction.getValue());
         body.setLinearVelocity(0, 0);
     }
 
@@ -79,7 +79,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
             return;
         }
         this.body.setLinearVelocity(new Vector2(0, speed));
-        animationManager.setCurrentAnimation(State.WALK_UP.getValue());
+        animationManager.run(State.WALK_UP.getValue());
         direction = State.IDLE_UP;
     }
 
@@ -89,7 +89,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
             return;
         }
         this.body.setLinearVelocity(new Vector2(0, -speed));
-        animationManager.setCurrentAnimation(State.WALK_DOWN.getValue());
+        animationManager.run(State.WALK_DOWN.getValue());
         direction = State.IDLE_DOWN;
     }
 
@@ -99,7 +99,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
             return;
         }
         this.body.setLinearVelocity(new Vector2(speed, 0));
-        animationManager.setCurrentAnimation(State.WALK_RIGHT.getValue());
+        animationManager.run(State.WALK_RIGHT.getValue());
         direction = State.IDLE_RIGHT;
     }
 
@@ -109,7 +109,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
             return;
         }
         this.body.setLinearVelocity(new Vector2(-speed, 0));
-        animationManager.setCurrentAnimation(State.WALK_LEFT.getValue());
+        animationManager.run(State.WALK_LEFT.getValue());
         direction = State.IDLE_LEFT;
     }
 
@@ -136,7 +136,7 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     public void update(final float delta) {
         updateSprite();
         if (isDead()) {
-            if (animationManager.isCurrentAnimation(State.DEAD.getValue()) && animationManager.isFinished()) {
+            if (animationManager.isRunning(State.DEAD.getValue()) && animationManager.isFinished()) {
                 disappear();
             }
             return;
@@ -158,41 +158,41 @@ public class Bomberman extends GameObject implements DamageableObject, Controlla
     }
 
     public void setupAnimation() {
-        animationManager.addAnimation(State.WALK_DOWN.getValue(),
+        animationManager.add(State.WALK_DOWN.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.WALK_DOWN.getValue())));
 
-        animationManager.addAnimation(State.WALK_LEFT.getValue(),
+        animationManager.add(State.WALK_LEFT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.WALK_LEFT.getValue())));
 
-        animationManager.addAnimation(State.WALK_RIGHT.getValue(),
+        animationManager.add(State.WALK_RIGHT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.WALK_RIGHT.getValue())));
 
-        animationManager.addAnimation(State.WALK_UP.getValue(),
+        animationManager.add(State.WALK_UP.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.WALK_UP.getValue())));
 
-        animationManager.addAnimation(State.IDLE_DOWN.getValue(),
+        animationManager.add(State.IDLE_DOWN.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE_DOWN.getValue())));
 
-        animationManager.addAnimation(State.IDLE_LEFT.getValue(),
+        animationManager.add(State.IDLE_LEFT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE_LEFT.getValue())));
 
-        animationManager.addAnimation(State.IDLE_RIGHT.getValue(),
+        animationManager.add(State.IDLE_RIGHT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE_RIGHT.getValue())));
 
-        animationManager.addAnimation(State.IDLE_UP.getValue(),
+        animationManager.add(State.IDLE_UP.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE_UP.getValue())));
 
-        animationManager.addAnimation(State.DEAD.getValue(),
+        animationManager.add(State.DEAD.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.DEAD.getValue())));
 
-        animationManager.setCurrentAnimation(State.IDLE_DOWN.getValue());
+        animationManager.run(State.IDLE_DOWN.getValue());
     }
 
     @Override
     public void dead() {
         isDead = true;
         stopMovement();
-        animationManager.setCurrentAnimation(State.DEAD.getValue());
+        animationManager.run(State.DEAD.getValue());
     }
 
     public void speedUp(final float n) {

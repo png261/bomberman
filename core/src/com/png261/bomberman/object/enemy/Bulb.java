@@ -38,7 +38,7 @@ public class Bulb extends Enemy {
     public void update(final float delta) {
         super.update(delta);
         if (isDead()) {
-            if (animationManager.isCurrentAnimation(State.DEAD.getValue()) && animationManager.isFinished()) {
+            if (animationManager.isRunning(State.DEAD.getValue()) && animationManager.isFinished()) {
                 disappear();
             }
             return;
@@ -46,18 +46,18 @@ public class Bulb extends Enemy {
     }
 
     private void setupAnimation() {
-        animationManager.addAnimation(State.IDLE.getValue(),
+        animationManager.add(State.IDLE.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.IDLE.getValue())));
-        animationManager.addAnimation(State.DEAD.getValue(),
+        animationManager.add(State.DEAD.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.DEAD.getValue())));
 
-        animationManager.setCurrentAnimation(State.IDLE.getValue(), false);
+        animationManager.run(State.IDLE.getValue(), false);
     }
 
     @Override
     public void dead() {
         super.dead();
         stopMovement();
-        animationManager.setCurrentAnimation(State.DEAD.getValue());
+        animationManager.run(State.DEAD.getValue());
     }
 }

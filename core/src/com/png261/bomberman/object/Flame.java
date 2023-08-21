@@ -28,16 +28,16 @@ public class Flame extends GameObject {
         sprite = new Sprite();
         animationManager = new AnimationManager();
 
-        animationManager.addAnimation(State.DOWN.getValue(),
+        animationManager.add(State.DOWN.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.DOWN.getValue())));
-        animationManager.addAnimation(State.UP.getValue(),
+        animationManager.add(State.UP.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.UP.getValue())));
-        animationManager.addAnimation(State.LEFT.getValue(),
+        animationManager.add(State.LEFT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.LEFT.getValue())));
-        animationManager.addAnimation(State.RIGHT.getValue(),
+        animationManager.add(State.RIGHT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, atlas.findRegions(State.RIGHT.getValue())));
 
-        animationManager.setCurrentAnimation(direction.getValue(), false);
+        animationManager.run(direction.getValue(), false);
         pointLight = new PointLight(PhysicManager.getInstance().getRayHandler(), 50, new Color(0.5f, 0.5f, 0.5f, 1.0f),
                 2f, 0, 0);
         pointLight.setSoft(true);

@@ -37,18 +37,18 @@ public class Balloom extends Enemy {
     }
 
     public void setupAnimation() {
-        animationManager.addAnimation(State.UP.getValue(),
+        animationManager.add(State.UP.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.UP.getValue())));
-        animationManager.addAnimation(State.DEAD.getValue(),
+        animationManager.add(State.DEAD.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.DEAD.getValue())));
-        animationManager.addAnimation(State.DOWN.getValue(),
+        animationManager.add(State.DOWN.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.DOWN.getValue())));
-        animationManager.addAnimation(State.RIGHT.getValue(),
+        animationManager.add(State.RIGHT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.RIGHT.getValue())));
-        animationManager.addAnimation(State.LEFT.getValue(),
+        animationManager.add(State.LEFT.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.LEFT.getValue())));
-        animationManager.setCurrentAnimation(State.DOWN.getValue());
-        animationManager.addAnimation(State.DEAD.getValue(),
+        animationManager.run(State.DOWN.getValue());
+        animationManager.add(State.DEAD.getValue(),
                 new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions(State.DEAD.getValue())));
     }
 
@@ -58,19 +58,19 @@ public class Balloom extends Enemy {
             final int random = Util.getRandomInRange(1, 5);
             switch (random) {
                 case 1:
-                    animationManager.setCurrentAnimation(State.RIGHT.getValue());
+                    animationManager.run(State.RIGHT.getValue());
                     moveRight();
                     break;
                 case 2:
-                    animationManager.setCurrentAnimation(State.LEFT.getValue());
+                    animationManager.run(State.LEFT.getValue());
                     moveLeft();
                     break;
                 case 3:
-                    animationManager.setCurrentAnimation(State.UP.getValue());
+                    animationManager.run(State.UP.getValue());
                     moveUp();
                     break;
                 case 4:
-                    animationManager.setCurrentAnimation(State.DOWN.getValue());
+                    animationManager.run(State.DOWN.getValue());
                     moveDown();
                     break;
             }
@@ -82,7 +82,7 @@ public class Balloom extends Enemy {
     public void update(final float delta) {
         super.update(delta);
         if (isDead()) {
-            if (animationManager.isCurrentAnimation(State.DEAD.getValue()) && animationManager.isFinished()) {
+            if (animationManager.isRunning(State.DEAD.getValue()) && animationManager.isFinished()) {
                 disappear();
             }
             return;
@@ -99,6 +99,6 @@ public class Balloom extends Enemy {
     public void dead() {
         super.dead();
         stopMovement();
-        animationManager.setCurrentAnimation(State.DEAD.getValue());
+        animationManager.run(State.DEAD.getValue());
     }
 }
