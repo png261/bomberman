@@ -25,7 +25,7 @@ public class Bulb extends Enemy {
 
     public Bulb() {
         super();
-        textureAtlas = new TextureAtlas(Gdx.files.internal("atlas/bulb.atlas"));
+        textureAtlas = new TextureAtlas(Gdx.files.internal("image/atlas/bulb.atlas"));
     }
 
     @Override
