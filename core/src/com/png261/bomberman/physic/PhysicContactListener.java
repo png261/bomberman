@@ -6,35 +6,25 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.png261.bomberman.manager.GameStateManager;
-import com.png261.bomberman.object.DamageableObject;
-import com.png261.bomberman.object.item.Item;
 import com.png261.bomberman.object.Bomb;
 import com.png261.bomberman.object.Bomberman;
+import com.png261.bomberman.object.DamageableObject;
+import com.png261.bomberman.object.item.Item;
 import com.png261.bomberman.object.tile.Brick;
 import com.png261.bomberman.states.SinglePlayerState;
 
 public class PhysicContactListener implements ContactListener {
     @Override
     public void beginContact(final Contact contact) {
-        handleItemContact(contact);
-        handleFlameContact(contact);
-        handleEnemyConntact(contact);
-        handleDoorContact(contact);
+        handleItemBeginContact(contact);
+        handleFlameBeginContact(contact);
+        handleEnemyBeginConntact(contact);
+        handleDoorBeginContact(contact);
     }
 
     @Override
     public void endContact(final Contact contact) {
-        Fixture fixA = contact.getFixtureA();
-        Fixture fixB = contact.getFixtureB();
-        if (fixA.getFilterData().categoryBits == BitCollision.BOMB
-                || fixB.getFilterData().categoryBits == BitCollision.BOMB) {
-            Fixture bombFix = fixA
-                    .getFilterData().categoryBits == BitCollision.BOMB
-                            ? fixA
-                            : fixB;
-            Bomb bomb = (Bomb) bombFix.getUserData();
-            bomb.setSensor(false);
-        }
+        handleBombEndContact(contact);
     }
 
     @Override
@@ -45,7 +35,21 @@ public class PhysicContactListener implements ContactListener {
     public void postSolve(final Contact contact, final ContactImpulse impulse) {
     }
 
-    public void handleItemContact(final Contact contact) {
+    public void handleBombEndContact(final Contact contact) {
+        final Fixture fixA = contact.getFixtureA();
+        final Fixture fixB = contact.getFixtureB();
+        if (fixA.getFilterData().categoryBits == BitCollision.BOMB
+                || fixB.getFilterData().categoryBits == BitCollision.BOMB) {
+            final Fixture bombFix = fixA
+                    .getFilterData().categoryBits == BitCollision.BOMB
+                            ? fixA
+                            : fixB;
+            final Bomb bomb = (Bomb) bombFix.getUserData();
+            bomb.setSensor(false);
+        }
+    }
+
+    public void handleItemBeginContact(final Contact contact) {
         final Fixture fixtureA = contact.getFixtureA();
         final Fixture fixtureB = contact.getFixtureB();
 
@@ -66,7 +70,7 @@ public class PhysicContactListener implements ContactListener {
         item.bonus(bomberman);
     }
 
-    public void handleDoorContact(final Contact contact) {
+    public void handleDoorBeginContact(final Contact contact) {
         final Fixture fixtureA = contact.getFixtureA();
         final Fixture fixtureB = contact.getFixtureB();
 
@@ -76,13 +80,13 @@ public class PhysicContactListener implements ContactListener {
         if ((categoryA | categoryB) != (BitCollision.DOOR | BitCollision.BOMBERMAN)) {
             return;
         }
-        SinglePlayerState singlePlayerState = (SinglePlayerState) GameStateManager.getInstance().currentState();
+        final SinglePlayerState singlePlayerState = (SinglePlayerState) GameStateManager.getInstance().currentState();
         if (singlePlayerState != null) {
             singlePlayerState.nextLevel();
         }
     }
 
-    public void handleFlameContact(final Contact contact) {
+    public void handleFlameBeginContact(final Contact contact) {
         handleFlameBrickContact(contact);
         handleFlameDamageableObjectContact(contact);
     }
@@ -121,7 +125,7 @@ public class PhysicContactListener implements ContactListener {
         object.damage(1);
     }
 
-    public void handleEnemyConntact(final Contact contact) {
+    public void handleEnemyBeginConntact(final Contact contact) {
         final Fixture fixtureA = contact.getFixtureA();
         final Fixture fixtureB = contact.getFixtureB();
 
