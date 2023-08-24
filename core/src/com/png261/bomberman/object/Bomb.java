@@ -68,8 +68,8 @@ public class Bomb extends GameObject {
     public void createBody() {
         createCircleBody(params.position(), BODY_RADIUS);
         setCollisionFilter(BitCollision.BOMB, BitCollision.ALL);
+        setBodyToStatic();
         setSensor(true);
-
     }
 
     @Override

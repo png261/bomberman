@@ -87,7 +87,7 @@ public abstract class PhysicObject implements Disposable {
         fixture.setFilterData(filter);
     }
 
-    protected void setSensor(final boolean isSensor) {
+    public void setSensor(final boolean isSensor) {
         fixture.setSensor(isSensor);
     }
 

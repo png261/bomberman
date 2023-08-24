@@ -8,9 +8,9 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.png261.bomberman.manager.GameStateManager;
 import com.png261.bomberman.object.DamageableObject;
 import com.png261.bomberman.object.item.Item;
+import com.png261.bomberman.object.Bomb;
 import com.png261.bomberman.object.Bomberman;
 import com.png261.bomberman.object.tile.Brick;
-import com.png261.bomberman.states.GameState;
 import com.png261.bomberman.states.SinglePlayerState;
 
 public class PhysicContactListener implements ContactListener {
@@ -24,6 +24,17 @@ public class PhysicContactListener implements ContactListener {
 
     @Override
     public void endContact(final Contact contact) {
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+        if (fixA.getFilterData().categoryBits == BitCollision.BOMB
+                || fixB.getFilterData().categoryBits == BitCollision.BOMB) {
+            Fixture bombFix = fixA
+                    .getFilterData().categoryBits == BitCollision.BOMB
+                            ? fixA
+                            : fixB;
+            Bomb bomb = (Bomb) bombFix.getUserData();
+            bomb.setSensor(false);
+        }
     }
 
     @Override
